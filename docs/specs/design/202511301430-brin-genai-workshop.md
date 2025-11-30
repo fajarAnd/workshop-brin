@@ -1206,17 +1206,17 @@ docs/material/
 
 #### Task 1: Create Workshop Materials (docs/material/)
 
-**1.1 Detailed Slide Deck (Indonesian/English)** - Location: `docs/material/slides/`
-- [ ] **Phase 1 Slides**:
-  - [ ] `01-opening-genai-intro.md` (ID/EN) - AI → GenAI → Practical Impact
-  - [ ] `02-architecture-overview.md` (ID/EN) - System components and integration
-- [ ] **Phase 2 Slides**:
-  - [ ] `03-module1-n8n-llm.md` (ID/EN) - N8N workflow architecture
-  - [ ] `04-module2-prompt-engineering.md` (ID/EN) - Prompt design theory
-  - [ ] `05-module3-rag-implementation.md` (ID/EN) - RAG concepts and LangChain
-- [ ] **Phase 3 Slides**:
-  - [ ] `06-integration-demo.md` (ID/EN) - End-to-end integration
-  - [ ] `07-closing-next-steps.md` (ID/EN) - Wrap-up and resources
+**1.1 Detailed Slide Deck (English)** - Location: `docs/material/slides/`
+- [x] **Phase 1 Slides**:
+  - [x] `01-opening-genai-intro.md` - AI → GenAI → Practical Impact
+  - [x] `02-architecture-overview.md` - System components and integration
+- [x] **Phase 2 Slides**:
+  - [x] `03-module1-n8n-llm.md` - N8N workflow architecture
+  - [x] `04-module2-prompt-engineering.md` - Prompt design theory
+  - [x] `05-module3-rag-implementation.md` - RAG concepts and LangChain
+- [x] **Phase 3 Slides**:
+  - [x] `06-integration-demo.md` - End-to-end integration
+  - [x] `07-closing-next-steps.md` - Wrap-up and resources
 
 **1.2 Hands-On Exercise Guides (Step-by-Step)** - Location: `docs/material/exercises/`
 - [ ] `module1-n8n-workflow-guide.md` - Step-by-step for Module 1
@@ -1235,20 +1235,20 @@ docs/material/
   - [ ] Troubleshooting guide
 
 **1.3 Theory & Concept Materials per Phase/Module** - Location: `docs/material/theory/`
-- [ ] **Phase 1 Theory Materials**:
-  - [ ] `phase1-genai-fundamentals.md` - Traditional AI vs GenAI concepts
-  - [ ] `phase1-architecture-principles.md` - System design patterns
-- [ ] **Phase 2 Theory Materials**:
-  - [ ] `module1-n8n-architecture.md` - N8N concepts, node types, data flow
-  - [ ] `module1-llm-integration.md` - OpenRouter, API patterns, authentication
-  - [ ] `module2-prompt-engineering-theory.md` - Prompt framework, scenarios, best practices
-  - [ ] `module2-advanced-prompting.md` - CoT, Few-shot, ReAct techniques
-  - [ ] `module3-rag-concepts.md` - RAG architecture, vector embeddings, similarity search
-  - [ ] `module3-langchain-n8n.md` - LangChain integration in N8N
-  - [ ] `model-selection-guide.md` - Decision tree, parameter tuning
-- [ ] **Phase 3 Theory Materials**:
-  - [ ] `phase3-integration-patterns.md` - Component orchestration
-  - [ ] `production-deployment.md` - Best practices for production
+- [x] **Phase 1 Theory Materials**:
+  - [x] `01-phase1-genai-fundamentals.md` - Traditional AI vs GenAI concepts
+  - [x] `02-phase1-architecture-principles.md` - System design patterns
+- [x] **Phase 2 Theory Materials**:
+  - [x] `03-module1-n8n-architecture.md` - N8N concepts, node types, data flow
+  - [x] `04-module1-llm-integration.md` - OpenRouter, API patterns, authentication
+  - [x] `05-module2-prompt-engineering-theory.md` - Prompt framework, scenarios, best practices
+  - [x] `06-module2-advanced-prompting.md` - CoT, Few-shot, ReAct techniques
+  - [x] `07-module3-rag-concepts.md` - RAG architecture, vector embeddings, similarity search
+  - [x] `08-module3-langchain-n8n.md` - LangChain integration in N8N
+  - [x] `09-model-selection-guide.md` - Decision tree, parameter tuning
+- [x] **Phase 3 Theory Materials**:
+  - [x] `10-phase3-integration-patterns.md` - Component orchestration
+  - [x] `11-production-deployment.md` - Best practices for production
 
 #### Task 2: Infrastructure & Development Environment
 
