@@ -24,8 +24,14 @@
 - [Hands-On Exercise Design](#hands-on-exercise-design)
 - [Technical Stack & Prerequisites](#technical-stack--prerequisites)
 - [Decision Log](#decision-log)
-- [Success Criteria](#success-criteria)
 - [Risk Mitigation](#risk-mitigation)
+- [Appendix: Resources](#appendix-resources)
+- [Conclusion](#conclusion)
+- [Implementation Task Plan](#implementation-task-plan)
+  - [Task 1: Create Workshop Materials](#task-1-create-workshop-materials-docsmaterial)
+  - [Task 2: Infrastructure & Development Environment](#task-2-infrastructure--development-environment)
+  - [Task 3: Participant Resources](#task-3-participant-resources)
+  - [Task 4: Testing & Validation](#task-4-testing--validation)
 
 ---
 
@@ -389,23 +395,23 @@ graph TB
 
 ### Module 1: N8N Workflow + LLM Integration (30 min)
 
-**Objective**: Build working N8N workflow that calls LLM
+**Objective**: Understand N8N workflow architecture and LLM integration patterns
 
 #### Learning Outcomes:
-- Create N8N workflow from scratch
-- Integrate OpenRouter API
-- Handle webhook triggers
-- Parse LLM responses
+- Understand N8N workflow components
+- Learn OpenRouter API integration
+- Comprehend webhook triggers and data flow
+- Understand LLM request/response patterns
 
 #### Exercise Structure
 
 **Setup** (5 min):
 - Open N8N instance
-- Import starter template (basic webhook)
+- Import pre-built workflow template (complete workflow provided by instructor)
 
-**Hands-On Task** (20 min):
+**Concept Explanation** (15 min):
 
-Participants will build this workflow:
+Instructor will explain the pre-built workflow architecture:
 
 ```mermaid
 graph LR
@@ -420,64 +426,69 @@ graph LR
     style F fill:#e8f5e9
 ```
 
-**Step-by-Step Guide** (provided as checklist):
+**Workflow Breakdown** (instructor-led walkthrough):
 
-1. ✅ Add Webhook node
-2. ✅ Add "Set" node → Extract `message` and `user_id`
-3. ✅ Add HTTP Request node
+1. **Webhook Node**: Entry point for external triggers
+   - How webhook URLs are generated
+   - Request payload structure
+2. **Set Node**: Variable extraction and data preparation
+   - Extracting `message` and `user_id` from input
+   - Variable scoping in N8N
+3. **HTTP Request Node**: OpenRouter API integration
    - URL: `https://openrouter.ai/api/v1/chat/completions`
    - Method: POST
    - Headers: `Authorization: Bearer {{API_KEY}}`
-   - Body: (template provided)
-4. ✅ Test with Postman/curl
-5. ✅ Add response formatter
+   - Body structure and templating
+4. **Response Processing**: LLM output handling
+   - Parsing JSON responses
+   - Error handling patterns
+5. **Return Node**: Webhook response formatting
 
-**Testing** (5 min):
-- Send test message
-- Verify LLM response
-- Debug common issues (API key, JSON format)
+**Testing & Demonstration** (10 min):
+- Instructor sends test message via Postman/curl
+- Participants observe workflow execution in real-time
+- Walk through execution logs and data flow
+- Q&A on workflow architecture
 
 **Key Concepts Covered**:
-- N8N node types
-- API authentication
+- N8N node types and connections
+- API authentication patterns
 - JSON payload structure
+- Webhook-based integrations
 - Error handling basics
 
 ---
 
 ### Module 2: Prompt Engineering (25 min)
 
-**Objective**: Master prompt design for CS automation
+**Objective**: Understand prompt design principles for CS automation
 
 #### Learning Outcomes:
-- Structure effective prompts
-- Use prompt templates
-- Implement role-based prompting
-- Apply constraints and output formatting
+- Understand effective prompt structure
+- Learn prompt engineering framework
+- Recognize role-based prompting patterns
+- Know how to apply constraints and output formatting
 
-#### Exercise Structure
+#### Session Structure
 
-**Theory** (5 min):
+**Theory & Concepts** (15 min):
 
-Prompt Engineering Framework:
+**Prompt Engineering Framework**:
 
 ```mermaid
 graph LR
     A[Role<br/><i>Who is the AI?</i>] --> B[Task<br/><i>What to do?</i>]
     B --> C[Constraint<br/><i>Limitations</i>]
     C --> D[Output<br/><i>Format/Style</i>]
-
-    style A fill:#e3f2fd
-    style B fill:#fff3e0
-    style C fill:#fce4ec
-    style D fill:#e8f5e9
 ```
 
-**Hands-On Task** (15 min):
+**Core Concepts**:
+1. **Role Definition**: Setting AI persona and expertise level
+2. **Task Specification**: Clear instructions on what to accomplish
+3. **Constraints**: Boundaries and limitations (language, length, tone)
+4. **Output Formatting**: Structure and style requirements
 
-Participants will create 3 prompt templates for different scenarios:
-
-**Template Structure** (provided as starter):
+**Template Structure Examples** (instructor will show):
 
 ```
 Role: You are a customer service agent for [COMPANY]
@@ -491,34 +502,53 @@ Output: [FORMAT]
 User Message: {{user_message}}
 ```
 
-**Scenarios to Implement**:
+**Scenario Walkthroughs** (instructor demonstrates):
 1. **FAQ Handler**: Simple questions, friendly tone
+   - Role: Helpful support agent
+   - Task: Answer common questions
+   - Constraints: Brief, friendly, Bahasa Indonesia
+   - Output: Direct answer, 2-3 sentences max
+
 2. **Complaint Handler**: Empathetic, solution-oriented
-3. **Escalation**: Knows when to forward to human
+   - Role: Senior support specialist
+   - Task: Acknowledge and resolve complaints
+   - Constraints: Empathetic tone, provide solutions
+   - Output: Structured response (acknowledge → solution → next steps)
 
-**Testing** (5 min):
-- Test each template in N8N
-- Compare responses
-- Iterate on prompts
+3. **Escalation Detector**: Knows when to forward to human
+   - Role: Triage agent
+   - Task: Identify complex issues
+   - Constraints: Recognize escalation triggers
+   - Output: Boolean decision + reason
 
-**Advanced Techniques** (discussed, not hands-on):
-- Chain-of-Thought (CoT)
-- Few-shot examples
-- ReAct prompting
+**Advanced Techniques** (10 min discussion):
+- **Chain-of-Thought (CoT)**: Breaking down reasoning steps
+- **Few-shot examples**: Providing sample inputs/outputs
+- **ReAct prompting**: Reasoning + Action pattern
+- **Temperature & parameter tuning**: Impact on response variability
+
+**Common FAQ** (instructor-led Q&A):
+- Q: How long should prompts be?
+- Q: When to use few-shot vs zero-shot?
+- Q: How to handle multilingual requirements?
+- Q: How to prevent prompt injection attacks?
+- Q: Best practices for production prompts?
 
 ---
 
 ### Module 3: RAG Implementation (35 min)
 
-**Objective**: Build knowledge retrieval system
+**Objective**: Understand RAG architecture and implement knowledge retrieval System
 
 #### Learning Outcomes:
-- Understand RAG concept
-- Create vector embeddings
-- Query vector database
-- Integrate RAG into LLM workflow
+- Understand RAG concept and architecture
+- Learn vector embeddings and similarity search
+- Comprehend N8N LangChain integration
+- Implement RAG workflow using pre-built templates
 
-#### RAG Concept Explanation (5 min)
+#### RAG Concept Explanation (10 min)
+
+**Theory: What is RAG?**
 
 ```mermaid
 graph TB
@@ -540,58 +570,85 @@ graph TB
 ```
 
 **Why RAG?**
-- Company-specific knowledge
-- Up-to-date information
-- Grounded responses (reduces hallucination)
+- Company-specific knowledge (policies, procedures, product info)
+- Up-to-date information (not limited by LLM training cutoff)
+- Grounded responses (reduces hallucination with factual context)
+- Cost-effective (smaller models + retrieval vs large context windows)
 
-#### Hands-On Task (25 min)
+**N8N LangChain Integration** (5 min explanation):
+- N8N provides native LangChain nodes for RAG workflows
+- Simplifies vector DB operations and embedding generation
+- Built-in support for pgvector, Pinecone, and other vector stores
+- Handles document chunking and retrieval automatically
 
-**Phase A: Create Knowledge Base** (10 min)
+#### Hands-On Task (20 min)
 
-Participants will:
-1. Upload sample documents (FAQ, product docs)
-2. Generate embeddings using OpenAI API
-3. Store in PostgreSQL with pgvector extension
+**Phase A: Understanding Pre-Built RAG Workflow** (10 min)
 
-**Workflow**:
+Instructor will demonstrate pre-built N8N workflow with LangChain:
 
 ```mermaid
 graph LR
-    A[Upload<br/>Documents] --> B[Split into<br/>Chunks]
-    B --> C[Generate<br/>Embeddings]
-    C --> D[Store in<br/>Vector DB]
+    A[Trigger] --> B[Load<br/>Documents]
+    B --> C[LangChain:<br/>Text Splitter]
+    C --> D[LangChain:<br/>Embeddings]
+    D --> E[Store in<br/>pgvector]
 
     style A fill:#e3f2fd
     style C fill:#fff3e0
-    style D fill:#e8f5e9
+    style D fill:#fce4ec
+    style E fill:#e8f5e9
 ```
 
-**Phase B: Query RAG System** (10 min)
+**Workflow Breakdown**:
+1. **Document Loader**: Reads sample knowledge base files (provided)
+2. **Text Splitter Node**: Chunks documents using LangChain
+   - Chunk size: 500 tokens
+   - Overlap: 50 tokens
+3. **Embeddings Node**: Generates vectors using OpenAI embeddings
+4. **Vector Store Node**: Stores in PostgreSQL pgvector
 
-Update N8N workflow to include RAG:
+Participants will:
+- Import pre-built workflow template
+- Review sample knowledge base documents (FAQ, policies)
+- Run the workflow to populate vector database
+- Observe execution logs
+
+**Phase B: Implementing RAG Query** (10 min)
+
+Import and configure pre-built query workflow:
 
 ```mermaid
 graph LR
-    A[User<br/>Question] --> B[Embed<br/>Question]
-    B --> C[Vector<br/>Search]
+    A[User<br/>Question] --> B[LangChain:<br/>Embed Query]
+    B --> C[LangChain:<br/>Vector Search]
     C --> D[Get Top 3<br/>Results]
-    D --> E[Inject into<br/>LLM Prompt]
-    E --> F[Generate<br/>Response]
+    D --> E[LangChain:<br/>Prompt Template]
+    E --> F[LLM<br/>Generate]
+    F --> G[Response]
 
     style A fill:#e3f2fd
     style C fill:#fff3e0
     style F fill:#e8f5e9
 ```
 
-**N8N Implementation**:
-1. Add "HTTP Request" node → Query vector DB
-2. Add "Function" node → Format results
-3. Update LLM prompt to include context
+**Workflow Components**:
+1. **Query Embeddings**: LangChain node converts question to vector
+2. **Vector Similarity Search**: Queries pgvector for top-k matches
+3. **Context Injection**: LangChain prompt template combines query + retrieved docs
+4. **LLM Generation**: Sends augmented prompt to OpenRouter
 
-**Testing** (5 min):
-- Query: "What's your refund policy?"
-- Verify retrieval of correct document
-- Check LLM uses retrieved context
+Participants will:
+- Import RAG query workflow template
+- Test with sample questions
+- Observe how context is injected into prompts
+- Compare RAG vs non-RAG responses
+
+**Testing & Validation** (5 min):
+- Test query: "Apa kebijakan refund produk rusak?"
+- Verify vector search retrieves correct knowledge base entry
+- Check LLM response uses retrieved context
+- Compare response quality with/without RAG
 
 ---
 
@@ -1031,50 +1088,6 @@ docker-compose down
 - Comprehensive setup guide sent 1 week ahead
 - Slack channel for async troubleshooting
 
----
-
-## Success Criteria
-
-### Participant Outcomes
-
-**By the end of the workshop, participants will be able to**:
-
-✅ **Build**: Create N8N workflow with LLM integration from scratch
-✅ **Design**: Write effective prompts for CS automation scenarios
-✅ **Implement**: Set up basic RAG system with vector database
-✅ **Integrate**: Connect workflow to WhatsApp via Golang backend
-✅ **Deploy**: Understand production deployment considerations
-✅ **Optimize**: Choose appropriate models and parameters for different tasks
-
-### Measurable Success Metrics
-
-**During Workshop**:
-- ✅ 90%+ of participants complete Module 1 (N8N + LLM)
-- ✅ 80%+ complete Module 2 (Prompt Engineering)
-- ✅ 70%+ complete Module 3 (RAG)
-- ✅ 100% see working end-to-end demo
-
-**Post-Workshop** (1 week follow-up survey):
-- ✅ 80%+ report confidence in building similar systems
-- ✅ 50%+ have started implementing in their projects
-- ✅ 90%+ found workshop practical and applicable
-
-### Deliverables
-
-**Participant Deliverables**:
-- Working N8N workflow (exportable JSON)
-- 3 prompt templates for different scenarios
-- RAG-enabled knowledge base
-- Documentation of their implementation
-
-**Workshop Materials**:
-- Complete slide deck
-- Hands-on exercise guides
-- Code templates and samples
-- Reference architecture diagrams
-- Post-workshop resources list
-
----
 
 ## Risk Mitigation
 
@@ -1178,16 +1191,120 @@ This workshop is designed to give BRIN developers **practical, immediately appli
 The Docker-based approach ensures participants own their complete development environment, can continue learning post-workshop, and gain real-world deployment experience. The modular structure ensures that even if time runs short, core learning objectives are met.
 
 **Next Steps After Specification Approval**:
-1. Create detailed slide deck (Indonesian/English)
-2. Build Docker Compose stack with all services
-3. Build N8N workflow templates (importable JSON)
-4. Prepare PostgreSQL initialization scripts (schema + pgvector setup)
-5. Create hands-on exercise guides (step-by-step)
-6. Prepare sample knowledge base and embeddings
-7. Generate OpenRouter API keys (39 individual keys)
-8. Create Docker setup guide and troubleshooting videos
-9. Conduct dry run with teaching assistants on fresh environment
-10. Prepare USB drives with Docker images for offline deployment
+
+## Implementation Task Plan
+
+All workshop materials will be organized in `docs/material/` directory with the following structure:
+
+```
+docs/material/
+├── slides/                  # Presentation decks
+├── exercises/              # Hands-on guides
+├── theory/                 # Concept materials per phase/module
+└── assets/                 # Images, diagrams, resources
+```
+
+#### Task 1: Create Workshop Materials (docs/material/)
+
+**1.1 Detailed Slide Deck (Indonesian/English)** - Location: `docs/material/slides/`
+- [ ] **Phase 1 Slides**:
+  - [ ] `01-opening-genai-intro.md` (ID/EN) - AI → GenAI → Practical Impact
+  - [ ] `02-architecture-overview.md` (ID/EN) - System components and integration
+- [ ] **Phase 2 Slides**:
+  - [ ] `03-module1-n8n-llm.md` (ID/EN) - N8N workflow architecture
+  - [ ] `04-module2-prompt-engineering.md` (ID/EN) - Prompt design theory
+  - [ ] `05-module3-rag-implementation.md` (ID/EN) - RAG concepts and LangChain
+- [ ] **Phase 3 Slides**:
+  - [ ] `06-integration-demo.md` (ID/EN) - End-to-end integration
+  - [ ] `07-closing-next-steps.md` (ID/EN) - Wrap-up and resources
+
+**1.2 Hands-On Exercise Guides (Step-by-Step)** - Location: `docs/material/exercises/`
+- [ ] `module1-n8n-workflow-guide.md` - Step-by-step for Module 1
+  - [ ] Import workflow template instructions
+  - [ ] Testing and observation steps
+  - [ ] Troubleshooting common issues
+- [ ] `module3-rag-implementation-guide.md` - Step-by-step for Module 3
+  - [ ] Phase A: Import RAG ingestion workflow
+  - [ ] Run knowledge base population
+  - [ ] Phase B: Import RAG query workflow
+  - [ ] Testing with sample questions
+- [ ] `phase3-integration-guide.md` - End-to-end integration
+  - [ ] Intent detection setup
+  - [ ] Routing configuration
+  - [ ] Testing scenarios
+  - [ ] Troubleshooting guide
+
+**1.3 Theory & Concept Materials per Phase/Module** - Location: `docs/material/theory/`
+- [ ] **Phase 1 Theory Materials**:
+  - [ ] `phase1-genai-fundamentals.md` - Traditional AI vs GenAI concepts
+  - [ ] `phase1-architecture-principles.md` - System design patterns
+- [ ] **Phase 2 Theory Materials**:
+  - [ ] `module1-n8n-architecture.md` - N8N concepts, node types, data flow
+  - [ ] `module1-llm-integration.md` - OpenRouter, API patterns, authentication
+  - [ ] `module2-prompt-engineering-theory.md` - Prompt framework, scenarios, best practices
+  - [ ] `module2-advanced-prompting.md` - CoT, Few-shot, ReAct techniques
+  - [ ] `module3-rag-concepts.md` - RAG architecture, vector embeddings, similarity search
+  - [ ] `module3-langchain-n8n.md` - LangChain integration in N8N
+  - [ ] `model-selection-guide.md` - Decision tree, parameter tuning
+- [ ] **Phase 3 Theory Materials**:
+  - [ ] `phase3-integration-patterns.md` - Component orchestration
+  - [ ] `production-deployment.md` - Best practices for production
+
+#### Task 2: Infrastructure & Development Environment
+
+- [ ] **Build Docker Compose Stack** - Complete containerized environment
+  - [ ] `docker-compose.yaml` with all services (backend, n8n, postgres)
+  - [ ] Backend Golang + Whatmeow service (pre-built)
+  - [ ] N8N service configuration
+  - [ ] PostgreSQL + pgvector configuration
+  - [ ] Network and volume configuration
+
+- [ ] **Build N8N Workflow Templates** - Importable JSON workflows
+
+- [ ] **Prepare PostgreSQL Initialization Scripts**
+  - [ ] `init-db.sql` - Database schema creation
+  - [ ] `setup-pgvector.sql` - pgvector extension setup
+  - [ ] `seed-data.sql` - Sample user data
+
+- [ ] **Prepare Sample Knowledge Base**
+  - [ ] `sample-faqs.txt` - FAQ entries (Bahasa Indonesia)
+  - [ ] `product-docs.txt` - Product documentation
+  - [ ] `policies.txt` - Company policies (refund, support hours, etc.)
+  - [ ] Pre-generate embeddings for faster workshop setup
+
+#### Task 3: Participant Resources
+
+- [ ] **Create Setup & Troubleshooting Materials**
+  - [ ] `docker-setup-guide.md` - OS-specific Docker installation
+  - [ ] `pre-workshop-checklist.md` - Verification steps
+  - [ ] `troubleshooting-guide.md` - Common issues and solutions
+
+- [ ] **Generate API Keys & Access**
+  - [ ] Generate 1 General OpenRouter API keys
+  - [ ] Create backup API key pool (10 additional keys)
+
+- [ ] **Offline Materials**
+  - [ ] Prepare USB drives with pre-downloaded Docker images
+  - [ ] Bundle workshop repository (complete with all files)
+  - [ ] Include PDF versions of all slides and guides
+
+#### Task 4: Testing & Validation
+
+- [ ] **Conduct Dry Run with Teaching Assistants**
+  - [ ] Test on fresh Windows environment
+  - [ ] Test on fresh macOS environment
+  - [ ] Test on fresh Linux environment
+  - [ ] Verify all workflows import correctly
+  - [ ] Validate timing for each module
+  - [ ] Identify potential bottlenecks
+  - [ ] Refine exercise guides based on feedback
+
+- [ ] **Final Pre-Workshop Validation**
+  - [ ] Test full end-to-end flow
+  - [ ] Verify all API keys are valid
+  - [ ] Ensure all Docker images are cached
+  - [ ] Test offline fallback scenario
+  - [ ] Review all materials for accuracy and clarity
 
 ---
 
