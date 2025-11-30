@@ -71,7 +71,7 @@
 - Government/research focus: reproducible, documented processes
 
 **Workshop Design Implications**:
-- Skip AI/LLM basics → Jump to implementation
+- Introduction AI/LLM basics → Jump to implementation
 - Focus on architecture patterns and integration
 - Provide reusable templates and workflows
 - Emphasize production readiness and best practices
@@ -118,7 +118,7 @@
 
 ### Principles
 
-1. **80/20 Rule**: 80% hands-on implementation, 20% explanation
+1. **65/35 Rule**: 65% hands-on implementation, 35% explanation
 2. **Practical First**: Start with working examples, explain concepts after
 3. **Modular Checkpoints**: Each section produces deployable component
 4. **Scale-Friendly**: Exercises work for 1 or 39 participants

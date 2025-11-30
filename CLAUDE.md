@@ -94,28 +94,3 @@ Document all architectural and design decisions:
 ---
 *This file defines the coding standards and conventions for this project. Claude Code will follow these rules automatically.*
 
-
-
-
-
-
-Revisi:
-- Format Hands-on Laptop masing-masing. template project akan di provide ( akan di dijelaskan di bawah) 
-- Open router API key Akan di sediakan
-- untuk database jangan gunakan supabase, ganti saja menjadi postgres dengan menggunakan extension pg vector.
-- N8N Self hosted di local
-- Project template dengan structure di bawah
-```
-.
-├── backend/           # Go Whatapp service (whatsmeow)
-├── docs/             # Architecture documentation
-├── scripts/          # Database initialization scripts
-├── docker-compose.yaml
-└── .env.example
-```
-- untuk backend akan dibuat manual oleh saya, jangan masukan ke spec.
-- Project ini bisa di running  dengan eksekusi 1 perintah. gunakan "docker-compose up -d". usahakan minimal effort, tidak ada dependency (OS, external library etc) hanya cukup perlu docker
-- docker-compose memiliki service: backend-wa, n8n, postgres, 
-
-Bertahap, slide persentation dulu berbentuk markdown. setelah saya review baru step by step untuk detail dan comprehenshive doc tersebut.
-
