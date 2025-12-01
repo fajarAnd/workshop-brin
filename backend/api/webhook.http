@@ -1,0 +1,109 @@
+### N8N Webhook Response - Successful Response
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "message_id": "msg_12345",
+  "phone": "6287744059690",
+  "response": "Thank you for your message! Your request has been processed successfully.",
+  "success": true
+}
+
+###
+
+### N8N Webhook Response - Error Response
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "message_id": "msg_67890",
+  "phone": "6287744059690",
+  "response": "Sorry, I couldn't process your request at this time.",
+  "success": false,
+  "error": "Processing timeout"
+}
+
+###
+
+### N8N Webhook Response - Simple Success
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "message_id": "msg_abc123",
+  "phone": "6285551234567",
+  "response": "Hello! How can I assist you today?",
+  "success": true
+}
+
+###
+
+### N8N Webhook Response - Multiple Line Response
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "message_id": "msg_multiline",
+  "phone": "6281234567890",
+  "response": "Here's your information:\n\n1. Account Status: Active\n2. Balance: $150.00\n3. Last Transaction: Yesterday\n\nIs there anything else you need?",
+  "success": true
+}
+
+###
+
+### N8N Webhook Response - Invalid JSON (Test Error Handling)
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "message_id": "msg_invalid",
+  "phone": 123456789,
+  "response": "This should fail validation"
+}
+
+###
+
+### N8N Webhook Response - Missing Required Fields
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+{
+  "response": "Missing message_id and phone fields",
+  "success": true
+}
+
+###
+
+### N8N Webhook Response - Empty Response Body
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+
+###
+
+### Test with Custom Headers
+POST http://localhost:8082/api/v1/webhook/n8n/response
+Content-Type: application/json
+X-N8N-Workflow-ID: workflow_12345
+X-Source: n8n-automation
+
+{
+  "message_id": "msg_custom_headers",
+  "phone": "6287744059690",
+  "response": "Response with custom headers for tracking",
+  "success": true
+}
+
+###
+
+### Production Environment Test (update URL as needed)
+# POST https://your-production-domain.com/api/v1/webhook/n8n/response
+# Content-Type: application/json
+# 
+# {
+#   "message_id": "msg_production",
+#   "phone": "6287744059690",
+#   "response": "Production environment test message",
+#   "success": true
+# }
+
+###

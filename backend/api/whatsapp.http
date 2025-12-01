@@ -1,0 +1,13 @@
+### WhatsApp Management API
+
+### Get WhatsApp Connection Status
+GET http://api-chat.gosignal.id/api/v1/whatsapp/status
+Content-Type: application/json
+
+###
+
+### Logout from WhatsApp
+POST http://localhost:8082/api/v1/whatsapp/logout
+Content-Type: application/json
+
+###

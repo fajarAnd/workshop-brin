@@ -1,0 +1,326 @@
+### N8N Signal Webhook - BBCA Bullish Signal
+POST https://idx-gosignal.nipeharefa.dev/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "BBCA",
+  "last_date": "2025-08-10",
+  "last_close": 9420,
+  "entry_price": 9655,
+  "entry_gap_percent": 2.5,
+  "stop": 9180,
+  "target": 9720,
+  "risk_reward": 1.85,
+  "backtest_win_rate": 68.5,
+  "total_trades": 147,
+  "confluence_score": 8.2,
+  "confluence_hits": "Near Bollinger lower band (Close: 9420 <= Lower: 9180 * 1.02) | Volume spike detected (Current: 161970096 > SMA20: 58916444 * 1.5) | RSI oversold signal (RSI: 28 < 30) | MACD bullish divergence detected | Moving average confluence (EMA12 > EMA26 > EMA50) | Price above key support level",
+  "overall_sentiment": "bullish",
+  "confidence_score": 85.3,
+  "sentiment_score": 72.8,
+  "analysis_summary": "Strong technical confluence with bullish sentiment. Price above key moving averages with increasing volume."
+}
+
+###
+
+### N8N Signal Webhook - TLKM Bearish Signal
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "TLKM",
+  "last_date": "2025-08-10",
+  "last_close": 3500,
+  "entry_price": 3437,
+  "entry_gap_percent": -1.8,
+  "stop": 3600,
+  "target": 3300,
+  "risk_reward": 1.67,
+  "backtest_win_rate": 72.1,
+  "total_trades": 89,
+  "confluence_score": 7.8,
+  "confluence_hits": "Bearish divergence (Price: 3500, RSI: 72) | Volume confirmation (Current: 89234567 > Average: 45678901 * 1.95) | Resistance break failure | Moving average crossover (EMA12 < EMA26) | Price below key support",
+  "overall_sentiment": "bearish",
+  "confidence_score": 78.9,
+  "sentiment_score": 45.2,
+  "analysis_summary": "Bearish technical indicators with high volume. Strong resistance at current levels with declining momentum."
+}
+
+###
+
+### N8N Signal Webhook - ASII Neutral Signal
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "ASII",
+  "last_date": "2025-08-10",
+  "last_close": 5650,
+  "entry_price": 5695,
+  "entry_gap_percent": 0.8,
+  "stop": 5450,
+  "target": 5850,
+  "risk_reward": 1.0,
+  "backtest_win_rate": 55.2,
+  "total_trades": 203,
+  "confluence_score": 5.5,
+  "confluence_hits": "Price consolidation pattern | Neutral volume profile | Mixed technical signals",
+  "overall_sentiment": "neutral",
+  "confidence_score": 62.4,
+  "sentiment_score": 50.0,
+  "analysis_summary": "Mixed signals with neutral sentiment. Price consolidating in range with low conviction signals."
+}
+
+###
+
+### N8N Signal Webhook - High Conviction UNVR Signal
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "UNVR",
+  "last_date": "2025-08-10",
+  "last_close": 4280,
+  "entry_price": 4417,
+  "entry_gap_percent": 3.2,
+  "stop": 4050,
+  "target": 4600,
+  "risk_reward": 2.26,
+  "backtest_win_rate": 82.4,
+  "total_trades": 68,
+  "confluence_score": 9.1,
+  "confluence_hits": "Golden cross (EMA12 > EMA26) | Volume breakout (Current: 245896742 > SMA20: 98456123 * 2.5) | RSI momentum (RSI: 68) | MACD bullish crossover | Bollinger upper band breakout | Price above all moving averages | Support level hold | Bullish engulfing pattern",
+  "overall_sentiment": "bullish",
+  "confidence_score": 91.7,
+  "sentiment_score": 88.3,
+  "analysis_summary": "Exceptional technical setup with very high confluence. Multiple bullish indicators aligned with strong momentum breakout."
+}
+
+###
+
+### N8N Signal Webhook - Low Confidence BMRI Signal
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "BMRI",
+  "last_date": "2025-08-10",
+  "last_close": 6750,
+  "entry_price": 6831,
+  "entry_gap_percent": 1.2,
+  "stop": 6500,
+  "target": 7000,
+  "risk_reward": 1.0,
+  "backtest_win_rate": 48.9,
+  "total_trades": 312,
+  "confluence_score": 4.2,
+  "confluence_hits": 2,
+  "overall_sentiment": "bullish",
+  "confidence_score": 51.8,
+  "sentiment_score": 62.1,
+  "analysis_summary": "Weak bullish setup with limited confluence. Low conviction signal with mixed technical indicators."
+}
+
+###
+
+### N8N Signal Webhook - Invalid Ticker (Test Validation)
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "",
+  "last_date": "2025-08-10",
+  "last_close": 1000,
+  "entry_gap_percent": 1.0,
+  "stop": 950,
+  "target": 1050,
+  "risk_reward": 1.0,
+  "backtest_win_rate": 50.0,
+  "total_trades": 10,
+  "confluence_score": 5.0,
+  "confluence_hits": 3,
+  "overall_sentiment": "neutral",
+  "confidence_score": 50.0,
+  "sentiment_score": 50.0,
+  "analysis_summary": "Test signal with empty ticker"
+}
+
+###
+
+### N8N Signal Webhook - Invalid Sentiment (Test Validation)
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "TEST",
+  "last_date": "2025-08-10",
+  "last_close": 1000,
+  "entry_gap_percent": 1.0,
+  "stop": 950,
+  "target": 1050,
+  "risk_reward": 1.0,
+  "backtest_win_rate": 50.0,
+  "total_trades": 10,
+  "confluence_score": 5.0,
+  "confluence_hits": 3,
+  "overall_sentiment": "unknown",
+  "confidence_score": 50.0,
+  "sentiment_score": 50.0,
+  "analysis_summary": "Test signal with invalid sentiment"
+}
+
+###
+
+### N8N Signal Webhook - Missing Required Fields
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "TEST",
+  "last_date": "2025-08-10"
+}
+
+###
+
+### N8N Signal Webhook - Invalid Data Types
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "TEST",
+  "last_date": "2025-08-10",
+  "last_close": "invalid_number",
+  "entry_gap_percent": 1.0,
+  "stop": 950,
+  "target": 1050,
+  "risk_reward": 1.0,
+  "backtest_win_rate": 50.0,
+  "total_trades": 10,
+  "confluence_score": 5.0,
+  "confluence_hits": 3,
+  "overall_sentiment": "neutral",
+  "confidence_score": 50.0,
+  "sentiment_score": 50.0,
+  "analysis_summary": "Test signal with invalid data types"
+}
+
+###
+
+### N8N Signal Webhook - Empty Request Body
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+###
+
+### N8N Signal Webhook - Malformed JSON
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "TEST",
+  "last_date": "2025-08-10",
+  "last_close": 1000,
+  "malformed": "json",
+}
+
+###
+
+### N8N Signal Webhook with Custom Headers
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+X-N8N-Workflow-ID: signal_workflow_12345
+X-Source: n8n-signal-automation
+X-Request-ID: req_signal_001
+
+{
+  "ticker": "ICBP",
+  "last_date": "2025-08-10",
+  "last_close": 11200,
+  "entry_gap_percent": 1.8,
+  "stop": 10900,
+  "target": 11600,
+  "risk_reward": 1.33,
+  "backtest_win_rate": 64.7,
+  "total_trades": 124,
+  "confluence_score": 6.8,
+  "confluence_hits": 4,
+  "overall_sentiment": "bullish",
+  "confidence_score": 71.2,
+  "sentiment_score": 68.9,
+  "analysis_summary": "Request with custom headers for tracking and workflow identification."
+}
+
+###
+
+### N8N Signal Webhook - Large Numbers Test
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "GOTO",
+  "last_date": "2025-08-10",
+  "last_close": 54,
+  "entry_gap_percent": 5.5,
+  "stop": 48,
+  "target": 62,
+  "risk_reward": 2.33,
+  "backtest_win_rate": 76.3,
+  "total_trades": 1250,
+  "confluence_score": 8.7,
+  "confluence_hits": 7,
+  "overall_sentiment": "bullish",
+  "confidence_score": 89.4,
+  "sentiment_score": 82.1,
+  "analysis_summary": "High volume breakout with strong momentum. Multiple time frame alignment supporting bullish continuation."
+}
+
+###
+
+### N8N Signal Webhook - Decimal Price Test
+POST http://localhost:8082/api/v1/webhook/n8n/signal
+Content-Type: application/json
+
+{
+  "ticker": "ADRO",
+  "last_date": "2025-08-10",
+  "last_close": 2650,
+  "entry_gap_percent": -2.1,
+  "stop": 2720.5,
+  "target": 2550.75,
+  "risk_reward": 1.42,
+  "backtest_win_rate": 59.8,
+  "total_trades": 487,
+  "confluence_score": 6.1,
+  "confluence_hits": 4,
+  "overall_sentiment": "bearish",
+  "confidence_score": 67.3,
+  "sentiment_score": 38.7,
+  "analysis_summary": "Commodities under pressure with bearish sector rotation. Technical breakdown below key support levels."
+}
+
+###
+
+### Production Environment Test (update URL as needed)
+# POST https://your-production-domain.com/api/v1/webhook/n8n/signal
+# Content-Type: application/json
+# Authorization: Bearer your-api-key-here
+# 
+# {
+#   "ticker": "BBRI",
+#   "last_date": "2025-08-10",
+#   "last_close": 4920,
+#   "entry_gap_percent": 2.8,
+#   "stop": 4750,
+#   "target": 5150,
+#   "risk_reward": 1.76,
+#   "backtest_win_rate": 71.4,
+#   "total_trades": 189,
+#   "confluence_score": 7.6,
+#   "confluence_hits": "Bearish divergence (Price: 3500, RSI: 72) | Volume confirmation (Current: 89234567 > Average: 45678901 * 1.95) | Resistance break failure | Moving average crossover (EMA12 < EMA26) | Price below key support",
+#   "overall_sentiment": "bullish",
+#   "confidence_score": 78.9,
+#   "sentiment_score": 74.2,
+#   "analysis_summary": "Production environment test with banking sector bullish signal."
+# }
+
+###

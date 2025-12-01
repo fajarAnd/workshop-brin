@@ -1,0 +1,46 @@
+### Variables
+@baseUrl = http://localhost:8084/api
+@contentType = application/json
+
+
+### Get QR Code - JSON Response
+GET {{baseUrl}}/v1/qr/
+Content-Type: application/json
+
+###
+
+### Get Connection Status - JSON Response
+GET {{baseUrl}}/v1/qr/status
+Content-Type: application/json
+
+###
+
+### Get QR Page - HTML Response
+GET {{baseUrl}}/v1/qr/page
+Content-Type: text/html
+
+###
+
+### Test QR Code Generation (when not connected)
+GET {{baseUrl}}/v1/qr/
+Accept: application/json
+
+###
+
+### Test Connection Status (check if connected)
+GET {{baseUrl}}/v1/qr/status
+Accept: application/json
+
+###
+
+### View QR Page in Browser
+GET {{baseUrl}}/v1/qr/page
+Accept: text/html
+
+###
+
+### Get QR Code as PNG Image
+GET {{baseUrl}}/v1/qr/image
+Accept: image/png
+
+###
