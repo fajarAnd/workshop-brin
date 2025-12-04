@@ -1,0 +1,721 @@
+CHANGE MANAGEMENT PROCEDURES
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: CHG-PROC-001
+Version: 2.0
+Effective Date: 01 Januari 2025
+
+=============================================================================
+1. CHANGE MANAGEMENT OVERVIEW
+=============================================================================
+
+Purpose:
+Change Management memastikan bahwa perubahan pada IT infrastructure dilakukan dengan cara yang tercontrol, aman, dan meminimalkan dampak negatif terhadap layanan IT.
+
+Scope:
+Change Management berlaku untuk semua perubahan pada:
+- IT infrastructure (servers, network, storage)
+- Applications & databases
+- Security configurations
+- IT policies & procedures
+
+Goals:
+- Minimize service disruptions
+- Reduce risk of failed changes
+- Enable rapid rollback if needed
+- Document all changes for compliance & audit
+- Coordinate changes to avoid conflicts
+
+Change Management Process Owner: IT Change Manager
+Supporting Team: Change Advisory Board (CAB)
+
+=============================================================================
+2. CHANGE CLASSIFICATION & RISK LEVELS
+=============================================================================
+
+STANDARD CHANGE (Pre-Approved)
+
+Definition:
+- Low-risk, repetitive changes with well-documented procedures
+- Pre-approved by CAB, tidak perlu individual approval
+- Minimal atau no impact to services
+
+Examples:
+- Password reset
+- Add user to Active Directory group
+- Install approved software on workstation
+- Patch non-critical systems (monthly patch cycle)
+- Backup tape rotation
+
+Process:
+1. Submit change request via ServiceNow (auto-approved)
+2. Implement during standard maintenance window
+3. Document completion & results
+4. Close change ticket
+
+Approval: Pre-approved (no CAB review needed)
+Implementation: Any time (prefer maintenance windows)
+
+---
+
+NORMAL CHANGE
+
+Definition:
+- Moderate-risk changes that require CAB review & approval
+- May impact services but with manageable risk
+- Proper testing & rollback plan required
+
+Examples:
+- Server OS upgrades
+- Application version updates
+- Network configuration changes (VLANs, routing)
+- Firewall rule modifications
+- Database schema changes
+
+Process:
+1. Submit change request (minimum 7 days advance)
+2. CAB review & approval (weekly meeting)
+3. Testing in UAT/staging environment
+4. Implementation during maintenance window
+5. Validation & rollback if needed
+6. Post-implementation review
+7. Close change ticket
+
+Approval: CAB approval required
+Implementation: Scheduled maintenance window
+Lead Time: Minimum 7 days
+
+---
+
+MAJOR CHANGE
+
+Definition:
+- High-risk, complex changes with significant impact
+- May affect critical services or large user base
+- Requires extensive planning, testing, and approval
+
+Examples:
+- Data center migration
+- Core network infrastructure upgrade
+- Major application rollout (ERP, CRM)
+- Email system migration
+- Active Directory forest migration
+
+Process:
+1. Submit detailed change proposal (minimum 30 days advance)
+2. Risk assessment & mitigation planning
+3. CAB + Executive approval (IT Manager + CIO)
+4. Extensive testing (pilot group, UAT)
+5. Implementation plan with detailed steps
+6. Rollback plan & backout procedures
+7. Implementation (may span multiple days)
+8. Extensive validation & monitoring
+9. Post-implementation review & lessons learned
+10. Close change ticket
+
+Approval: CAB + Executive (IT Manager + CIO)
+Implementation: Dedicated change window (may require extended downtime)
+Lead Time: Minimum 30 days
+
+---
+
+EMERGENCY CHANGE
+
+Definition:
+- Urgent changes required to resolve critical incidents or security vulnerabilities
+- Cannot wait for standard approval process
+- Higher risk accepted due to urgency
+
+Examples:
+- Security patch for active exploit
+- Fix for P1 critical incident
+- Restore service after major outage
+- Block malicious traffic (security incident)
+
+Process:
+1. Submit emergency change request (via phone/email if needed)
+2. Emergency CAB approval (IT Manager + available CAB members, verbal approval OK)
+3. Implement immediately
+4. Document all steps taken
+5. Post-implementation review within 24 hours
+6. Retroactive CAB review at next regular meeting
+
+Approval: IT Manager + 1 CAB member minimum (can be verbal)
+Implementation: Immediately
+Documentation: Retroactively within 24 hours
+
+=============================================================================
+3. CHANGE ADVISORY BOARD (CAB)
+=============================================================================
+
+CAB Members:
+- IT Change Manager (Chair)
+- IT Infrastructure Lead
+- Application Development Lead
+- Security Team Representative
+- Network Team Representative
+- Database Administrator
+- Business Representatives (as needed, for major changes)
+
+CAB Meeting Schedule:
+- Regular Meeting: Every Wednesday, 14:00-15:00 WIB
+- Emergency CAB: As needed (virtual, can be via email/Teams)
+
+CAB Responsibilities:
+1. Review & approve/reject change requests
+2. Assess risk & impact of proposed changes
+3. Ensure proper testing & rollback plans exist
+4. Coordinate changes to avoid conflicts
+5. Monitor change success rate & failed changes
+6. Review post-implementation results
+
+CAB Meeting Agenda:
+1. Review failed changes from previous week (lessons learned)
+2. Review changes implemented last week (success/issues)
+3. Review change requests for next 2 weeks
+4. Approve/defer/reject new change requests
+5. Discuss upcoming major changes
+6. Review change metrics & trends
+
+=============================================================================
+4. CHANGE REQUEST PROCESS (NORMAL CHANGE)
+=============================================================================
+
+STEP 1: CHANGE REQUEST SUBMISSION
+
+Requester submits change request via ServiceNow Change Management module:
+
+Required Information:
+- Change Title: Brief description (e.g., "Upgrade SQL Server 2019 to 2022")
+- Change Type: Standard / Normal / Major / Emergency
+- Configuration Items (CIs) affected: Servers, applications, network devices
+- Detailed Description: What will be changed and how
+- Business Justification: Why this change is needed
+- Priority: Low / Medium / High / Critical
+- Planned Start Date/Time
+- Planned End Date/Time (duration)
+- Affected Services: List of IT services impacted
+- Impact Assessment:
+  * User impact: How many users affected, what functionality impacted
+  * Service downtime: Yes/No, duration if yes
+  * Risk level: Low / Medium / High
+- Implementation Plan: Step-by-step procedure
+- Testing Evidence: Proof that change was tested in non-prod environment
+- Rollback Plan: Step-by-step procedure to revert if change fails
+- Communication Plan: Who needs to be notified, when, and how
+
+Attachments:
+- Technical design documents (if applicable)
+- Test results
+- Vendor documentation
+- Approval emails (if pre-approval obtained)
+
+Submission Deadline:
+- Normal Change: 7 days before planned implementation
+- Major Change: 30 days before planned implementation
+- Emergency: ASAP (document after implementation if needed)
+
+---
+
+STEP 2: INITIAL REVIEW
+
+Change Manager reviews submission:
+- Completeness check (all required fields filled)
+- Classification check (is it really Normal vs Major vs Standard?)
+- Conflict check (any other changes scheduled same time?)
+- Risk assessment validation
+
+Actions:
+- Return to requester if incomplete
+- Re-classify if needed
+- Add to CAB agenda if ready for review
+
+---
+
+STEP 3: CAB REVIEW & APPROVAL
+
+CAB Meeting Review:
+- Requester presents change (5-10 minutes)
+- Q&A from CAB members
+- Discussion of risks & mitigation
+- Review of testing & rollback plan
+
+CAB Decision:
+1. APPROVED: Change can proceed as planned
+2. APPROVED WITH CONDITIONS: Change approved but with modifications
+   - Example: "Approved, but implement in 2 phases instead of 1"
+3. DEFERRED: More information needed or timing not right
+   - Example: "Defer to next month, need more testing evidence"
+4. REJECTED: Change not approved
+   - Example: "Risk too high, find alternative solution"
+
+Approval Criteria:
+- Proper business justification
+- Adequate testing completed
+- Solid rollback plan
+- Acceptable risk level
+- No conflicts with other changes
+- Appropriate maintenance window
+
+---
+
+STEP 4: IMPLEMENTATION PLANNING
+
+After Approval:
+1. Change status: APPROVED → SCHEDULED
+2. Change Owner finalizes implementation plan
+3. Communicates to stakeholders:
+   - Users (if user-facing changes)
+   - IT teams (implementation & support teams)
+   - Management (if high-impact)
+
+Communication Template:
+```
+Subject: Scheduled Maintenance - [System Name] - [Date Time]
+
+Dear [Users/Team],
+
+This is to inform you that scheduled maintenance will be performed on [System Name]:
+
+Date: [Date]
+Time: [Start Time] - [End Time] WIB
+Duration: [X hours]
+Impact: [Service will be unavailable / Reduced performance / No user impact]
+
+Reason: [Brief explanation of the change]
+
+What you need to do:
+- [Save your work before maintenance window]
+- [Logout from system before X time]
+- [No action needed]
+
+If you have questions or concerns, please contact IT Support.
+
+Thank you for your cooperation.
+
+IT Support Team
+```
+
+Notification Timeline:
+- Major change: 14 days, 7 days, 1 day before
+- Normal change: 7 days, 1 day before
+- Standard change: 1 day before (or no notification if no impact)
+
+---
+
+STEP 5: IMPLEMENTATION
+
+Pre-Implementation Checklist:
+- [ ] All approvals obtained
+- [ ] Team members notified & available
+- [ ] Backups completed & verified
+- [ ] Rollback plan reviewed & understood
+- [ ] Tools & access verified
+- [ ] Communication sent to users
+- [ ] Support team on standby
+
+During Implementation:
+1. Change Owner leads implementation
+2. Follow implementation plan step-by-step
+3. Document actual steps taken (may differ from plan)
+4. If issue encountered:
+   - Assess severity: Can we continue or must rollback?
+   - If rollback needed: Execute rollback plan immediately
+   - Notify Change Manager & stakeholders
+5. Capture screenshots/logs as evidence
+
+Implementation Team Roles:
+- Change Owner: Executes the change
+- Change Manager: Oversees, monitors, makes go/no-go decisions
+- Subject Matter Expert: Provides technical guidance
+- Support Team: Monitors for user-reported issues
+- Communication Lead: Updates users & stakeholders
+
+---
+
+STEP 6: VALIDATION & VERIFICATION
+
+Post-Implementation Checks:
+1. Functional Testing:
+   - Verify change objective achieved
+   - Test affected functionality
+   - Confirm no regression (existing functionality still works)
+
+2. Performance Testing:
+   - Check system performance metrics
+   - Verify no performance degradation
+
+3. User Acceptance:
+   - Sample users test (if user-facing)
+   - Confirm user experience acceptable
+
+4. Monitoring:
+   - Monitor system logs for errors
+   - Check monitoring dashboards for anomalies
+   - Alert teams on standby for 24-48 hours post-change
+
+Success Criteria:
+- Change objective achieved ✓
+- No unplanned outages ✓
+- No performance degradation ✓
+- No user complaints (or minimal & expected) ✓
+
+If Success:
+- Change status: IMPLEMENTED → SUCCESSFUL
+- Document results in change record
+- Proceed to closure
+
+If Issues Detected:
+- Assess severity
+- Minor issues: Document, create incident tickets, monitor
+- Major issues: Rollback immediately
+
+---
+
+STEP 7: ROLLBACK (IF NEEDED)
+
+Rollback Triggers:
+- Change objective not achieved
+- Critical functionality broken
+- Severe performance degradation
+- Unacceptable user impact
+- Security vulnerability introduced
+
+Rollback Decision:
+- Change Owner assesses situation
+- Recommends rollback to Change Manager
+- Change Manager makes final call
+
+Rollback Execution:
+1. Notify stakeholders (rollback in progress)
+2. Execute rollback plan step-by-step
+3. Verify system restored to pre-change state
+4. Validate functionality
+5. Monitor for stability
+6. Notify stakeholders (rollback complete, service restored)
+
+Post-Rollback:
+- Change status: ROLLED BACK / FAILED
+- Root cause analysis: Why did change fail?
+- Revise change plan
+- Re-submit change request (if still needed)
+
+---
+
+STEP 8: POST-IMPLEMENTATION REVIEW
+
+Mandatory for:
+- All Major changes
+- Failed/rolled-back changes
+- Changes with significant issues
+
+Post-Implementation Review (PIR) Meeting:
+- Attendees: Change Owner, CAB members, implementation team
+- Timing: Within 5 business days of implementation
+
+PIR Agenda:
+1. Review change objectives vs actual results
+2. What went well?
+3. What went wrong?
+4. Lessons learned
+5. Action items for improvement
+
+PIR Outputs:
+- PIR report (attached to change record)
+- Known errors documented (if applicable)
+- Process improvements identified
+- Update procedures/documentation
+
+---
+
+STEP 9: CHANGE CLOSURE
+
+Closure Checklist:
+- [ ] Change implemented successfully
+- [ ] Validation completed
+- [ ] No outstanding issues (or issues documented as incident tickets)
+- [ ] PIR completed (if required)
+- [ ] Documentation updated (runbooks, architecture diagrams, etc.)
+- [ ] Knowledge base updated (if lessons learned)
+- [ ] Communication sent (change complete, service restored)
+
+Change Owner updates change record:
+- Actual start/end time
+- Actual vs planned duration
+- Issues encountered & resolutions
+- Final status: SUCCESSFUL / FAILED / ROLLED BACK / CANCELLED
+
+Change Manager reviews & closes change ticket.
+
+=============================================================================
+5. MAINTENANCE WINDOWS
+=============================================================================
+
+Standard Maintenance Windows:
+
+Monthly Scheduled Maintenance:
+- Frequency: First Saturday of every month
+- Time: 22:00 Saturday - 06:00 Sunday (8 hours)
+- Scope: Non-critical system updates, patches, configuration changes
+- Notification: Email sent H-7 to all users
+- Services affected: Non-critical applications, file servers, print servers
+
+Quarterly Major Maintenance:
+- Frequency: Last Saturday of Q2 and Q4 (June & December)
+- Time: 22:00 Saturday - 12:00 Sunday (14 hours)
+- Scope: Major upgrades, infrastructure changes, data center work
+- Notification: Email sent H-14 and H-7 to all users
+- Services affected: May include critical systems (with extensive planning)
+
+Emergency Maintenance:
+- Frequency: As needed (unscheduled)
+- Time: ASAP (may be during business hours if critical)
+- Scope: Critical fixes, security patches, P1 incident resolution
+- Notification: Minimum 4 hours notice (if possible), or immediate if no choice
+- Services affected: Targeted (only affected systems)
+
+Blackout Windows (No Changes Allowed):
+- Year-end closing: 15 Desember - 5 Januari
+  - Finance & reporting critical period
+  - Only emergency changes allowed
+- Budget planning period: March (first 2 weeks)
+- Board meeting week: As announced
+- Major events: As announced
+
+=============================================================================
+6. ROLLBACK & BACKOUT PROCEDURES
+=============================================================================
+
+Rollback Plan Requirements:
+
+Every change request must include rollback plan with:
+1. Rollback trigger conditions (when to rollback)
+2. Rollback steps (detailed procedure)
+3. Estimated rollback duration
+4. Rollback testing evidence (test in non-prod)
+5. Data recovery plan (if data changes involved)
+
+Rollback Testing:
+- Test rollback in UAT/staging environment
+- Verify rollback time estimate
+- Document actual rollback steps
+- Attach test results to change request
+
+Common Rollback Scenarios:
+
+Application Upgrade:
+- Rollback: Restore previous application version from backup
+- Database: Restore database to pre-upgrade backup (if schema changed)
+- Duration: Typically 1-2 hours
+- Data loss: Accept data loss from time of upgrade to rollback (communicate to users)
+
+Configuration Change:
+- Rollback: Revert configuration to backup
+- Config backup: Automated backup before change
+- Duration: Minutes to 1 hour
+- Example: Network config, firewall rules, server settings
+
+Infrastructure Change:
+- Rollback: Restore infrastructure to previous state
+- May involve: VM snapshots, backup restores, manual reconfiguration
+- Duration: Hours (longer for complex changes)
+- Example: Server migrations, network topology changes
+
+Rollback Decision Timeline:
+- Monitor for issues: 1-4 hours post-change (depending on change complexity)
+- Decision point: Go/No-Go decision by Change Manager
+- If issues detected beyond decision point: Weigh rollback cost vs fix-forward
+
+=============================================================================
+7. CHANGE CALENDAR & COORDINATION
+=============================================================================
+
+Change Calendar:
+- Tool: ServiceNow Change Calendar (Gantt chart view)
+- Visibility: All IT staff, management, business stakeholders
+- Access: https://changecalendar.brin.go.id
+
+Change Calendar Shows:
+- All approved changes (color-coded by risk level)
+- Maintenance windows
+- Blackout periods
+- Conflicts (overlapping changes on same systems)
+
+Change Coordination:
+
+Before Scheduling Change:
+1. Check change calendar for conflicts
+2. Verify no blackout period
+3. Verify no other changes on same systems
+4. Coordinate with other change owners if related changes
+
+Conflict Resolution:
+- If conflict detected: Change Manager coordinates resolution
+- Options:
+  * Reschedule one change
+  * Combine related changes (if makes sense)
+  * Stagger changes (timing separation)
+  * Escalate to IT Manager if cannot resolve
+
+Change Freeze:
+- Definition: Period when no changes allowed (except emergency)
+- Reasons: Critical business period, major event, high-risk change in progress
+- Authority: IT Manager or CIO declares change freeze
+- Notification: Minimum 2 weeks notice (for planned freeze)
+
+=============================================================================
+8. CHANGE METRICS & REPORTING
+=============================================================================
+
+Key Performance Indicators (KPIs):
+
+1. Change Success Rate
+   - Formula: (Successful changes / Total changes) × 100%
+   - Target: >95%
+   - Actual (Dec 2024): 96.5%
+
+2. Emergency Change Rate
+   - Formula: (Emergency changes / Total changes) × 100%
+   - Target: <5% (low emergency rate = good planning)
+   - Actual (Dec 2024): 3.2%
+
+3. Failed Change Rate
+   - Formula: (Failed/rolled-back changes / Total changes) × 100%
+   - Target: <5%
+   - Actual (Dec 2024): 2.1%
+
+4. Unauthorized Changes
+   - Changes implemented without approval
+   - Target: 0
+   - Actual (Dec 2024): 0
+
+5. Change Lead Time
+   - Average time from submission to implementation
+   - Target: 14 days (Normal), 45 days (Major)
+   - Actual (Dec 2024): 12 days (Normal), 38 days (Major)
+
+Monthly Change Report:
+
+Distributed to: IT Management, CIO
+Contents:
+- Total changes by type (Standard, Normal, Major, Emergency)
+- Change success vs failed rate
+- Top 5 most frequent change types
+- Trends (increasing/decreasing change volume)
+- Failed changes deep dive (root causes)
+- Recommendations for improvement
+
+Quarterly Change Review:
+
+Attendees: CAB, IT Manager, CIO
+Agenda:
+- Review quarterly change metrics
+- Analyze trends
+- Identify process improvements
+- Update change procedures if needed
+- Recognize teams with high change success rate
+
+=============================================================================
+9. CHANGE MANAGEMENT TOOLS
+=============================================================================
+
+Primary Tool: ServiceNow Change Management Module
+
+Features:
+- Change request submission & approval workflow
+- Change calendar & conflict detection
+- CAB meeting scheduling & documentation
+- Change templates (pre-filled forms for common changes)
+- Integration with CMDB (Configuration Management Database)
+- Automated notifications & reminders
+- Metrics & reporting dashboards
+
+Access:
+- URL: https://servicenoew.brin.go.id/change
+- Login: BRIN AD credentials
+- Mobile app: ServiceNow mobile (iOS/Android)
+
+Change Templates (Quick Create):
+
+Pre-configured templates for common changes:
+- Server OS patch (monthly patching)
+- Firewall rule add/modify
+- User account provisioning (bulk)
+- Application deployment
+- Network configuration change
+- Database schema change
+
+Benefits of templates:
+- Faster submission (pre-filled fields)
+- Consistency (standardized procedures)
+- Reduced errors (required fields enforced)
+
+=============================================================================
+10. TRAINING & COMPLIANCE
+=============================================================================
+
+Change Management Training:
+
+Mandatory Training:
+- All IT staff: Change Management basics (2 hours, annual)
+- Change Owners: Advanced change management (4 hours, annual)
+- CAB members: CAB training (3 hours, annual)
+
+Training Topics:
+- Change management process overview
+- How to submit change request
+- Risk assessment & mitigation
+- Testing & rollback planning
+- Post-implementation review
+
+Certification:
+- Change Manager: ITIL Change Management certification (recommended)
+- IT staff: ITIL Foundation (recommended)
+
+Compliance & Audit:
+
+Audit Requirements:
+- All changes must be documented in ServiceNow
+- No changes without approval (except pre-approved Standard changes)
+- Retroactive documentation of emergency changes within 24 hours
+
+Audit Checks:
+- Random sampling of changes (quarterly)
+- Verify approval evidence exists
+- Verify rollback plan documented
+- Verify post-implementation review completed (for Major changes)
+
+Non-Compliance:
+- Unauthorized change: Verbal warning (first offense)
+- Repeat offense: Written warning, escalation to IT Manager
+- Serious violation (unauthorized change causing outage): Disciplinary action
+
+=============================================================================
+CONTACT & SUPPORT
+=============================================================================
+
+Change Management Team:
+- Change Manager: change.manager@brin.go.id
+- Phone: (021) 8012-3456 ext. 160
+
+Submit Change Request:
+- ServiceNow: https://servicenow.brin.go.id/change
+- Email: change.request@brin.go.id (for emergency, then log in ServiceNow)
+
+CAB Meeting:
+- Schedule: Every Wednesday 14:00-15:00 WIB
+- Location: IT Meeting Room / Microsoft Teams
+- Add to CAB agenda: Submit change request by Monday 17:00 WIB
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Change Manager
+Approved by: IT Manager
+Last Updated: 01 Januari 2025
+Next Review: 01 Juli 2025
+
+Change History:
+- v2.0 (01 Jan 2025): Major revision - added change templates, updated metrics
+- v1.5 (01 Jul 2024): Added rollback procedures, clarified emergency change process
+- v1.0 (01 Jan 2024): Initial version

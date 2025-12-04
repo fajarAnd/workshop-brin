@@ -1,0 +1,830 @@
+IT SERVICE CATALOG
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: SVC-CAT-001
+Version: 2.3
+Effective Date: 01 Januari 2025
+
+=============================================================================
+INTRODUCTION
+=============================================================================
+
+Selamat datang di IT Service Catalog BRIN!
+
+Service Catalog ini berisi daftar lengkap layanan IT yang tersedia untuk semua karyawan BRIN. Setiap layanan memiliki deskripsi, cara request, SLA (Service Level Agreement), dan kontak support.
+
+Cara Menggunakan Service Catalog:
+1. Temukan layanan yang Anda butuhkan di kategori terkait
+2. Baca deskripsi & requirements
+3. Submit request via portal atau contact yang tertera
+4. Track status request Anda via ServiceNow portal
+
+Service Request Portal: https://serviceportal.brin.go.id
+Help Desk: (021) 8012-3456 ext. 123 | itsupport@brin.go.id
+
+=============================================================================
+CATEGORY 1: ACCOUNT & ACCESS MANAGEMENT
+=============================================================================
+
+SERVICE: New User Account Creation
+-----------------------------------
+Deskripsi:
+Pembuatan akun Active Directory baru untuk karyawan baru, termasuk email, network access, dan aplikasi standar.
+
+What's Included:
+- Active Directory account
+- Email (Office 365)
+- Network access (WiFi & VPN)
+- Standard applications (Office, Teams, OneDrive)
+- Access to shared drives (department folder)
+
+Prerequisites:
+- HR onboarding completed
+- Employee ID assigned
+- Manager approval (automatic dari HR system)
+
+How to Request:
+- Automatic: HR system triggers account creation saat onboarding
+- Manual: Submit request via https://serviceportal.brin.go.id/new-account
+
+SLA:
+- Provisioning: 1 business day dari HR approval
+- Priority: Standard
+
+Cost: No charge (included in IT budget)
+
+---
+
+SERVICE: Password Reset
+-----------------------
+Deskripsi:
+Reset password untuk akun Active Directory / Email / VPN.
+
+Self-Service Option:
+- URL: https://passwordreset.brin.go.id
+- Requirements: Verified email/phone on file
+- Availability: 24/7
+- Duration: 5-10 minutes
+
+IT Support Assistance:
+- Phone: (021) 8012-3456 ext. 123
+- WhatsApp: +62 812-3456-7890
+- Identity verification required (NIK, tanggal lahir, manager name)
+- Availability: Mon-Fri 08:00-17:00 WIB
+
+SLA:
+- Self-service: Immediate
+- IT Support: 15 minutes response
+
+Cost: No charge
+
+---
+
+SERVICE: Account Unlock
+-----------------------
+Deskripsi:
+Unlock akun yang terkunci karena salah password berulang kali.
+
+Auto-Unlock:
+- Account auto-unlocked after 30 minutes
+- No action required
+
+Manual Unlock:
+- Contact IT Support: (021) 8012-3456 ext. 123
+- Identity verification required
+- Immediate unlock
+
+SLA: 15 minutes response
+
+Cost: No charge
+
+---
+
+SERVICE: Access Request (Application/Folder)
+--------------------------------------------
+Deskripsi:
+Request akses ke aplikasi, shared folder, atau resources yang memerlukan permission khusus.
+
+Examples:
+- Access to finance folder
+- Access to SIMBRIS (research system)
+- Access to Tableau server
+- Admin access to specific application
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/access-request
+- Include: System name, access level needed, business justification
+
+Approval Workflow:
+1. Manager approval (via email)
+2. Resource owner approval (application/folder owner)
+3. IT provisioning
+
+SLA:
+- Standard access: 2 business days
+- Privileged access: 5 business days (requires security review)
+
+Cost: No charge
+
+=============================================================================
+CATEGORY 2: HARDWARE & EQUIPMENT
+=============================================================================
+
+SERVICE: Laptop / Desktop Request
+----------------------------------
+Deskripsi:
+Request laptop atau desktop baru untuk karyawan.
+
+Eligibility:
+- New employees (automatic dari HR)
+- Replacement for damaged/old equipment (>4 years old)
+- Additional device (requires manager + IT Manager approval)
+
+Available Options:
+- Standard Business Laptop: Intel i5, 16GB RAM, 512GB SSD
+- High-Performance Laptop: Intel i7, 32GB RAM, 1TB SSD
+- Standard Desktop: Intel i5, 16GB RAM, 512GB SSD
+- Workstation Desktop: Intel i7/i9, 32GB RAM, dedicated GPU
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/hardware-request
+- Include: Business justification, preferred specs
+
+Approval Workflow:
+1. Department Head approval
+2. IT Manager approval
+3. Finance budget verification
+4. Procurement
+
+SLA:
+- Standard laptop/desktop: 3-4 weeks dari approval
+- High-performance: 6-8 weeks (special order)
+
+Cost:
+- Charged to department budget
+- Standard laptop: ~Rp 18 juta
+- High-performance: ~Rp 28 juta
+
+---
+
+SERVICE: Mobile Device (Smartphone/Tablet)
+-------------------------------------------
+Deskripsi:
+Corporate smartphone atau tablet untuk mobile workers.
+
+Eligibility:
+- Managers & above (automatic)
+- Field researchers (with manager approval)
+- Roles requiring mobile work
+
+Standard Models:
+- iPhone 14 atau Samsung Galaxy S23
+- iPad atau Samsung Galaxy Tab
+
+Included:
+- Device
+- Mobile data plan (20GB/month standard, 50GB for heavy users)
+- MDM enrollment (Intune)
+- Corporate email & apps
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/mobile-device
+
+SLA: 2-3 weeks from approval
+
+Cost: Rp 12-15 juta (device) + Rp 200k/month (data plan)
+
+---
+
+SERVICE: Printer / Scanner Request
+-----------------------------------
+Deskripsi:
+Request printer atau scanner untuk departmen/project.
+
+Options:
+- Personal laser printer (not recommended, prefer shared)
+- Department MFP (Multi-Function Printer): Print, scan, copy
+- High-volume printer (>5000 pages/month)
+- Specialized scanner (for archival/digitization projects)
+
+Recommendation:
+- Use shared department printers (cost-effective, eco-friendly)
+- Personal printers only for special cases (manager approval required)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/printer-request
+- Include: Expected monthly volume, location, business justification
+
+SLA: 2-3 weeks from approval
+
+Cost: Rp 3-15 juta (device) + maintenance contract
+
+---
+
+SERVICE: Monitor / Accessories
+------------------------------
+Deskripsi:
+Additional monitor, keyboard, mouse, docking station, atau accessories lainnya.
+
+Standard Accessories (Free):
+- USB keyboard & mouse (replacement for damaged)
+- Laptop power adapter (replacement)
+- Network cable
+
+Chargeable Accessories:
+- Additional monitor (24" Full HD: Rp 2 juta, 27" 4K: Rp 5 juta)
+- Ergonomic keyboard/mouse
+- Docking station (Rp 3 juta)
+- Webcam (Rp 1 juta)
+- Headset (Rp 500k)
+
+How to Request:
+- Free items: Walk-in to IT Support, same-day pickup
+- Chargeable items: Portal request with manager approval
+
+SLA:
+- Free items: Same day
+- Chargeable items: 1-2 weeks
+
+=============================================================================
+CATEGORY 3: SOFTWARE & APPLICATIONS
+=============================================================================
+
+SERVICE: Standard Software Installation
+---------------------------------------
+Deskripsi:
+Instalasi software yang sudah licensed dan approved oleh IT.
+
+Pre-Approved Software (Self-Service):
+- Microsoft Office 365
+- Adobe Acrobat Reader
+- 7-Zip
+- VLC Media Player
+- Google Chrome, Mozilla Firefox
+- Zoom, Microsoft Teams
+- VPN Client (GlobalProtect)
+
+Installation Methods:
+1. Company Portal (Windows): Start → Company Portal → Available Apps
+2. Self-Service Portal: https://software.brin.go.id
+3. Contact IT Support (if not listed)
+
+SLA: Self-service (immediate), IT Support (4 hours)
+
+Cost: No charge (covered by licenses)
+
+---
+
+SERVICE: Licensed Software Request
+-----------------------------------
+Deskripsi:
+Request software yang requires additional license purchase.
+
+Examples:
+- Adobe Creative Cloud
+- Autodesk AutoCAD
+- MATLAB
+- Tableau Desktop
+- Specialized research software
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/software-license
+- Include: Software name, version, business justification, cost center
+
+Approval Workflow:
+1. Manager approval
+2. IT review (check existing licenses, alternatives)
+3. Finance budget approval
+4. Procurement & installation
+
+SLA: 2-4 weeks from approval
+
+Cost: Varies (annual license: Rp 2 juta - Rp 30 juta per user)
+
+---
+
+SERVICE: Software Training
+---------------------------
+Deskripsi:
+Training untuk menggunakan aplikasi IT (Office 365, Teams, specialized software).
+
+Available Training:
+- Microsoft Office 365 (Outlook, Word, Excel, PowerPoint)
+- Microsoft Teams (chat, meetings, collaboration)
+- OneDrive & SharePoint (file management)
+- Power BI / Tableau (data visualization)
+- Custom training (by request)
+
+Training Format:
+- Self-paced: Online courses via LinkedIn Learning (https://learning.brin.go.id)
+- Instructor-led: Monthly group sessions (check schedule)
+- One-on-one: By request (for specialized software)
+
+How to Request:
+- Group training: Register via https://training.brin.go.id
+- One-on-one: Submit request with justification
+
+SLA:
+- Self-paced: Immediate access
+- Group training: Next available session (monthly)
+- One-on-one: 2 weeks scheduling
+
+Cost: No charge (covered by training budget)
+
+=============================================================================
+CATEGORY 4: NETWORK & CONNECTIVITY
+=============================================================================
+
+SERVICE: WiFi Access
+--------------------
+Deskripsi:
+Access ke BRIN corporate WiFi network.
+
+SSID: BRIN-Corporate
+
+Access:
+- Automatic untuk devices enrolled di MDM
+- Manual: Connect → Login dengan AD credentials
+
+Requirements:
+- Active BRIN account
+- Device meets security requirements (antivirus, OS updated)
+
+Troubleshooting:
+- Cannot connect: Contact IT Support
+- Slow performance: Check signal strength, try different AP
+
+Guest WiFi:
+- SSID: BRIN-Guest
+- Access: Request guest account dari IT Support (for external visitors)
+- Duration: Max 8 hours per session, max 7 days validity
+
+SLA: Immediate (self-service), IT Support 30 minutes
+
+Cost: No charge
+
+---
+
+SERVICE: VPN Access
+-------------------
+Deskripsi:
+Remote access ke BRIN network dari luar kantor.
+
+Included:
+- VPN client (GlobalProtect)
+- Access to internal resources (file shares, applications, intranet)
+- Secure encrypted connection
+
+Prerequisites:
+- Active BRIN account
+- MFA enabled (mandatory)
+- VPN access approval (automatic untuk employees, by request for contractors)
+
+Setup:
+1. Download VPN client: https://vpn.brin.go.id/download
+2. Install & configure (auto-config with BRIN email)
+3. Connect: Enter credentials + MFA
+
+Usage:
+- Capacity: 1000 concurrent users
+- Session timeout: 12 hours (reconnect required)
+- Allowed: All employees working remotely
+
+Troubleshooting:
+- Connection fails: Check internet, check credentials, contact IT Support
+- Slow performance: Check bandwidth, disconnect when not needed
+
+SLA: Setup 1 hour, Support 2 hours
+
+Cost: No charge
+
+---
+
+SERVICE: Network Port Activation
+---------------------------------
+Deskripsi:
+Aktivasi network port (Ethernet) di ruangan untuk koneksi kabel.
+
+When Needed:
+- New office setup
+- Desk relocation
+- Additional device (printer, IP phone, etc.)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/network-port
+- Include: Building, floor, room number, port label (if known)
+
+SLA:
+- Existing port activation: 4 hours
+- New port installation: 3-5 business days (requires cabling)
+
+Cost:
+- Activation: No charge
+- New port installation: Rp 500k - Rp 2 juta (depends on distance)
+
+=============================================================================
+CATEGORY 5: EMAIL & COLLABORATION
+=============================================================================
+
+SERVICE: Shared Mailbox
+-----------------------
+Deskripsi:
+Email mailbox bersama untuk team atau department (e.g., info@brin.go.id, support@brin.go.id).
+
+Use Cases:
+- Department email (e.g., hr@brin.go.id, finance@brin.go.id)
+- Project email
+- Support/helpdesk email
+- Alias email untuk role/position
+
+Included:
+- Shared mailbox (50GB)
+- Multiple users dapat access
+- Shared calendar & contacts
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/shared-mailbox
+- Include: Desired email address, purpose, list of users who need access
+
+Approval: Manager approval required
+
+SLA: 2 business days
+
+Cost: No charge (up to 50GB, Rp 100k/month for additional 50GB)
+
+---
+
+SERVICE: Distribution List / Group Email
+-----------------------------------------
+Deskripsi:
+Email group untuk send email ke multiple recipients sekaligus.
+
+Examples:
+- all-staff@brin.go.id
+- research-team@brin.go.id
+- project-alpha@brin.go.id
+
+How it Works:
+- Email sent to group address → delivered to all members
+- Members dapat dynamic (auto-add new employees) atau static (manual management)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/distribution-list
+- Include: Group name, members, who can send to group (anyone vs members only)
+
+SLA: 1 business day
+
+Cost: No charge
+
+---
+
+SERVICE: Microsoft Teams - New Team/Channel
+--------------------------------------------
+Deskripsi:
+Create new Team atau Channel untuk collaboration.
+
+Self-Service:
+- Any user dapat create Team (no approval needed)
+- Teams app → Create team → Follow wizard
+
+IT Support:
+- Contact IT jika perlu advanced configuration (e.g., external access, custom permissions)
+
+Best Practices:
+- Use existing Teams jika possible (avoid too many Teams)
+- Use Channels untuk organize topics within Team
+- Set appropriate privacy (Public vs Private)
+
+SLA: Self-service (immediate)
+
+Cost: No charge
+
+---
+
+SERVICE: File Share / Network Drive
+------------------------------------
+Deskripsi:
+Shared folder di network untuk team collaboration.
+
+Standard Shares:
+- Department shares (automatic untuk departments)
+- Project shares (by request)
+- User home drives (automatic, private)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/file-share
+- Include: Share name, purpose, initial members, quota needed
+
+Quota:
+- Department: 500 GB default (expandable)
+- Project: 100 GB default (expandable)
+- User home: 50 GB per user
+
+Access:
+- Windows: Mapped drive (automatic via GPO)
+- macOS: Connect to server smb://files.brin.go.id
+- Web: https://files.brin.go.id
+
+SLA: 2 business days
+
+Cost:
+- Default quota: No charge
+- Additional storage: Rp 100k per 100GB per month
+
+=============================================================================
+CATEGORY 6: SUPPORT & MAINTENANCE
+=============================================================================
+
+SERVICE: IT Help Desk Support
+------------------------------
+Deskripsi:
+General IT support untuk troubleshooting, questions, dan assistance.
+
+Contact Methods:
+- Phone: (021) 8012-3456 ext. 123
+- WhatsApp: +62 812-3456-7890
+- Email: itsupport@brin.go.id
+- Portal: https://helpdesk.brin.go.id
+- Walk-in: Gedung A Lantai 1, IT Support Room
+
+Hours:
+- Regular: Mon-Fri 08:00-17:00 WIB
+- After hours: Emergency only (ext. 999)
+
+What We Support:
+- Hardware issues (laptop, desktop, printer, etc.)
+- Software issues (installation, troubleshooting, training)
+- Account issues (password, access, email)
+- Network issues (WiFi, VPN, connectivity)
+- General IT questions
+
+SLA:
+- Response: 15 min (P1), 1 hour (P2), 4 hours (P3)
+- Resolution: Varies by issue complexity
+
+Cost: No charge (covered by IT budget)
+
+---
+
+SERVICE: Equipment Repair
+-------------------------
+Deskripsi:
+Repair untuk hardware yang rusak atau malfunction.
+
+Covered:
+- Laptop / desktop repair
+- Printer repair
+- Monitor, keyboard, mouse replacement
+- Network equipment
+
+Process:
+1. Submit ticket via portal atau call IT Support
+2. Diagnosis (onsite atau bring to IT room)
+3. Warranty check:
+   - Under warranty: Free repair via vendor
+   - Out of warranty: Repair cost estimate → approval → repair
+4. Repair atau replacement
+5. Return to user
+
+SLA:
+- Diagnosis: 4 hours
+- Repair: 3-5 business days (under warranty), 1-2 weeks (out of warranty)
+
+Cost:
+- Under warranty: No charge
+- Out of warranty: Varies (Rp 500k - Rp 5 juta depending on repair)
+
+Alternative:
+- If repair cost >50% of new device → recommend replacement
+
+---
+
+SERVICE: Data Backup & Recovery
+-------------------------------
+Deskripsi:
+Backup data dan recovery untuk lost/deleted files.
+
+Automatic Backups:
+- OneDrive for Business: Real-time sync, 30 days version history
+- Email: Retention policy 7 years
+- Shared drives: Daily backup, 30 days retention
+- Servers: Daily backup, 90 days retention
+
+Data Recovery Request:
+- Portal: https://serviceportal.brin.go.id/data-recovery
+- Include: File name, location, approximate deletion date
+
+SLA:
+- Recent files (<7 days): 4 hours
+- Older files (7-30 days): 1 business day
+- Archive restore (>30 days): 3 business days
+
+Cost:
+- Standard recovery: No charge
+- Large data recovery (>100GB): Rp 500k per 100GB
+
+Prevention:
+- Use OneDrive for important files (auto-backup)
+- Don't store critical data only on local drive (laptop can fail/be stolen)
+
+=============================================================================
+CATEGORY 7: SECURITY SERVICES
+=============================================================================
+
+SERVICE: Security Incident Reporting
+------------------------------------
+Deskripsi:
+Report suspected security incidents (phishing, malware, data breach, etc.).
+
+Examples:
+- Suspicious email (phishing)
+- Malware infection
+- Lost/stolen device
+- Unauthorized access
+- Data leak
+
+How to Report:
+- Email: security@brin.go.id
+- Phone: (021) 8012-3456 ext. 911 (Security Hotline, 24/7)
+- Portal: https://security.brin.go.id/report
+
+Response:
+- Acknowledgment: Immediate (within 15 minutes)
+- Investigation: Started within 1 hour
+- Containment: Immediate (if active threat)
+- Resolution: Varies by incident severity
+
+Critical: Report immediately, don't delay!
+
+Cost: No charge
+
+---
+
+SERVICE: Security Awareness Training
+------------------------------------
+Deskripsi:
+Training untuk meningkatkan security awareness karyawan.
+
+Mandatory Training:
+- New employee: Security awareness basics (1 hour)
+- Annual: Security refresher (30 minutes)
+- Phishing simulation: Monthly (automated)
+
+Optional Training:
+- Advanced security topics (for IT staff)
+- Data privacy & compliance (for managers)
+- Secure coding (for developers)
+
+Format:
+- E-learning: https://training.brin.go.id
+- Instructor-led: Quarterly sessions
+- Custom: By request for departments
+
+SLA: Self-paced (immediate access)
+
+Cost: No charge
+
+=============================================================================
+CATEGORY 8: SPECIALIZED SERVICES
+=============================================================================
+
+SERVICE: Virtual Server / Cloud Resources
+------------------------------------------
+Deskripsi:
+Request virtual server atau cloud resources untuk applications, testing, development.
+
+Options:
+- On-premise VM (VMware vSphere)
+- Cloud VM (AWS EC2, Azure VM)
+- Database (PostgreSQL, MySQL, SQL Server)
+- Storage (file storage, object storage)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/cloud-resources
+- Include: Resource specs, purpose, estimated duration, cost center
+
+Approval:
+- Development/Test: Manager approval
+- Production: IT Manager + CIO approval
+
+SLA: 5-10 business days (setup & provisioning)
+
+Cost:
+- Small VM: Rp 500k/month
+- Medium VM: Rp 2 juta/month
+- Large VM: Rp 5 juta/month
+- (Billed to department budget)
+
+---
+
+SERVICE: Database Services
+---------------------------
+Deskripsi:
+Managed database untuk applications.
+
+Available:
+- PostgreSQL
+- MySQL
+- Microsoft SQL Server
+- MongoDB (NoSQL)
+
+Included:
+- Database setup & configuration
+- Daily backups
+- Performance monitoring
+- Security hardening
+- High availability (for production)
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/database-service
+- Include: Database type, size estimate, environment (dev/test/prod)
+
+SLA: 5 business days (provisioning)
+
+Cost: Varies by size & environment (Rp 1-10 juta/month)
+
+---
+
+SERVICE: Website / Web Application Hosting
+-------------------------------------------
+Deskripsi:
+Hosting untuk website atau web application BRIN.
+
+Options:
+- Static website (brochure, landing page)
+- Dynamic website (CMS: WordPress, Drupal)
+- Web application (custom development)
+
+Included:
+- Web server (Apache/Nginx)
+- SSL certificate (HTTPS)
+- Subdomain (e.g., project.brin.go.id)
+- Backup & monitoring
+
+How to Request:
+- Portal: https://serviceportal.brin.go.id/web-hosting
+- Include: Purpose, expected traffic, technical requirements
+
+SLA: 1-2 weeks (setup)
+
+Cost:
+- Small website: Rp 500k/month
+- Medium website: Rp 2 juta/month
+- Large web app: Rp 5-10 juta/month
+
+=============================================================================
+CONTACT INFORMATION
+=============================================================================
+
+IT Service Desk:
+- Phone: (021) 8012-3456 ext. 123
+- WhatsApp: +62 812-3456-7890
+- Email: itsupport@brin.go.id
+- Portal: https://serviceportal.brin.go.id
+- Walk-in: Gedung A Lantai 1, IT Support Room
+
+Hours:
+- Regular: Mon-Fri 08:00-17:00 WIB
+- Emergency: 24/7 (ext. 999)
+
+IT Security:
+- Email: security@brin.go.id
+- Hotline: (021) 8012-3456 ext. 911 (24/7)
+
+IT Management:
+- IT Manager: it.manager@brin.go.id
+- CIO: cio@brin.go.id
+
+=============================================================================
+FEEDBACK & CONTINUOUS IMPROVEMENT
+=============================================================================
+
+We Value Your Feedback!
+
+Setelah request Anda completed, Anda akan menerima survey (NPS score):
+- How satisfied are you with the service? (1-10)
+- What can we improve?
+
+Your feedback helps us improve IT services untuk semua.
+
+Suggestions:
+- Jika Anda punya ide untuk new service atau improvement, email ke: it.feedback@brin.go.id
+
+Service Catalog Updates:
+- Reviewed & updated quarterly
+- New services added based on business needs & feedback
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Service Management Team
+Approved by: IT Manager
+Last Updated: 01 Januari 2025
+Next Review: 01 April 2025
+
+Change History:
+- v2.3 (01 Jan 2025): Added cloud resources & database services
+- v2.2 (01 Oct 2024): Updated pricing & SLAs
+- v2.1 (01 Jul 2024): Added mobile device service
+- v2.0 (01 Apr 2024): Major revision - reorganized categories
+- v1.0 (01 Jan 2024): Initial version

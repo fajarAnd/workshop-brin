@@ -1,0 +1,727 @@
+USER MANUAL - MICROSOFT 365 EMAIL & COLLABORATION
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: UM-O365-001
+Version: 2.2
+Effective Date: 01 Desember 2024
+Target Audience: All BRIN Employees
+
+=============================================================================
+1. GETTING STARTED WITH BRIN EMAIL
+=============================================================================
+
+Akses Email BRIN:
+
+Email Address Format:
+- Nama.Surname@brin.go.id (e.g., Budi.Santoso@brin.go.id)
+- Alias: FirstName.LastName@brin.go.id atau NamaDepan.NamaBelakang@brin.go.id
+
+Web Access (Outlook Web App):
+- URL: https://outlook.office.com
+- Atau: https://mail.brin.go.id (redirect ke Office 365)
+- Login: Email BRIN Anda + password Active Directory
+- MFA: Approve dengan Microsoft Authenticator app
+
+Desktop Application:
+- Outlook 2021/365 (included dalam Microsoft 365 license)
+- Installation: Via company portal atau self-service
+- Configuration: Auto-configure dengan email address (autodiscover)
+
+Mobile Access:
+- App: Microsoft Outlook (iOS/Android)
+- Download: App Store atau Google Play
+- Setup: Add account → masukkan email BRIN → authenticate
+
+Email Capacity & Limits:
+- Mailbox size: 50 GB per user (100 GB untuk executives)
+- Max email size: 25 MB (attachment included)
+- Max recipients per email: 500
+- Archive mailbox: 100 GB (auto-archive emails older than 2 years)
+
+=============================================================================
+2. OUTLOOK WEB APP (OWA) - BASIC FUNCTIONS
+=============================================================================
+
+Compose & Send Email:
+
+Step 1: Click "New message" button (top-left)
+Step 2: Fill in:
+  - To: Recipient email addresses (multiple separated by semicolon or Enter)
+  - Cc: Carbon copy (optional)
+  - Bcc: Blind carbon copy (recipients tidak saling visible)
+  - Subject: Email subject (concise & descriptive)
+  - Body: Email message (formatting toolbar available)
+
+Step 3: Formatting Options:
+  - Bold, Italic, Underline
+  - Bullet points & numbering
+  - Font type & size
+  - Text color & highlighting
+  - Insert link, table, image
+
+Step 4: Attach Files:
+  - Click "Attach" icon
+  - Choose file from computer OR OneDrive
+  - Max 25 MB total attachment size
+  - Large files: Share via OneDrive link instead
+
+Step 5: Click "Send"
+
+Pro Tips:
+- Use "Schedule send" untuk delayed sending (handy untuk email luar jam kerja)
+- Use "Delay delivery" jika ingin email dikirim di waktu tertentu
+- Draft auto-saved setiap beberapa detik
+
+---
+
+Reading & Managing Email:
+
+Inbox Organization:
+- Focused Inbox: Prioritized emails (algorithmically determined)
+- Other Inbox: Less important emails
+- Toggle: Switch between Focused/Other with tabs
+
+Actions on Email:
+- Reply: Reply hanya ke sender
+- Reply All: Reply ke semua recipients (Be careful! Avoid "reply-all storms")
+- Forward: Forward email ke orang lain
+- Delete: Move to Deleted Items (recoverable for 30 days)
+- Archive: Move to Archive folder (keep inbox clean)
+- Flag: Mark email for follow-up
+- Categorize: Color-code emails (create custom categories)
+
+Search Email:
+- Search box: Top of page
+- Search scope: Current folder (default) atau All mailboxes
+- Search filters: From, Subject, Has attachments, Date range
+- Advanced search: Click search box → More filters
+- Save search: For frequently used searches
+
+---
+
+Folders & Organization:
+
+Default Folders:
+- Inbox: Incoming emails
+- Drafts: Saved drafts
+- Sent Items: Sent emails
+- Deleted Items: Trash (auto-deleted after 30 days)
+- Archive: Long-term storage
+- Junk Email: Spam (auto-filtered)
+- Clutter: Low-priority emails (deprecated, use Focused Inbox instead)
+
+Create Custom Folders:
+1. Right-click "Folders" → "Create new folder"
+2. Name the folder (e.g., "Projects", "Vendor Communications")
+3. Drag & drop emails to organize
+
+Inbox Rules (Automated Organization):
+1. Click Settings (gear icon) → View all Outlook settings
+2. Mail → Rules
+3. Add new rule:
+   - Condition: If email from specific sender, subject contains keywords, etc.
+   - Action: Move to folder, categorize, forward, delete, etc.
+4. Example: "All emails from boss@brin.go.id → move to 'Important' folder + flag"
+
+=============================================================================
+3. CALENDAR - SCHEDULING & MEETINGS
+=============================================================================
+
+Create Appointment/Event:
+
+Step 1: Go to Calendar (icon on left sidebar)
+Step 2: Click "New event" button
+Step 3: Fill in:
+  - Title: Event name
+  - Start/End: Date & time (or toggle "All day")
+  - Location: Meeting room, building, or "Microsoft Teams Meeting"
+  - Description: Agenda, notes, dial-in info
+  - Attendees: Invite people (optional untuk appointments, required untuk meetings)
+
+Step 4: Options:
+  - Show as: Free, Busy, Tentative, Out of Office
+  - Reminder: Notification before event (15 min, 30 min, 1 hour, etc.)
+  - Recurrence: Repeat daily/weekly/monthly (for recurring meetings)
+  - Sensitivity: Normal, Private, Personal, Confidential
+
+Step 5: Click "Save" (appointment) atau "Send" (meeting invitation)
+
+---
+
+Schedule Meeting with Others:
+
+Step 1: New event → Add attendees (search by name or email)
+Step 2: Check Scheduling Assistant:
+  - Click "Scheduling Assistant" tab
+  - Shows attendees' free/busy status
+  - Suggests best meeting time (when all/most attendees free)
+Step 3: Reserve meeting room:
+  - Add room resource (e.g., "Meeting Room A-301")
+  - System auto-checks room availability
+  - Room auto-accepted if available
+Step 4: Add Microsoft Teams Meeting:
+  - Toggle "Teams meeting" switch
+  - Automatic Teams link generated & added to invite
+Step 5: Click "Send" to invite attendees
+
+Attendee Actions:
+- Accept: Attending, added to calendar
+- Tentative: Maybe attending
+- Decline: Not attending
+- Propose new time: Suggest alternate time (organizer can accept/reject)
+
+---
+
+Meeting Room Booking:
+
+Available Meeting Rooms (BRIN Jakarta):
+- Meeting Room A-301 (Capacity: 10 people, Projector, Whiteboard)
+- Meeting Room A-401 (Capacity: 20 people, Video Conference, Projector)
+- Meeting Room B-201 (Capacity: 6 people, TV screen)
+- Conference Hall (Capacity: 100 people, AV system, catering available)
+
+How to Book:
+1. Create meeting invitation
+2. Add room as "Room" (not attendee): Search "Meeting Room A-301"
+3. If room free, auto-accepted; if busy, declined
+4. Alternative: Use "Scheduling Assistant" to find available room
+
+Room Etiquette:
+- Cancel booking if meeting cancelled (free up room for others)
+- End meeting on time (respect next booking)
+- Clean up room after use
+- Report issues (AV not working, room dirty) to Facilities via ext. 190
+
+---
+
+Calendar Views:
+
+View Options:
+- Day: Single day view (hourly grid)
+- Work week: Monday-Friday (default)
+- Week: Monday-Sunday (include weekends)
+- Month: Calendar month view
+- Agenda: List view of upcoming events
+
+Calendar Sharing:
+1. Settings → Calendar → Shared calendars
+2. Share your calendar:
+   - Choose person/group to share with
+   - Permission level:
+     * Can view when I'm busy: See free/busy only
+     * Can view titles and locations: See event names
+     * Can view all details: Full event details
+     * Can edit: Modify events
+     * Delegate: Full control + can send meetings on your behalf
+3. View someone else's shared calendar:
+   - If shared with you, appears in "Shared calendars" section
+   - Or: Add calendar → Search person's name → Add
+
+=============================================================================
+4. CONTACTS - ADDRESS BOOK
+=============================================================================
+
+Global Address List (GAL):
+- Contains all BRIN employees automatically
+- Search: Start typing name or email in To/Cc field
+- View: Go to People icon → All contacts → Directory
+
+Personal Contacts:
+- Add external contacts (vendors, partners, etc.)
+- Create contact:
+  1. Go to People icon
+  2. Click "New contact"
+  3. Fill in: Name, Email, Phone, Company, Notes
+  4. Save
+
+Contact Groups (Distribution Lists):
+- Create group for frequent email recipients
+- How to create:
+  1. Go to People → Contact lists → New contact list
+  2. Name the list (e.g., "Project Team Alpha")
+  3. Add members (internal or external)
+  4. Save
+- Usage: Type list name in To field → expands to all members
+
+=============================================================================
+5. ONEDRIVE FOR BUSINESS - FILE STORAGE & SHARING
+=============================================================================
+
+OneDrive Basics:
+
+Storage Capacity: 1 TB per user
+
+Access OneDrive:
+- Web: https://onedrive.com (auto-redirects to BRIN tenant)
+- Desktop: OneDrive sync client (pre-installed on BRIN laptops)
+- Mobile: OneDrive app (iOS/Android)
+
+Upload Files:
+- Web: Click "Upload" → Select files or folders
+- Desktop sync: Copy files to OneDrive folder (auto-syncs to cloud)
+  - Default location: C:\Users\[username]\OneDrive - BRIN
+
+Sync Client Setup (if not installed):
+1. Download from https://www.microsoft.com/en-us/microsoft-365/onedrive/download
+2. Install and sign in with BRIN email
+3. Choose folders to sync (or sync all)
+4. Files sync automatically (two-way sync)
+
+---
+
+Sharing Files & Folders:
+
+Share a File:
+1. Right-click file → Share
+2. Options:
+   - Specific people: Enter email addresses (internal or external)
+   - Anyone with the link: Public link (use cautiously!)
+   - People in BRIN: Anyone in organization
+3. Permission:
+   - Can view: Read-only
+   - Can edit: Modify & download
+4. Set expiration date (optional)
+5. Add message (optional)
+6. Click "Send" (email invitation) or "Copy link" (share manually)
+
+Share a Folder:
+- Same process as file
+- Shared folder appears in recipient's "Shared with me" section
+- Permissions apply to all files in folder
+
+Revoke Access:
+1. Right-click file/folder → Manage access
+2. See list of people with access
+3. Click "X" next to person to remove access
+
+---
+
+Version History & Recovery:
+
+Version History:
+- OneDrive auto-saves versions of files
+- Retention: Keep all versions for 30 days (or until storage quota exceeded)
+- Access: Right-click file → Version history
+- Restore: Select previous version → Restore
+
+Recover Deleted Files:
+- Deleted files go to Recycle Bin
+- Retention: 30 days in Recycle Bin
+- Recover: Go to Recycle Bin → Select file → Restore
+- Permanently delete: Empty Recycle Bin (cannot undo!)
+
+Ransomware Recovery:
+- If files encrypted by ransomware, use "Restore your OneDrive"
+- Settings → Restore your OneDrive → Select date before infection
+- Restores entire OneDrive to previous state
+
+=============================================================================
+6. MICROSOFT TEAMS - COLLABORATION & CHAT
+=============================================================================
+
+Teams Overview:
+
+Teams vs Channels vs Chats:
+- Team: Group of people working together (e.g., "IT Department", "Research Project X")
+- Channel: Topic-based conversations within a Team (e.g., "General", "Announcements", "Tech Support")
+- Chat: 1-on-1 or group chat (informal, quick messages)
+
+Access Teams:
+- Web: https://teams.microsoft.com
+- Desktop: Teams desktop app (recommended)
+- Mobile: Teams app (iOS/Android)
+
+---
+
+Chat (1-on-1 or Group):
+
+Start a Chat:
+1. Click "Chat" icon (left sidebar)
+2. Click "New chat" button
+3. Add people (type name or email)
+4. Type message → Enter to send
+
+Chat Features:
+- Rich text formatting (bold, italic, bullet points)
+- @Mention: Type @ + name to notify specific person
+- Emoji & GIFs: Express yourself
+- Attach files: From computer or OneDrive
+- Audio/Video call: Click call icon to start call
+
+---
+
+Teams & Channels:
+
+Join a Team:
+1. Click "Teams" icon → Browse or join a team
+2. Search for team name (if public)
+3. Request to join (if private, owner must approve)
+
+Create a Team (if authorized):
+1. Click "Teams" icon → Create team
+2. Choose template (Standard, from scratch, or from existing group)
+3. Privacy: Private (invite-only) or Public (anyone can join)
+4. Add members
+5. Create channels for different topics
+
+Post in Channel:
+1. Go to Team → Select channel
+2. Click "New post" or reply to existing post
+3. Type message → Post
+4. Use @Team name to notify all members
+5. Use @Channel name to notify all channel members
+
+---
+
+Meetings in Teams:
+
+Schedule Meeting:
+1. Go to Calendar → New meeting
+2. Add attendees, date/time, Teams meeting (auto-enabled)
+3. Send invitation
+
+Join Meeting:
+- Click "Join" in calendar event
+- Or click meeting link in email/chat
+- Choose audio/video settings → Join now
+
+Meeting Controls:
+- Mic: Mute/unmute (Ctrl+Shift+M)
+- Camera: Video on/off (Ctrl+Shift+O)
+- Share screen: Share desktop, window, or PowerPoint
+- Chat: Meeting chat (visible to all participants)
+- Participants: See who's in meeting
+- Leave: End your participation (or End meeting if organizer)
+
+---
+
+File Sharing in Teams:
+
+Files in Channels:
+- Each channel has "Files" tab
+- Stored in SharePoint (backed by OneDrive)
+- Collaboration: Multiple people can edit simultaneously
+- Version history & recovery available
+
+Share File in Chat:
+- Click "Attach" icon → Upload from computer or OneDrive
+- File shared with chat participants
+- Recipients can view/edit (depending on permissions)
+
+=============================================================================
+7. SECURITY & BEST PRACTICES
+=============================================================================
+
+Email Security:
+
+Identify Phishing Emails:
+- Suspicious sender (misspelled domain, generic email)
+- Urgent action required (threat, time pressure)
+- Spelling & grammar errors
+- Suspicious links (hover to see real URL)
+- Unexpected attachments (especially .exe, .zip, .scr)
+
+What to Do:
+- DO NOT click links or download attachments
+- DO NOT reply or provide information
+- Report as phishing: Click "Report message" → Phishing
+- Delete email
+- If clicked: Contact IT Security immediately (security@brin.go.id or ext. 911)
+
+---
+
+Attachment Security:
+
+Safe File Types:
+- Documents: .pdf, .docx, .xlsx, .pptx
+- Images: .jpg, .png, .gif
+- Archives: .zip (scan before extracting)
+
+Dangerous File Types (BLOCKED by email filter):
+- Executables: .exe, .com, .bat, .cmd, .scr
+- Scripts: .js, .vbs, .ps1
+- Macros: .docm, .xlsm (allowed but scanned)
+
+Best Practices:
+- Scan attachments with antivirus before opening (automatic on BRIN laptops)
+- Verify sender if unexpected attachment
+- Large files: Share via OneDrive link instead of attachment
+
+---
+
+Password & Security:
+
+Password Requirements:
+- Minimum 12 characters
+- Complexity: Uppercase + lowercase + numbers + symbols
+- Change every 90 days
+- Cannot reuse last 10 passwords
+
+Multi-Factor Authentication (MFA):
+- Enabled for all BRIN accounts
+- Setup: https://aka.ms/mfasetup
+- Methods: Microsoft Authenticator app (recommended), SMS (backup)
+- Approve MFA prompt only if you initiated the login!
+
+Account Security:
+- Never share password with anyone (including IT support)
+- Lock computer when away (Windows+L)
+- Sign out from shared/public computers
+- Report suspicious account activity immediately
+
+---
+
+Data Classification & Handling:
+
+Email Classification:
+- Use subject tags: [PUBLIC], [INTERNAL], [CONFIDENTIAL], [RESTRICTED]
+- Automatic: Sensitivity labels in Outlook (Apply → Choose label)
+
+Sharing Sensitive Data:
+- CONFIDENTIAL: Encrypt email (Options → Encrypt) or share via secure OneDrive link
+- RESTRICTED: Do not send via email, use encrypted file share or hand-deliver
+- External sharing: Get manager approval for CONFIDENTIAL+
+
+Data Retention:
+- Email auto-archived after 2 years (moved to Online Archive)
+- Deleted items purged after 30 days
+- Legal hold: Some mailboxes have retention policies (cannot delete emails)
+
+=============================================================================
+8. TROUBLESHOOTING - COMMON ISSUES
+=============================================================================
+
+Issue 1: Cannot send/receive emails
+
+Troubleshooting:
+1. Check internet connection (ping 8.8.8.8)
+2. Check if Outlook online accessible (https://outlook.office.com)
+3. If desktop Outlook: Click "Send/Receive All Folders"
+4. Check mailbox quota (File → Mailbox Cleanup → View mailbox size)
+   - If >95% full, delete old emails or archive
+5. If still issue, contact IT Support
+
+---
+
+Issue 2: Emails going to Junk/Spam
+
+Troubleshooting:
+1. Check Junk Email folder
+2. Mark as "Not Junk" → Right-click email → Junk → Not Junk
+3. Add sender to Safe Senders list:
+   - Settings → View all settings → Mail → Junk email
+   - Add sender's email to Safe senders and domains
+4. If legitimate business email blocked, contact IT to whitelist
+
+---
+
+Issue 3: Meeting room not accepting booking
+
+Troubleshooting:
+1. Check room calendar (search room name → Open calendar)
+2. Verify room available at requested time
+3. Try different time slot
+4. If room shows "Free" but declines: Contact Facilities (room might be offline for maintenance)
+5. Alternative: Book different room
+
+---
+
+Issue 4: Cannot access shared OneDrive file
+
+Troubleshooting:
+1. Verify link not expired (check with sender)
+2. Try opening in incognito/private browser window
+3. Check if file requires BRIN login (might need VPN if remote)
+4. Request access: Click "Request access" button → Owner will receive notification
+5. If still issue: Ask owner to re-share with your email address
+
+---
+
+Issue 5: Teams meeting audio/video not working
+
+Troubleshooting:
+1. Check device permissions:
+   - Teams → Settings → Permissions
+   - Allow microphone & camera access
+2. Test devices:
+   - Teams → Settings → Devices → Test call
+   - Check if mic picking up sound, camera showing video
+3. Check if muted in meeting (red mic icon)
+4. Restart Teams app
+5. Update Teams to latest version
+6. If still issue: Join via web browser (https://teams.microsoft.com) as fallback
+
+=============================================================================
+9. MOBILE APP SETUP & USAGE
+=============================================================================
+
+Install Microsoft 365 Apps:
+
+Required Apps:
+- Outlook (Email & Calendar)
+- OneDrive (File storage)
+- Teams (Chat & Meetings)
+- Office (Word, Excel, PowerPoint - optional)
+- Authenticator (MFA - mandatory)
+
+Setup Process:
+1. Download from App Store (iOS) or Google Play (Android)
+2. Open app → Sign in with BRIN email
+3. Approve MFA prompt on Authenticator
+4. Grant permissions (notifications, contacts, calendar)
+5. Configure settings (sync frequency, notifications)
+
+Mobile Device Management (MDM):
+- BRIN requires device enrollment in Intune (MDM)
+- Enrollment prompt appears after first sign-in
+- Follow enrollment wizard
+- Benefits: Auto-configure email, security policies, remote wipe if lost
+
+---
+
+Mobile Email Usage:
+
+Focused Inbox:
+- Same as desktop: Focused vs Other
+- Toggle: Swipe right on Focused tab → Settings → Enable/disable Focused Inbox
+
+Notifications:
+- Configure: Outlook app → Settings → Notifications
+- Options: All email, Focused only, VIPs only, Off
+- Quiet hours: Silence notifications outside work hours
+
+Mobile Calendar:
+- View: Day, 3-day, Week, Month
+- Create event: Tap "+" icon
+- Join Teams meeting: Tap "Join" in calendar event
+
+Mobile OneDrive:
+- Auto-upload photos (optional): Settings → Camera upload
+- Offline files: Long-press file → Make available offline
+- Share: Tap "..." → Share → Choose method
+
+Mobile Teams:
+- Notifications: Settings → Notifications → Configure per team/channel
+- Mobile calls: Use Teams for voice calls over WiFi/data (no cellular minutes)
+- Background: Teams must be running in background untuk receive calls
+
+=============================================================================
+10. TIPS & PRODUCTIVITY HACKS
+=============================================================================
+
+Keyboard Shortcuts (Outlook Web):
+
+- New email: Ctrl+Shift+M (Cmd+Shift+M on Mac)
+- Reply: Ctrl+R
+- Reply all: Ctrl+Shift+R
+- Forward: Ctrl+Shift+F
+- Send email: Ctrl+Enter
+- Search: Ctrl+Alt+K
+- Go to Calendar: Ctrl+2
+- Go to People: Ctrl+3
+
+---
+
+Email Management Tips:
+
+1. Inbox Zero Strategy:
+   - Process emails once or twice daily (don't check constantly)
+   - Decide immediately: Delete, Archive, Reply, Defer (flag for follow-up)
+   - Use folders sparingly (search is powerful)
+
+2. Use Quick Steps (automated actions):
+   - Create custom quick steps: Settings → Quick steps
+   - Example: "Move to Project X folder + Mark as read" (1-click action)
+
+3. Email Templates:
+   - For repetitive emails (e.g., out-of-office reply, meeting confirmation)
+   - Compose → My templates → Save as template
+   - Reuse: Compose → My templates → Select template
+
+4. Clutter/Sweep Rules:
+   - Auto-delete/archive newsletters older than 10 days
+   - Right-click email → Sweep → Choose action
+
+5. Focused Inbox Training:
+   - Move emails between Focused ↔ Other to train algorithm
+   - System learns your priorities over time
+
+---
+
+Calendar Productivity:
+
+1. Color-code Calendars:
+   - Personal, work projects, team meetings (different colors)
+   - Quick visual scanning of day
+
+2. Time Blocking:
+   - Block focus time on calendar (mark as "Busy")
+   - Colleagues see you're unavailable → fewer meeting invites
+
+3. Meeting Policies:
+   - Default meeting: 25 min (not 30) or 50 min (not 60) → buffer time
+   - Settings → Calendar → Events → Shorten appointments and meetings
+
+4. Calendar Analytics:
+   - MyAnalytics (if enabled): Insights on meeting time, email habits
+   - Access: https://myanalytics.microsoft.com
+
+---
+
+Teams Productivity:
+
+1. Custom Status:
+   - Set status: Available, Busy, Do not disturb, Be right back, Away, Offline
+   - Custom message: Add context ("In meeting until 3pm", "Focused work - urgent only")
+
+2. Keyboard Shortcuts (Teams):
+   - Ctrl+E: Search (people, messages, files - universal search bar)
+   - Ctrl+Shift+M: Mute/unmute in meeting
+   - Ctrl+Shift+O: Video on/off
+   - Ctrl+Shift+X: Hand raise (in meeting)
+
+3. @Mentions Best Practices:
+   - @Person: Notify individual
+   - @Team: Notify entire team (use sparingly!)
+   - @Channel: Notify all channel members
+   - Avoid @mention abuse (notification fatigue)
+
+4. Pin Important Chats/Channels:
+   - Right-click chat/channel → Pin
+   - Pinned items always at top of list
+
+=============================================================================
+ADDITIONAL RESOURCES
+=============================================================================
+
+Microsoft Support:
+- Office 365 Help: https://support.office.com
+- Training Videos: https://support.microsoft.com/training
+- Teams Training: https://adoption.microsoft.com/microsoft-teams/
+
+BRIN IT Support:
+- Email: itsupport@brin.go.id
+- Phone: (021) 8012-3456 ext. 123
+- Portal: https://helpdesk.brin.go.id
+- Walk-in: Gedung A Lantai 1, IT Support Room
+
+Self-Service Portal:
+- Password reset: https://passwordreset.brin.go.id
+- MFA setup: https://aka.ms/mfasetup
+- Software download: https://portal.brin.go.id/software
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Support Team
+Approved by: IT Manager
+Last Updated: 01 Desember 2024
+Next Review: 01 Juni 2025
+
+Feedback: Jika ada pertanyaan atau saran untuk improve user manual ini, email ke itsupport@brin.go.id dengan subject "User Manual Feedback - O365"
+
+Change History:
+- v2.2 (01 Des 2024): Update MFA setup, add mobile app section
+- v2.1 (01 Jun 2024): Add Teams productivity tips
+- v2.0 (01 Jan 2024): Major revision - Teams integration, OneDrive updates
+- v1.0 (01 Jul 2023): Initial version

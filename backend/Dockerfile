@@ -1,51 +1,69 @@
 # Build stage
-FROM golang:1.24-alpine AS builder
+FROM golang:1.23-alpine AS builder
 
-# Install git and ca-certificates
+# Install build dependencies
 RUN apk add --no-cache git ca-certificates
 
 # Set working directory
-WORKDIR /app
+WORKDIR /build
 
-# Copy go mod files
+# Set GOTOOLCHAIN to auto to allow downloading required Go version
+ENV GOTOOLCHAIN=auto
+
+# Copy go mod files first for better caching
 COPY go.mod go.sum ./
-
-# Download dependencies
 RUN go mod download
 
 # Copy source code
 COPY . .
 
 # Build the application
-RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o wa_service ./cmd/bot
+# CGO_ENABLED=0 for static binary, GOOS=linux for linux target
+RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo \
+    -ldflags '-extldflags "-static" -s -w' \
+    -o bot ./cmd/bot
 
-# Final stage
+# Runtime stage
 FROM alpine:latest
 
-# Install ca-certificates for HTTPS requests
-RUN apk --no-cache add ca-certificates
+# Install ca-certificates for HTTPS requests and tools for entrypoint
+RUN apk --no-cache add ca-certificates tzdata wget postgresql-client
 
-# Create app directory
-WORKDIR /app
+# Install golang-migrate
+RUN wget -qO- https://github.com/golang-migrate/migrate/releases/download/v4.17.0/migrate.linux-amd64.tar.gz | tar xvz -C /usr/local/bin migrate
 
 # Create non-root user
-RUN addgroup -S wa_service && adduser -S wa_service -G wa_service
+RUN addgroup -g 1000 appuser && \
+    adduser -D -u 1000 -G appuser appuser
 
-# Copy binary from builder stage
-COPY --from=builder /app/wa_service .
+WORKDIR /app
 
-# Create sessions directory for WhatsApp
-RUN mkdir -p sessions && chown -R wa_service:wa_service /app
+# Copy binary from builder
+COPY --from=builder /build/bot ./api
+
+# Copy migrations directory
+COPY --from=builder /build/migrations ./migrations
+
+# Copy entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh && \
+    chown appuser:appuser /usr/local/bin/docker-entrypoint.sh
+
+# Change ownership to non-root user
+RUN chown -R appuser:appuser /app
 
 # Switch to non-root user
-USER wa_service
+USER appuser
 
 # Expose port
-EXPOSE 8085
+EXPOSE 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:8085/health || exit 1
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost:8080/health || exit 1
 
-# Run the binary
-CMD ["./wa_service"]
+# Set entrypoint to run migrations before starting app
+ENTRYPOINT ["docker-entrypoint.sh"]
+
+# Run the application
+CMD ["./api"]

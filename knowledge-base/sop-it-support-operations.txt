@@ -1,0 +1,238 @@
+STANDARD OPERATING PROCEDURE - IT SUPPORT OPERATIONS
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: SOP-IT-001
+Version: 2.1
+Effective Date: 01 Januari 2025
+Last Updated: 15 November 2024
+
+=============================================================================
+1. JAM OPERASIONAL IT SUPPORT
+=============================================================================
+
+Jam Operasional Reguler:
+- Senin - Jumat: 08:00 - 17:00 WIB
+- Sabtu - Minggu: Tutup (kecuali emergency)
+
+Hotline Emergency 24/7:
+- Telepon: (021) 8012-3456 ext. 999
+- WhatsApp: +62 812-3456-7890
+- Email: itsupport@brin.go.id
+
+Break Time:
+- Istirahat siang: 12:00 - 13:00 WIB (layanan tetap tersedia dengan rotasi tim)
+
+=============================================================================
+2. KATEGORI PRIORITAS TICKET
+=============================================================================
+
+P1 - CRITICAL (Response: 15 menit, Resolve: 4 jam)
+- Sistem core down (email server, Active Directory, database utama)
+- Security breach atau ancaman keamanan
+- Data loss pada sistem kritis
+- Gangguan jaringan seluruh gedung
+
+P2 - HIGH (Response: 1 jam, Resolve: 8 jam)
+- Aplikasi bisnis kritis tidak berfungsi
+- Gangguan jaringan sebagian area
+- Hardware critical failure (server, storage)
+- Masalah VPN untuk remote work
+
+P3 - MEDIUM (Response: 4 jam, Resolve: 2 hari)
+- Masalah software non-kritis
+- Gangguan printer atau peripheral
+- Request instalasi software standar
+- Slow performance pada aplikasi tertentu
+
+P4 - LOW (Response: 1 hari, Resolve: 5 hari)
+- Pertanyaan umum atau how-to
+- Request akses non-urgent
+- Minor cosmetic issues
+- Enhancement requests
+
+=============================================================================
+3. PROSEDUR ESKALASI
+=============================================================================
+
+Level 1 - Help Desk Support
+- Menerima dan mencatat semua ticket
+- Menangani masalah standar dan FAQ
+- Troubleshooting dasar
+- Eskalasi ke Level 2 jika tidak terselesaikan dalam 30 menit
+
+Level 2 - Technical Support Specialist
+- Masalah teknis kompleks
+- Troubleshooting advanced
+- Koordinasi dengan vendor
+- Eskalasi ke Level 3 untuk masalah infrastruktur kritis
+
+Level 3 - System Administrator / Infrastructure Team
+- Masalah infrastruktur dan server
+- Network issues kompleks
+- Database administration
+- Security incidents
+
+Management Escalation:
+- Jika P1 tidak terselesaikan dalam 2 jam → IT Manager
+- Jika P2 tidak terselesaikan dalam 4 jam → IT Manager
+- User complaint setelah 3x eskalasi → IT Manager
+
+=============================================================================
+4. PROSEDUR LOGGING TICKET
+=============================================================================
+
+Informasi Wajib untuk Setiap Ticket:
+1. Nama lengkap dan employee ID
+2. Departemen dan lokasi
+3. Nomor telepon / WhatsApp
+4. Kategori masalah (Hardware, Software, Network, Access, Other)
+5. Deskripsi masalah detail
+6. Screenshot error message (jika ada)
+7. Langkah troubleshooting yang sudah dilakukan
+8. Tingkat urgency dan business impact
+
+Ticket Numbering Format:
+- TKT-YYYYMMDD-XXXX
+- Contoh: TKT-20250115-0234
+
+Status Ticket:
+- NEW: Ticket baru masuk
+- ASSIGNED: Sudah ditugaskan ke teknisi
+- IN PROGRESS: Sedang ditangani
+- PENDING: Menunggu input dari user/vendor
+- RESOLVED: Sudah diselesaikan, menunggu konfirmasi user
+- CLOSED: Dikonfirmasi selesai oleh user
+
+=============================================================================
+5. SLA (SERVICE LEVEL AGREEMENT)
+=============================================================================
+
+Response Time SLA:
+- P1: 15 menit (95% compliance)
+- P2: 1 jam (90% compliance)
+- P3: 4 jam (85% compliance)
+- P4: 1 hari (80% compliance)
+
+Resolution Time SLA:
+- P1: 4 jam (90% compliance)
+- P2: 8 jam (85% compliance)
+- P3: 2 hari kerja (80% compliance)
+- P4: 5 hari kerja (75% compliance)
+
+User Satisfaction Target:
+- Minimal 85% rating "Satisfied" atau "Very Satisfied"
+- Survei dikirim otomatis setelah ticket closed
+
+First Call Resolution Target:
+- Minimal 60% dari P3 dan P4 tickets
+- Minimal 30% dari P2 tickets
+
+=============================================================================
+6. PROSEDUR KOMUNIKASI DENGAN USER
+=============================================================================
+
+Saat Menerima Ticket:
+- Kirim konfirmasi otomatis dengan ticket number dalam 5 menit
+- Berikan estimasi waktu penanganan
+- Jelaskan langkah berikutnya
+
+Selama Penanganan:
+- Update user setiap 2 jam untuk P1/P2
+- Update user setiap 1 hari untuk P3/P4
+- Jika ada delay, informasikan alasan dan revised timeline
+
+Setelah Penyelesaian:
+- Kirim notifikasi bahwa masalah sudah resolved
+- Minta user untuk verifikasi dan konfirmasi
+- Kirim survei kepuasan (NPS score)
+- Dokumentasikan solusi untuk knowledge base
+
+Bahasa Komunikasi:
+- Gunakan Bahasa Indonesia formal dan sopan
+- Hindari jargon teknis, gunakan bahasa yang mudah dipahami
+- Selalu tunjukkan empati, terutama untuk complaint
+
+=============================================================================
+7. KNOWLEDGE BASE MAINTENANCE
+=============================================================================
+
+Kriteria Dokumentasi Knowledge Base:
+- Masalah yang terjadi >3 kali dalam 1 bulan
+- Solusi non-standar yang efektif
+- Perubahan konfigurasi sistem
+- Troubleshooting steps untuk masalah umum
+
+Format Artikel Knowledge Base:
+- Judul: Singkat dan deskriptif
+- Kategori: Hardware/Software/Network/Security/Access
+- Keywords: Untuk searchability
+- Deskripsi masalah
+- Langkah-langkah solusi (numbered steps)
+- Screenshot (jika diperlukan)
+- Tanggal update terakhir
+
+Review dan Update:
+- Review semua artikel minimal setiap 6 bulan
+- Archive artikel yang sudah tidak relevan
+- Update artikel jika ada perubahan prosedur/sistem
+
+=============================================================================
+8. AFTER-HOURS SUPPORT
+=============================================================================
+
+Emergency Support (24/7):
+- Hanya untuk P1 critical issues
+- On-call engineer: rotasi mingguan
+- Response time: 30 menit maksimal
+
+Non-Emergency After Hours:
+- User dapat submit ticket via portal atau email
+- Ticket akan diproses pada hari kerja berikutnya
+- Status otomatis: PENDING
+
+Weekend Maintenance Window:
+- Sabtu 22:00 - Minggu 06:00 WIB
+- Untuk maintenance yang memerlukan downtime
+- Notifikasi dikirim H-3 ke semua user
+- War room team standby untuk rollback jika ada masalah
+
+=============================================================================
+9. CONTINUOUS IMPROVEMENT
+=============================================================================
+
+Metrics yang Dimonitor:
+- Average response time per priority
+- Average resolution time per priority
+- First call resolution rate
+- SLA compliance percentage
+- User satisfaction score (CSAT/NPS)
+- Ticket volume trends
+- Repeat incidents rate
+
+Monthly Review Meeting:
+- Analisa trend ticket dan root cause
+- Review SLA performance
+- Identifikasi area improvement
+- Update knowledge base gaps
+- Training needs assessment
+
+Quarterly Business Review:
+- Present metrics ke management
+- Cost analysis (staff, tools, vendor)
+- Capacity planning
+- Technology roadmap alignment
+
+=============================================================================
+APPROVAL & DISTRIBUTION
+=============================================================================
+
+Prepared by: IT Support Manager
+Approved by: Chief Information Officer
+Distribution: All IT Support Staff, Department Heads
+
+Revision History:
+- v2.1 (15 Nov 2024): Update hotline numbers, revisi SLA targets
+- v2.0 (01 Jan 2024): Major revision - new priority categorization
+- v1.5 (01 Jul 2023): Minor updates - communication procedures
+- v1.0 (01 Jan 2023): Initial version
+
+Next Review Date: 01 Juli 2025

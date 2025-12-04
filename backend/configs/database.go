@@ -27,17 +27,18 @@ type DatabaseConfig struct {
 }
 
 // LoadDatabaseConfig loads database configuration from environment variables
+// Prioritizes DATABASE_URL if available, otherwise builds from individual components
 func LoadDatabaseConfig() *DatabaseConfig {
 	config := &DatabaseConfig{
-		Host:              getEnvString("DB_HOST", "localhost"),
+		Host:              getEnvString("DB_HOST", "postgres-brin"),
 		Port:              getEnvInt("DB_PORT", 5432),
-		Username:          getEnvString("DB_USER", "postgres"),
-		Password:          getEnvString("DB_PASSWORD", ""),
-		Database:          getEnvString("DB_NAME", "wa-service"),
+		Username:          getEnvString("POSTGRES_WA_SERVICE_USER", "wa_service"),
+		Password:          getEnvString("POSTGRES_WA_SERVICE_PASSWORD", "workshop2025"),
+		Database:          getEnvString("POSTGRES_WA_SERVICE_NAME", "wa_service"),
 		SSLMode:           getEnvString("DB_SSL_MODE", "disable"),
-		MaxConnections:    getEnvInt("DB_MAX_CONNECTIONS", 25),
-		MinConnections:    getEnvInt("DB_MIN_CONNECTIONS", 5),
-		MaxLifetime:       time.Duration(getEnvInt("DB_MAX_LIFETIME_MINUTES", 60)) * time.Minute,
+		MaxConnections:    getEnvInt("DB_MAX_OPEN_CONNS", 25),
+		MinConnections:    getEnvInt("DB_MAX_IDLE_CONNS", 5),
+		MaxLifetime:       parseDuration(getEnvString("DB_CONN_MAX_LIFETIME", "5m"), 5*time.Minute),
 		MaxIdleTime:       time.Duration(getEnvInt("DB_MAX_IDLE_MINUTES", 30)) * time.Minute,
 		HealthCheckPeriod: time.Duration(getEnvInt("DB_HEALTH_CHECK_MINUTES", 1)) * time.Minute,
 	}
@@ -116,6 +117,13 @@ func getEnvInt(key string, defaultValue int) int {
 		if intValue, err := strconv.Atoi(value); err == nil {
 			return intValue
 		}
+	}
+	return defaultValue
+}
+
+func parseDuration(value string, defaultValue time.Duration) time.Duration {
+	if duration, err := time.ParseDuration(value); err == nil {
+		return duration
 	}
 	return defaultValue
 }

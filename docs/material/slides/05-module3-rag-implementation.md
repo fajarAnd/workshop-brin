@@ -191,7 +191,7 @@ graph LR
 ✅ **Chunked** (500 tokens each):
 - Precise retrieval
 - Higher relevance
-- Efficient context usage
+  - Efficient context usage
 
 **Chunking Parameters**:
 ```javascript

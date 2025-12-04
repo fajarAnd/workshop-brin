@@ -1,5 +1,5 @@
 ### Variables
-@baseUrl = http://localhost:8084/api
+@baseUrl = http://localhost:8095/api
 @contentType = application/json
 
 

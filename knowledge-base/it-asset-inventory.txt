@@ -1,0 +1,532 @@
+IT ASSET MANAGEMENT & INVENTORY
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: DOC-IT-ASSET-001
+Version: 3.0
+Effective Date: 01 Januari 2025
+
+=============================================================================
+1. OVERVIEW ASET IT BRIN
+=============================================================================
+
+Total Aset IT (Per Desember 2024):
+- Komputer Desktop: 1,247 unit
+- Laptop: 892 unit
+- Server (Physical): 45 unit
+- Server (Virtual): 180 VM
+- Network Equipment: 320 unit (switches, routers, access points)
+- Storage Systems: 15 unit (total 2.5 PB capacity)
+- Printer/Scanner: 450 unit
+- Mobile Devices (Tablets, Smartphones): 280 unit
+- UPS & Power Equipment: 95 unit
+- Conference Room Equipment: 85 set (TV, projector, video conference)
+
+Total Asset Value: Rp 47,5 Miliar
+Annual IT Budget: Rp 12,3 Miliar
+
+=============================================================================
+2. ASSET CATEGORIZATION & TAGGING
+=============================================================================
+
+Asset Tag Format: BRIN-[CATEGORY]-[YEAR]-[SEQUENCE]
+
+Category Codes:
+- DT: Desktop Computer
+- LT: Laptop
+- SV: Server (Physical)
+- NT: Network Equipment
+- ST: Storage Equipment
+- PR: Printer/Scanner
+- MB: Mobile Device
+- AC: Accessories (Monitor, Keyboard, Mouse)
+
+Contoh Asset Tag:
+- BRIN-DT-2024-0234: Desktop tahun 2024, sequence 234
+- BRIN-LT-2023-0567: Laptop tahun 2023, sequence 567
+- BRIN-SV-2022-0012: Server tahun 2022, sequence 12
+
+Asset Tag Location:
+- Laptop: Sticker di bagian belakang layar (dekat BRIN logo)
+- Desktop: Sticker di side panel casing (visible saat di meja)
+- Server: Sticker di front panel (visible di rack)
+- Network Equipment: Sticker di top panel device
+
+=============================================================================
+3. STANDARD HARDWARE SPECIFICATIONS
+=============================================================================
+
+A. DESKTOP COMPUTER (Workstation Standar)
+
+Tier 1 - Entry Level (Office Work)
+Processor: Intel Core i3 Gen 12 atau AMD Ryzen 3 5000 series
+RAM: 8 GB DDR4
+Storage: 256 GB SSD NVMe
+Graphics: Integrated
+Monitor: 21.5" Full HD (1920x1080)
+OS: Windows 11 Pro
+Warranty: 3 tahun on-site
+Lifecycle: 5 tahun
+Estimated Cost: Rp 8.500.000
+
+Use Case: Administrative staff, general office work, email, web browsing
+
+Tier 2 - Mid-Range (Power User)
+Processor: Intel Core i5 Gen 13 atau AMD Ryzen 5 5000 series
+RAM: 16 GB DDR4
+Storage: 512 GB SSD NVMe
+Graphics: Integrated + GPU optional (untuk desain)
+Monitor: Dual 24" Full HD
+OS: Windows 11 Pro
+Warranty: 3 tahun on-site
+Lifecycle: 5 tahun
+Estimated Cost: Rp 15.000.000
+
+Use Case: Researchers, data analysts, developers, content creators
+
+Tier 3 - High-End (Specialized Workstation)
+Processor: Intel Core i7/i9 Gen 13 atau AMD Ryzen 7/9 7000 series
+RAM: 32 GB DDR5 (expandable to 64 GB)
+Storage: 1 TB SSD NVMe (primary) + 2 TB HDD (secondary)
+Graphics: NVIDIA RTX 4060/4070 atau AMD Radeon RX 7700
+Monitor: Dual 27" 4K atau Triple 24" FHD
+OS: Windows 11 Pro / Linux (dual boot option)
+Warranty: 3 tahun on-site with 4-hour response
+Lifecycle: 5 tahun
+Estimated Cost: Rp 35.000.000
+
+Use Case: AI/ML researchers, 3D modeling, video editing, simulation, data science
+
+---
+
+B. LAPTOP (Mobile Computing)
+
+Tier 1 - Standard Business Laptop
+Processor: Intel Core i5 Gen 12 atau AMD Ryzen 5 6000 series
+RAM: 16 GB DDR4 (non-upgradable)
+Storage: 512 GB SSD NVMe
+Display: 14" Full HD (1920x1080) IPS
+Battery: Minimum 8 jam usage
+Weight: <1.5 kg
+OS: Windows 11 Pro
+Warranty: 3 tahun on-site + accidental damage protection
+Lifecycle: 4 tahun
+Estimated Cost: Rp 18.000.000
+
+Use Case: Mobile workers, field research, meeting & presentations
+
+Tier 2 - High-Performance Laptop
+Processor: Intel Core i7 Gen 13 atau AMD Ryzen 7 7000 series
+RAM: 32 GB DDR5
+Storage: 1 TB SSD NVMe
+Display: 15.6" Full HD IPS atau 14" 2K IPS
+Graphics: NVIDIA MX550 atau RTX 4050 (untuk research computing)
+Battery: Minimum 10 jam usage
+Weight: <2 kg
+OS: Windows 11 Pro
+Warranty: 3 tahun premier support + accidental damage
+Lifecycle: 4 tahun
+Estimated Cost: Rp 28.000.000
+
+Use Case: Senior researchers, managers, technical specialists
+
+---
+
+C. SERVER INFRASTRUCTURE
+
+Application Server (Standard)
+Processor: 2x Intel Xeon Silver 4314 (32 cores total)
+RAM: 128 GB DDR4 ECC (expandable to 512 GB)
+Storage: 4x 960 GB SSD (RAID 10) + RAID controller
+Network: 4x 10 GbE ports
+Power: Dual redundant PSU
+Form Factor: 2U Rackmount
+OS: Windows Server 2022 / Red Hat Enterprise Linux
+Warranty: 5 tahun 24/7 4-hour onsite
+Lifecycle: 7 tahun
+Estimated Cost: Rp 180.000.000
+
+Database Server (High-Performance)
+Processor: 2x Intel Xeon Gold 6348 (56 cores total)
+RAM: 512 GB DDR4 ECC (expandable to 2 TB)
+Storage: 8x 1.92 TB NVMe SSD (RAID 10) + dedicated RAID controller with battery backup
+Network: 4x 25 GbE ports
+Power: Dual redundant PSU (hot-swap)
+Form Factor: 2U Rackmount
+OS: Windows Server 2022 / Red Hat Enterprise Linux / PostgreSQL certified
+Warranty: 5 tahun 24/7 2-hour onsite
+Lifecycle: 7 tahun
+Estimated Cost: Rp 380.000.000
+
+Virtualization Host (VMware/Hyper-V)
+Processor: 2x Intel Xeon Platinum 8360Y (72 cores total)
+RAM: 1 TB DDR4 ECC (expandable to 4 TB)
+Storage: Local boot drive (2x 480 GB SSD RAID 1), data dari SAN
+Network: 8x 25 GbE ports (untuk VM traffic, management, storage)
+Power: Dual redundant PSU + battery backup
+Form Factor: 2U Rackmount
+OS: VMware ESXi 8.0 / Microsoft Hyper-V Server
+Warranty: 5 tahun 24/7 2-hour onsite
+Lifecycle: 7 tahun
+Estimated Cost: Rp 550.000.000
+
+---
+
+D. NETWORK EQUIPMENT
+
+Core Switch (Data Center)
+- Model: Cisco Catalyst 9500 series atau equivalent
+- Ports: 48x 25GbE + 8x 100GbE uplink
+- Throughput: 8 Tbps
+- Features: Layer 3 routing, redundant PSU, stacking
+- Warranty: 5 tahun 24/7
+- Lifecycle: 7 tahun
+- Estimated Cost: Rp 450.000.000
+
+Distribution Switch (Floor/Building)
+- Model: Cisco Catalyst 9300 series atau equivalent
+- Ports: 48x 1GbE + 4x 10GbE uplink
+- Features: PoE+ (802.3at), Layer 3 lite, stacking
+- Warranty: 5 tahun NBD
+- Lifecycle: 7 tahun
+- Estimated Cost: Rp 120.000.000
+
+Access Switch (Office)
+- Model: Cisco Catalyst 9200 series atau equivalent
+- Ports: 24x 1GbE + 4x 1GbE SFP uplink
+- Features: PoE (802.3af/at), Layer 2
+- Warranty: 3 tahun NBD
+- Lifecycle: 5 tahun
+- Estimated Cost: Rp 35.000.000
+
+Wireless Access Point
+- Model: Cisco Catalyst 9130 series atau equivalent
+- Standard: Wi-Fi 6E (802.11ax)
+- Speed: Up to 5.4 Gbps aggregate
+- Features: Internal antenna, PoE powered, cloud management
+- Coverage: ~100m² per AP
+- Warranty: 3 tahun
+- Lifecycle: 5 tahun
+- Estimated Cost: Rp 12.000.000
+
+=============================================================================
+4. ASSET REQUEST & PROCUREMENT PROCESS
+=============================================================================
+
+A. NEW ASSET REQUEST
+
+Step 1: Justification & Approval
+- User mengisi form request: https://assetrequest.brin.go.id
+- Sertakan business justification:
+  * Kebutuhan bisnis/research
+  * Alasan tidak bisa menggunakan aset existing
+  * Urgency level
+  * Budget code/cost center
+- Approval workflow:
+  * Department Head → Approval dalam 3 hari kerja
+  * IT Manager → Review spesifikasi, approval dalam 2 hari
+  * Finance → Budget verification, approval dalam 2 hari
+  * Procurement → Process PO dalam 5 hari
+
+Step 2: Procurement
+- IT Procurement team proses pembelian
+- Vendor selection (berdasarkan e-catalog/tender)
+- Purchase Order (PO) issued
+- Estimasi delivery: 2-4 minggu untuk hardware standar
+- Estimasi delivery: 6-12 minggu untuk server/specialized equipment
+
+Step 3: Receiving & Asset Tagging
+- Asset diterima di IT warehouse
+- Quality inspection & testing
+- Asset tagging (barcode & RFID)
+- Registration di Asset Management System (ServiceNow)
+- Photos dokumentasi
+
+Step 4: Deployment & Handover
+- IT team install OS & mandatory software
+- Security baseline configuration
+- User training (jika diperlukan)
+- User sign asset acknowledgment form
+- Asset assigned di system
+
+Total Process Time: 4-8 minggu (dari request sampai deployment)
+
+---
+
+B. ASSET REPLACEMENT (Refresh/Upgrade)
+
+Kriteria Asset Eligible untuk Replacement:
+- Umur ≥ 4 tahun (laptop) atau ≥ 5 tahun (desktop)
+- Performance degradation signifikan (tidak support aplikasi terkini)
+- Biaya maintenance > 40% harga baru
+- End of vendor support/warranty
+- Hardware failure berulang (>3x dalam 6 bulan)
+
+Replacement Cycle Priority:
+1. Laptops: 4 tahun
+2. Desktops: 5 tahun
+3. Servers: 7 tahun
+4. Network equipment: 7 tahun
+5. Printers: 5 tahun
+
+Process:
+- IT Asset team monitor aging assets via dashboard
+- Generate replacement plan annually (setiap Oktober untuk tahun berikutnya)
+- Priority diberikan berdasarkan:
+  * Business criticality
+  * Performance issues
+  * User tier (researchers > admin staff)
+- Approval di annual IT budget planning
+- Deployment dilakukan bertahap (quarterly batches)
+
+---
+
+C. ASSET RETURN & DISPOSAL
+
+Asset Return Scenarios:
+- Employee resignation/termination
+- Employee transfer department
+- Asset malfunction (RMA/replacement)
+- Project completion (temporary assignment)
+
+Return Process:
+1. User submit return request via https://assetreturn.brin.go.id
+2. IT Admin verifies asset condition
+3. Data wipe (secure erase) - mandatory untuk semua storage devices
+4. Asset status updated: RETURNED
+5. Asset options:
+   - Reassign to new user (jika kondisi baik)
+   - Send untuk repair/refurbish
+   - Mark untuk disposal (jika end-of-life)
+
+Asset Disposal (End-of-Life):
+- Kriteria: Umur >7 tahun, tidak ekonomis untuk repair, obsolete technology
+- Process:
+  1. IT Asset Manager approval untuk disposal
+  2. Finance team verify depreciation complete
+  3. Data destruction (secure wipe + physical destruction untuk sensitif data)
+  4. Certificate of Destruction issued
+  5. Asset removed dari inventory system
+  6. Disposal via authorized vendor (e-waste recycling) atau trade-in program
+
+Data Security saat Disposal:
+- Mandatory secure erase dengan DoD 5220.22-M standard (minimum 3-pass)
+- Hard drives/SSD untuk high-security data: Physical destruction (shredding/degaussing)
+- Certificate of Data Destruction disimpan 5 tahun untuk audit
+
+=============================================================================
+5. ASSET TRACKING & AUDIT
+=============================================================================
+
+Asset Management System:
+- Platform: ServiceNow IT Asset Management (ITAM)
+- Access: https://assetmanagement.brin.go.id
+- Features:
+  * Real-time inventory tracking
+  * Asset lifecycle management
+  * Contract & warranty management
+  * Cost tracking & depreciation
+  * Compliance reporting
+
+Asset Tracking Methods:
+- Barcode scanning (semua assets)
+- RFID tags (high-value assets >Rp 10 juta)
+- Software agent (untuk laptops/desktops - auto-inventory)
+- Network discovery (untuk network equipment & servers)
+
+Physical Audit Schedule:
+- High-value assets (>Rp 50 juta): Quarterly
+- Standard assets: Semi-annually
+- Complete inventory audit: Annually (setiap Desember)
+- Spot checks: Random monthly (10% sample)
+
+Audit Process:
+1. Generate audit list dari Asset Management System
+2. Physical verification team scan barcode/RFID
+3. Verify asset location, condition, user assignment
+4. Identify discrepancies:
+   - Missing assets → Investigation & report
+   - Unauthorized assets → Registration atau removal
+   - Mismatched location → Update system
+5. Audit report to IT Manager & Finance
+6. Discrepancy resolution plan (30 hari)
+
+Missing Asset Protocol:
+- User wajib report missing asset dalam 24 jam
+- IT Security investigation (CCTV review, access logs)
+- Police report (untuk theft >Rp 10 juta atau sensitif data)
+- Insurance claim (jika applicable)
+- User liability assessment (negligence vs theft)
+
+=============================================================================
+6. ASSET MAINTENANCE & SUPPORT
+=============================================================================
+
+Preventive Maintenance Schedule:
+
+Desktops/Laptops:
+- Every 6 months: Clean dust, check thermal paste, update firmware
+- Every 12 months: Full hardware diagnostics, replace thermal paste (laptop)
+
+Servers:
+- Every 3 months: Firmware update, clean dust filters, check fan operation
+- Every 6 months: Full hardware diagnostics, battery backup test (RAID controllers)
+- Every 12 months: Replace batteries (RAID, BIOS), deep cleaning
+
+Network Equipment:
+- Every 6 months: Firmware update, clean dust, check port status
+- Every 12 months: Cable management review, port utilization analysis
+
+UPS:
+- Every 3 months: Battery test
+- Every 12 months: Battery replacement (untuk critical systems)
+- Every 24 months: Capacitor inspection
+
+Warranty & Support Contracts:
+
+Standard Warranty Coverage:
+- Desktops/Laptops: 3 years on-site NBD (next business day)
+- Servers: 5 years 24/7 with 4-hour response SLA
+- Network Equipment: Cisco SmartNet 8x5xNBD
+- Enterprise Servers: 24/7 with 2-hour response SLA
+
+Extended Warranty Options:
+- Accidental Damage Protection (ADP): For laptops (recommended untuk field researchers)
+- Battery replacement service: For laptops >2 years old
+- Extended warranty: Additional 2 years beyond standard (untuk critical systems)
+
+Support Escalation:
+- Level 1: IT Support helpdesk (internal)
+- Level 2: IT Engineering team (internal)
+- Level 3: Vendor technical support
+- Level 4: Vendor engineering escalation (critical issues)
+
+=============================================================================
+7. SOFTWARE ASSET MANAGEMENT
+=============================================================================
+
+Licensed Software Inventory (BRIN-wide licenses):
+
+Operating Systems:
+- Windows 11 Pro: 2,100 licenses (Desktop/Laptop)
+- Windows Server 2022 Standard: 45 licenses
+- Windows Server 2022 Datacenter: 12 licenses
+- Red Hat Enterprise Linux: 80 subscriptions
+- Ubuntu Pro: 120 subscriptions
+
+Productivity Software:
+- Microsoft 365 E3: 2,500 licenses (Exchange, Teams, Office, SharePoint)
+- Microsoft 365 E5: 150 licenses (untuk management & compliance needs)
+- Adobe Creative Cloud All Apps: 85 licenses
+- Autodesk AutoCAD: 40 licenses
+- MATLAB Campus License: Unlimited (research use)
+
+Security Software:
+- Microsoft Defender for Endpoint: 2,500 licenses
+- CrowdStrike Falcon: 500 licenses (servers & critical endpoints)
+- Palo Alto Prisma Access (VPN): 1,000 concurrent users
+- McAfee DLP: 1,500 licenses
+
+Development & Data Tools:
+- JetBrains All Products Pack: 120 licenses
+- Tableau Desktop: 50 licenses
+- Tableau Server: 500 viewer licenses
+- VMware vSphere Enterprise Plus: 180 CPU licenses
+- Docker Enterprise: 50 node licenses
+
+License Compliance:
+- Quarterly license audit via SCCM & ServiceNow SAM
+- Annual vendor audit (Microsoft, Adobe, Autodesk)
+- Reclaim unused licenses (not used for 90 days)
+- License optimization recommendations
+
+Software Request Process:
+1. Submit request: https://softwarerequest.brin.go.id
+2. Justification & approval (sama seperti hardware)
+3. License availability check
+4. Procurement (jika tidak tersedia)
+5. Deployment via SCCM atau manual install
+6. License activation & registration
+
+=============================================================================
+8. MOBILE DEVICE MANAGEMENT (MDM)
+=============================================================================
+
+BYOD (Bring Your Own Device) Policy:
+- Allowed: Personal smartphones/tablets untuk akses email & Teams
+- Requirements:
+  * MDM enrollment (Microsoft Intune) mandatory
+  * PIN/Biometric lock
+  * Auto-lock after 5 minutes
+  * Encryption enabled
+  * Remote wipe capability
+- Supported OS:
+  * iOS 15+ (iPhone/iPad)
+  * Android 10+ (Samsung, Google Pixel, others)
+
+Corporate-Owned Devices:
+- Standard Model: iPhone 13/14 atau Samsung Galaxy S22/S23
+- Assignment: Directors, managers, field researchers
+- MDM: Microsoft Intune
+- Restrictions:
+  * Mandatory VPN untuk corporate data access
+  * App whitelisting (only approved apps installable)
+  * No jailbreak/root
+  * Location tracking enabled
+  * Remote wipe enabled
+
+Mobile Data Plans:
+- Standard: 20 GB/month per device
+- Heavy users (field research): 50 GB/month
+- Roaming: Approved per-case untuk international travel
+
+=============================================================================
+9. ASSET FINANCIAL MANAGEMENT
+=============================================================================
+
+Depreciation Schedule:
+- Computers (Desktop/Laptop): 4 years straight-line
+- Servers: 5 years straight-line
+- Network Equipment: 7 years straight-line
+- Software Licenses: 3 years (perpetual) / expense immediately (subscription)
+- Mobile Devices: 3 years straight-line
+
+Total Cost of Ownership (TCO) Calculation:
+- Purchase cost
+- Warranty/support cost
+- Software licensing
+- Maintenance & repair
+- Energy consumption
+- End-of-life disposal cost
+
+Annual IT Budget Breakdown (2025):
+- Hardware procurement: Rp 4,8 M (39%)
+- Software licensing: Rp 3,2 M (26%)
+- Maintenance & support: Rp 2,1 M (17%)
+- Cloud services: Rp 1,5 M (12%)
+- Network & telecom: Rp 0,7 M (6%)
+
+=============================================================================
+CONTACT & SUPPORT
+=============================================================================
+
+IT Asset Management Team:
+- Email: assetmanagement@brin.go.id
+- Phone: (021) 8012-3456 ext. 150
+- Location: Gedung A Lantai 1, IT Department
+
+Asset Request Portal: https://assetrequest.brin.go.id
+Asset Management System: https://assetmanagement.brin.go.id
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Asset Management Team
+Approved by: Chief Information Officer
+Last Updated: 01 Januari 2025
+Next Review: 01 Januari 2026
+
+Change History:
+- v3.0 (01 Jan 2025): Major update - new hardware specs, updated pricing
+- v2.5 (01 Jul 2024): Added mobile device management section
+- v2.0 (01 Jan 2024): Revised lifecycle & depreciation schedules
+- v1.0 (01 Jan 2023): Initial version

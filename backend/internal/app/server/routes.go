@@ -14,6 +14,7 @@ func SetupRoutes(r *gin.Engine, handlers *handlers.Handlers) {
 	health := api.Group("/health")
 	{
 		health.GET("/", handlers.Health.HealthCheck)
+		health.HEAD("/", handlers.Health.HealthCheck)
 		health.GET("/status", handlers.Health.Status)
 	}
 
@@ -42,4 +43,5 @@ func SetupRoutes(r *gin.Engine, handlers *handlers.Handlers) {
 
 	// Root health check (for load balancers)
 	r.GET("/health", handlers.Health.HealthCheck)
+	r.HEAD("/health", handlers.Health.HealthCheck)
 }

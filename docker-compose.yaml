@@ -1,0 +1,144 @@
+version: '3.8'
+
+services:
+  # Shared PostgreSQL for all services
+  postgres-brin:
+    image: pgvector/pgvector:pg17
+    container_name: postgres-brin
+    ports:
+      - "5466:5432"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: "2G"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-postgres}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-workshop2025}
+      # Default database (will create multiple databases via init script)
+      - POSTGRES_DB=postgres
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - postgres_shared_data:/var/lib/postgresql/data
+      - ./scripts/init-databases.sql:/docker-entrypoint-initdb.d/init-databases.sql:ro
+    networks:
+      - workshop_brin-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend Ticketing API Service
+  backend-wa_service:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: wa_service
+    ports:
+      - "8095:8080"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: "512M"
+        reservations:
+          cpus: "0.3"
+          memory: "128M"
+    environment:
+      # Server Configuration
+      - SERVER_PORT=8080
+      - SERVER_HOST=0.0.0.0
+      - ENVIRONMENT=${ENV:-development}
+
+      # Database Configuration
+      - DB_HOST=postgres-brin
+      - DB_PORT=5432
+      - POSTGRES_WA_SERVICE_NAME=${POSTGRES_WA_SERVICE_NAME:-wa_service}
+      - POSTGRES_WA_SERVICE_USER=${POSTGRES_WA_SERVICE_USER:-wa_service}
+      - POSTGRES_WA_SERVICE_PASSWORD=${POSTGRES_WA_SERVICE_PASSWORD:-workshop2025}
+      - DATABASE_URL=postgresql://${POSTGRES_WA_SERVICE_USER:-wa_service}:${POSTGRES_WA_SERVICE_PASSWORD:-workshop2025}@postgres-brin:5432/${POSTGRES_WA_SERVICE_NAME:-wa_service}?sslmode=disable
+      - DB_MAX_OPEN_CONNS=${DB_MAX_OPEN_CONNS:-25}
+      - DB_MAX_IDLE_CONNS=${DB_MAX_IDLE_CONNS:-5}
+      - DB_CONN_MAX_LIFETIME=${DB_CONN_MAX_LIFETIME:-5m}
+
+      # Authentication
+      - JWT_SECRET=${JWT_SECRET:-workshop2025}
+      - JWT_EXPIRY=${JWT_EXPIRY:-24h}
+    volumes:
+      # Mount for local file storage
+      - backend_storage:/app/storage
+    depends_on:
+      postgres-brin:
+        condition: service_healthy
+    networks:
+      - workshop_brin-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 5s
+      start_period: 45s
+      retries: 3
+
+  # N8N Workflow Automation
+  n8n-brin:
+    image: n8nio/n8n:latest
+    container_name: n8n-brin
+    ports:
+      - "5676:5678"
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: "2G"
+        reservations:
+          cpus: "0.5"
+          memory: "512M"
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=${N8N_USER:-admin}
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_PASSWORD:-admin123}
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - GENERIC_TIMEZONE=Asia/Jakarta
+      # PostgreSQL Database Configuration (Shared Instance)
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres-brin
+      - DB_POSTGRESDB_PORT=${POSTGRES_N8N_PORT:-5432}
+      - DB_POSTGRESDB_DATABASE=${POSTGRES_N8N_NAME:-n8n}
+      - DB_POSTGRESDB_USER=${POSTGRES_N8N_USER:-n8n}
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_N8N_PASSWORD:-workshop2025}
+      - DB_POSTGRESDB_SCHEMA=n8n
+    volumes:
+      - n8n_data:/home/node/.n8n
+    networks:
+      - workshop_brin-network
+    depends_on:
+      postgres-brin:
+        condition: service_healthy
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:5678/healthz"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  postgres_shared_data:
+    driver: local
+  backend_storage:
+    driver: local
+  n8n_data:
+    driver: local
+
+networks:
+  workshop_brin-network:
+    name: workshop_brin-network
+    driver: bridge

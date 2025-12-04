@@ -1,0 +1,662 @@
+IT SECURITY GUIDELINES & POLICIES
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: SEC-POL-001
+Version: 3.1
+Effective Date: 01 Januari 2025
+Classification: INTERNAL - MANDATORY COMPLIANCE
+
+=============================================================================
+1. INFORMATION SECURITY OVERVIEW
+=============================================================================
+
+Security Framework:
+BRIN mengadopsi ISO 27001:2013 Information Security Management System (ISMS)
+dengan tambahan compliance terhadap:
+- Peraturan Presiden tentang Sistem Pemerintahan Berbasis Elektronik (SPBE)
+- Undang-Undang Perlindungan Data Pribadi (UU PDP)
+- NIST Cybersecurity Framework
+- CIS Controls v8
+
+Security Objectives (CIA Triad):
+- Confidentiality: Informasi hanya accessible oleh authorized personnel
+- Integrity: Data akurat dan tidak dimodifikasi tanpa authorization
+- Availability: Sistem dan data available untuk authorized users saat dibutuhkan
+
+Security Organization:
+- Chief Information Security Officer (CISO)
+- Security Operations Center (SOC) Team
+- Incident Response Team (IRT)
+- IT Risk & Compliance Team
+
+=============================================================================
+2. DATA CLASSIFICATION & HANDLING
+=============================================================================
+
+Data Classification Levels:
+
+LEVEL 1 - PUBLIC
+- Definisi: Informasi yang boleh dipublikasikan ke umum
+- Contoh: Press release, publikasi ilmiah, website public content
+- Handling: No restrictions, dapat dishare secara bebas
+- Storage: Any approved storage
+- Encryption: Not required (recommended)
+- Example: BRIN annual report, research papers, public datasets
+
+LEVEL 2 - INTERNAL
+- Definisi: Informasi untuk internal BRIN only, tidak untuk publik
+- Contoh: Internal memos, SOP, policies, employee directory
+- Handling: Tidak boleh dishare ke pihak eksternal tanpa approval
+- Storage: Corporate network only, no personal devices (kecuali MDM enrolled)
+- Encryption: Recommended
+- Retention: Sesuai document retention policy
+- Example: Internal SOP, budget planning documents, project plans
+
+LEVEL 3 - CONFIDENTIAL
+- Definisi: Informasi sensitif yang jika exposed dapat menyebabkan kerugian
+- Contoh: Kontrak, vendor agreements, unpublished research data, HR data
+- Handling: Need-to-know basis only, encrypted in transit & at rest
+- Storage: Encrypted storage only, access logging mandatory
+- Encryption: MANDATORY (AES-256)
+- Sharing: Approval from data owner required, NDA for external parties
+- Retention: 7 years minimum
+- Example: Employee salary data, vendor contracts, patent applications
+
+LEVEL 4 - RESTRICTED / HIGHLY CONFIDENTIAL
+- Definisi: Informasi yang jika exposed dapat menyebabkan kerugian signifikan
+- Contoh: Strategic plans, M&A data, classified research, security vulnerabilities
+- Handling: Strictly need-to-know, MFA required, no remote access (kecuali VPN + MFA)
+- Storage: Encrypted storage with audit logging, access review quarterly
+- Encryption: MANDATORY (AES-256 + key management)
+- Sharing: CIO/CISO approval mandatory, legal review required
+- Retention: 10 years or per legal requirement
+- Example: Classified defense research, cybersecurity vulnerability reports
+
+Data Labeling:
+- Email subject: [PUBLIC], [INTERNAL], [CONFIDENTIAL], [RESTRICTED]
+- Document header/footer: Classification marking mandatory
+- File naming: Include classification if >INTERNAL (optional for INTERNAL/PUBLIC)
+
+=============================================================================
+3. ACCESS CONTROL & IDENTITY MANAGEMENT
+=============================================================================
+
+User Account Management:
+
+Account Creation:
+- Trigger: HR onboarding process (automated via workflow)
+- Provisioning SLA: Within 1 business day
+- Default access: Email, internal portal, basic file shares only
+- Additional access: Request via ServiceNow, requires manager approval
+
+Account Types:
+- Standard User: Regular employees (least privilege)
+- Power User: Elevated privileges for specific applications (approved by manager)
+- Administrator: Elevated privileges for IT staff (approved by IT Manager)
+- Service Account: For applications/services (approved by Security Team)
+- Guest Account: Temporary access for vendors/contractors (max 90 days)
+
+Password Policy:
+- Minimum length: 12 characters (16 for admin accounts)
+- Complexity: Uppercase + lowercase + numbers + symbols
+- Expiry: 90 days (standard), 60 days (admin), never expire (service accounts with MFA)
+- History: Cannot reuse last 10 passwords
+- Lockout: 5 failed attempts → locked for 30 minutes (auto-unlock) or manual unlock by IT
+
+Multi-Factor Authentication (MFA):
+MANDATORY for:
+- All admin/privileged accounts
+- Remote access (VPN, RDP)
+- Email access (O365)
+- Cloud services (AWS, Azure)
+- Financial systems
+
+RECOMMENDED for:
+- All user accounts
+
+MFA Methods (in order of security):
+1. Hardware token (YubiKey) - for admins & executives
+2. Microsoft Authenticator app (push notification)
+3. TOTP app (Google Authenticator, Authy)
+4. SMS OTP (fallback only, least secure)
+
+Access Review:
+- Frequency: Quarterly for standard users, monthly for privileged users
+- Process: Manager certifies user access still required
+- Automated reminder: 7 days before review due
+- Non-compliance: Access automatically revoked after 14 days overdue
+
+Privileged Access Management (PAM):
+
+Admin Account Naming:
+- Format: admin-[username] (e.g., admin-jbudi for user jbudi)
+- Separation: Admin account separate dari standard user account
+- Usage: Admin account hanya untuk admin tasks, tidak untuk email/browsing
+
+Bastion Host / Jump Server:
+- All admin access ke servers harus via bastion host (10.30.1.200)
+- MFA required untuk login ke bastion
+- Session recording enabled (video + keystroke logging)
+- Retention: 1 year
+
+Sudo/Elevation Logging:
+- All sudo commands logged centrally
+- Real-time alerts untuk suspicious commands (e.g., userdel, rm -rf /)
+- Review: Weekly by Security Team
+
+=============================================================================
+4. NETWORK SECURITY
+=============================================================================
+
+Firewall Policy:
+- Default Deny: Block all traffic by default
+- Explicit Allow: Allow specific traffic only
+- Application-based: Rules based on application, not just port/protocol
+- Logging: All firewall hits logged (allows + blocks)
+
+Segmentation:
+- Production, User, Management, Lab networks isolated
+- No direct communication between segments without firewall inspection
+- DMZ untuk public-facing services (web, email gateway)
+
+Remote Access:
+- VPN mandatory untuk semua remote access ke corporate resources
+- Split tunneling disabled (all traffic via VPN untuk DLP monitoring)
+- VPN client auto-update enforced
+- Device compliance check before VPN access (endpoint security software running)
+
+Wireless Security:
+- WPA3-Enterprise untuk corporate SSID (802.1X authentication)
+- Guest WiFi isolated dari corporate network (internet-only access)
+- Rogue AP detection enabled (wireless IDS)
+- Client isolation enabled on guest WiFi
+
+Email Security:
+- SPAM filtering (>95% detection rate)
+- Malware scanning (Sandboxing untuk suspicious attachments)
+- Phishing protection (URL rewriting, safe links)
+- DMARC, SPF, DKIM configured untuk outbound email
+- Email encryption available (S/MIME, PGP)
+
+Web Security:
+- Web filtering (block malicious sites, adult content, high-risk categories)
+- SSL inspection untuk outbound traffic (privacy exceptions untuk banking, healthcare)
+- Safe search enforced (Google, Bing, YouTube)
+- Download restrictions (executables scanned before download)
+
+=============================================================================
+5. ENDPOINT SECURITY
+=============================================================================
+
+Mandatory Security Software:
+
+Windows Devices:
+- Antivirus: Microsoft Defender ATP + CrowdStrike Falcon
+- Firewall: Windows Firewall enabled (managed via GPO)
+- Encryption: BitLocker full-disk encryption (mandatory)
+- EDR: CrowdStrike Falcon Insight (detection & response)
+- Patch Management: WSUS (automated patching)
+
+macOS Devices:
+- Antivirus: CrowdStrike Falcon for Mac
+- Firewall: macOS firewall enabled
+- Encryption: FileVault full-disk encryption (mandatory)
+- EDR: CrowdStrike Falcon Insight
+
+Linux Devices:
+- Antivirus: CrowdStrike Falcon for Linux
+- Firewall: iptables/firewalld configured
+- Encryption: LUKS full-disk encryption (for laptops)
+
+Mobile Devices (MDM via Microsoft Intune):
+- PIN/Biometric lock (mandatory)
+- Encryption enabled (mandatory)
+- Remote wipe capability
+- App whitelisting (only approved apps installable)
+- Jailbreak/root detection (blocked if detected)
+
+Endpoint Security Compliance:
+- Antivirus definition: Updated daily (auto-update)
+- OS patches: Critical within 30 days, High within 60 days, Medium within 90 days
+- Application updates: Mandatory for critical applications (browsers, Office, PDF readers)
+- Compliance check: Automated scan weekly
+- Non-compliant devices: Network access blocked until compliant
+
+Device Hardening:
+
+Laptops/Desktops:
+- Local admin rights removed (standard users only)
+- Unnecessary services disabled (Telnet, FTP, SMBv1)
+- Screen lock: Auto-lock after 10 minutes idle
+- USB restrictions: Writeable USB disabled via GPO (read-only allowed)
+- Bluetooth disabled by default (enable by request for approved devices)
+
+Servers:
+- Minimal installation (no GUI unless required)
+- Services: Only required services running
+- Ports: Only required ports open (firewall applied)
+- Logging: Centralized logging to SIEM
+- Hardening baseline: CIS Benchmark Level 1 applied
+
+=============================================================================
+6. DATA PROTECTION & PRIVACY
+=============================================================================
+
+Data Encryption:
+
+Data at Rest:
+- Full-disk encryption mandatory untuk laptops (BitLocker/FileVault)
+- Database encryption: TDE (Transparent Data Encryption) for sensitive databases
+- File servers: CONFIDENTIAL+ data harus di encrypted folders
+- Removable media: Encrypted USB drives only (approved models)
+
+Data in Transit:
+- HTTPS/TLS 1.3 mandatory untuk semua web traffic
+- Email: TLS encryption untuk external email (opportunistic)
+- File transfer: SFTP/FTPS (no plain FTP)
+- Database connections: SSL/TLS encrypted
+- VPN: IPsec atau SSL VPN dengan AES-256
+
+Data Backup:
+
+Backup Scope:
+- Servers: Full backup weekly, incremental daily
+- Databases: Full daily, transaction log every 15 minutes
+- User files: OneDrive for Business (real-time sync)
+- Email: O365 retention policies (7 years)
+
+Backup Security:
+- Backup data encrypted (AES-256)
+- Backup media stored in secure location (fireproof safe)
+- Off-site backup: Copy di DR site Bandung
+- Cloud backup: AWS S3 with versioning & lifecycle policies
+- Backup testing: Restore test monthly (random sample)
+
+Retention:
+- Active data: Online storage
+- 1-3 years old: Nearline storage (access within 24 hours)
+- >3 years old: Archive storage (access within 7 days)
+- Legal hold: Separate retention for litigation/audit
+
+Data Disposal:
+
+Digital Data:
+- Secure erase: DoD 5220.22-M standard (minimum 3-pass overwrite)
+- SSD/Flash: Cryptographic erase or physical destruction
+- Decommissioned servers: Drives removed & destroyed (certificate of destruction)
+
+Physical Media:
+- Paper documents: Shredding (cross-cut shredder, particle size <4mm)
+- Hard drives: Physical destruction via shredding/degaussing
+- Backup tapes: Degaussing + physical destruction
+
+Data Loss Prevention (DLP):
+
+Email DLP:
+- Scan outbound emails untuk sensitive data patterns (NIK, credit card, confidential markings)
+- Block or encrypt emails containing sensitive data
+- User notification & admin alert
+
+Endpoint DLP:
+- Monitor file transfers (USB, cloud storage, email)
+- Block copy of CONFIDENTIAL+ files to USB
+- Alert on large file transfers (>1 GB)
+
+Network DLP:
+- Monitor network traffic untuk data exfiltration patterns
+- Block upload to unauthorized cloud storage
+- Alert on suspicious bulk data transfer
+
+=============================================================================
+7. INCIDENT RESPONSE & SECURITY OPERATIONS
+=============================================================================
+
+Security Incident Types:
+
+- Malware infection (virus, ransomware, spyware)
+- Phishing attack (email, SMS, social engineering)
+- Data breach (unauthorized access, data leak)
+- Account compromise (stolen credentials, insider threat)
+- DDoS attack
+- Physical security incident (device theft, unauthorized access)
+
+Incident Response Process:
+
+1. DETECTION
+   - Automated: SIEM alerts, EDR alerts, IDS/IPS alerts
+   - Manual: User reports suspicious activity
+   - Monitoring: SOC 24/7 monitoring
+
+2. TRIAGE & ANALYSIS
+   - Severity assessment: Critical, High, Medium, Low
+   - Initial investigation: Scope, affected systems, data involved
+   - Classification: True positive vs false positive
+
+3. CONTAINMENT
+   - Immediate: Isolate affected device from network
+   - Short-term: Disable compromised accounts, block malicious IPs
+   - Long-term: Patch vulnerabilities, update firewall rules
+
+4. ERADICATION
+   - Remove malware from infected systems
+   - Close attack vector (patch, configuration change)
+   - Verify no persistence mechanisms (rootkits, backdoors)
+
+5. RECOVERY
+   - Restore systems from clean backups
+   - Reset passwords for compromised accounts
+   - Verify system integrity before reconnecting to network
+   - Monitor for re-infection
+
+6. POST-INCIDENT REVIEW
+   - Document lessons learned
+   - Update procedures & playbooks
+   - Security awareness training (if user error involved)
+   - Report to management & authorities (if required by law)
+
+Incident Reporting:
+
+Internal Reporting:
+- All employees must report security incidents immediately
+- Hotline: (021) 8012-3456 ext. 911 (Security Hotline)
+- Email: security@brin.go.id
+- Portal: https://security.brin.go.id/report
+
+External Reporting (if required):
+- Personal data breach: Report to regulator within 72 hours (UU PDP)
+- Critical infrastructure incident: Report to BSSN (Badan Siber dan Sandi Negara)
+- Criminal activity: Report to Polri Cyber Crime Unit
+
+Security Metrics (SOC Dashboard):
+
+- Incident count: Total incidents per month
+- MTTD (Mean Time To Detect): Target <15 minutes
+- MTTR (Mean Time To Respond): Target <1 hour (critical), <4 hours (high)
+- False positive rate: Target <10%
+- Phishing test failure rate: Target <5%
+
+=============================================================================
+8. SECURITY AWARENESS & TRAINING
+=============================================================================
+
+Mandatory Security Training:
+
+New Employee Onboarding:
+- Security awareness basics (1 hour e-learning)
+- Acceptable use policy (sign acknowledgment)
+- Data classification & handling
+- Password & MFA setup
+
+Annual Refresher Training:
+- All employees: Security awareness update (30 minutes annual)
+- IT staff: Advanced security training (8 hours annual)
+- Developers: Secure coding training (16 hours annual)
+- Managers: Data privacy & compliance (2 hours annual)
+
+Phishing Simulation:
+- Frequency: Monthly simulated phishing emails
+- Failure threshold: >5% click rate triggers department-wide training
+- Reporting: Users who report phishing emails get recognition
+
+Security Champions Program:
+- Each department has designated Security Champion
+- Monthly meetings with Security Team
+- Security Champion gets advanced training
+- Acts as security liaison for department
+
+Security Awareness Topics:
+
+- Password security & MFA
+- Phishing & social engineering
+- Mobile device security
+- Data classification & handling
+- Physical security (badge access, tailgating)
+- Incident reporting
+- Secure remote work
+- BYOD security
+- Cloud security
+
+=============================================================================
+9. THIRD-PARTY & VENDOR SECURITY
+=============================================================================
+
+Vendor Risk Assessment:
+
+Pre-Contract:
+- Security questionnaire (based on risk level)
+- Vendor security assessment (for high-risk vendors)
+- Data processing agreement (DPA) if handling BRIN data
+- NDA (Non-Disclosure Agreement) mandatory
+
+Contract Requirements:
+- Security controls documented in SLA
+- Data location & sovereignty requirements (prefer Indonesia data center)
+- Incident notification (within 24 hours)
+- Right to audit clause
+- Data deletion upon contract termination
+
+Ongoing Monitoring:
+- Annual vendor security review
+- Vendor compliance verification (certifications: ISO 27001, SOC 2)
+- Incident tracking (vendor-caused incidents)
+
+Vendor Access Management:
+- Vendor accounts: Separate from employee accounts
+- Access duration: Limited to contract period + 30 days grace
+- Access level: Least privilege (only required access)
+- MFA mandatory untuk remote vendor access
+- Session monitoring: All vendor sessions logged & recorded
+
+=============================================================================
+10. CLOUD SECURITY
+=============================================================================
+
+Approved Cloud Services:
+
+Infrastructure (IaaS):
+- AWS (approved)
+- Azure (approved)
+- Google Cloud (approved)
+- Others: Require security review & approval
+
+SaaS Applications:
+- Microsoft 365 (approved - email, office apps, Teams)
+- Salesforce (approved - CRM)
+- ServiceNow (approved - ITSM)
+- Others: Require security review via IT request
+
+Cloud Security Controls:
+
+Identity & Access:
+- SSO (Single Sign-On) via Azure AD mandatory
+- MFA enforced for all cloud access
+- Role-based access control (RBAC)
+- Privileged access review quarterly
+
+Data Protection:
+- Data classification tags applied to cloud resources
+- CONFIDENTIAL+ data: Encryption mandatory (customer-managed keys)
+- Data residency: Prefer Southeast Asia region (Singapore/Jakarta)
+- DLP policies applied to O365
+
+Monitoring & Logging:
+- Cloud activity logs forwarded to on-premise SIEM
+- CASB (Cloud Access Security Broker): Microsoft Defender for Cloud Apps
+- Anomaly detection: Alerts for unusual activity (logins from new location, bulk download)
+
+Shadow IT Prevention:
+- CASB monitors for unauthorized cloud app usage
+- Network firewall blocks unapproved cloud storage (personal Dropbox, Google Drive)
+- Approved apps: OneDrive for Business, SharePoint Online
+
+=============================================================================
+11. PHYSICAL SECURITY
+=============================================================================
+
+Data Center Security:
+
+Perimeter:
+- 24/7 security guards
+- CCTV monitoring (30 days retention)
+- Vehicle barrier & checkpoint
+
+Access Control:
+- Badge access (RFID card) required
+- Mantrap/airlock entry (one person at a time)
+- Biometric verification for critical areas (fingerprint + badge)
+- Visitor log & escort mandatory
+
+Environmental Controls:
+- Fire suppression: FM-200 gaseous system (safe for equipment)
+- Temperature monitoring (18-27°C target)
+- Humidity monitoring (40-60% RH target)
+- Water leak detection under raised floor
+- UPS + diesel generator (99.99% uptime)
+
+Office Security:
+
+Badge Access:
+- All employees issued RFID access badge
+- Badge required for building entry + floor access
+- Lost badge: Report immediately, temporary badge issued, permanent replacement within 3 days
+- Termination: Badge deactivated immediately
+
+Clean Desk Policy:
+- CONFIDENTIAL+ documents must be locked when unattended
+- Screens locked when away from desk (Windows+L)
+- No sensitive information on whiteboards in common areas
+- Shred bins available for document disposal
+
+Visitor Management:
+- Visitor badge required (issued at reception)
+- Escort required for visitors (no unescorted access)
+- Visitor badge return upon exit
+- Visitor log retention: 2 years
+
+Device Security:
+- Laptops: Cable lock available for use in office
+- Theft reporting: Immediate report to security + IT (remote wipe initiated)
+- Device return: All devices returned upon termination (checked for company data)
+
+=============================================================================
+12. COMPLIANCE & AUDIT
+=============================================================================
+
+Regulatory Compliance:
+
+SPBE (Sistem Pemerintahan Berbasis Elektronik):
+- Annual SPBE assessment & rating
+- Compliance dengan Arsitektur SPBE Nasional
+- Integration dengan Single Sign-On Nasional (SSO Nasional)
+
+UU PDP (Perlindungan Data Pribadi):
+- Data privacy impact assessment (DPIA) untuk processing involving personal data
+- User consent management
+- Data subject rights: Access, rectification, erasure, portability
+- Breach notification within 72 hours
+
+ISO 27001:
+- Current certification: ISO 27001:2013
+- Re-certification audit: Every 3 years (next: 2026)
+- Surveillance audit: Annually
+- Continuous improvement: PDCA (Plan-Do-Check-Act) cycle
+
+Audit Requirements:
+
+Internal Audit:
+- Frequency: Annually
+- Scope: IT general controls, access controls, change management
+- Conducted by: Internal Audit Department
+
+External Audit:
+- ISO 27001 certification audit (annual surveillance, triennial re-cert)
+- Financial audit (IT controls testing) - annually
+- Vendor audits: As required by vendor contracts
+
+Security Assessment:
+
+Vulnerability Scanning:
+- Automated scanning: Weekly (external), monthly (internal)
+- Tool: Tenable Nessus, Qualys
+- Remediation SLA: Critical 7 days, High 30 days, Medium 90 days
+
+Penetration Testing:
+- Frequency: Annually (external), bi-annually (internal)
+- Scope: Web applications, network infrastructure, social engineering
+- Conducted by: Third-party security firm
+- Report: Executive summary to CIO/CISO, detailed report to Security Team
+
+Security Metrics & Reporting:
+
+Monthly Metrics (to IT Management):
+- Security incidents count & trend
+- Vulnerability remediation status
+- Patch compliance rate
+- Phishing simulation results
+- Access review completion rate
+
+Quarterly Metrics (to Executive Management):
+- Security program maturity score
+- Risk heat map
+- Compliance status (regulatory & standards)
+- Security investment & ROI
+
+=============================================================================
+13. ACCEPTABLE USE POLICY
+=============================================================================
+
+Allowed Use:
+- Corporate IT resources untuk business purposes
+- Incidental personal use (email, limited browsing during breaks) - allowed
+- Personal learning & development related to work - allowed
+
+Prohibited Use:
+- Illegal activities (hacking, piracy, illegal downloads)
+- Accessing inappropriate content (adult, gambling, hate speech)
+- Personal commercial activities (online selling, crypto mining)
+- Excessive personal use (streaming videos during work hours)
+- Sharing corporate credentials with anyone
+- Installing unauthorized software
+- Connecting unauthorized devices to corporate network
+
+Monitoring & Enforcement:
+- All IT usage monitored & logged (email, web browsing, file access)
+- Monitoring for security & compliance, not employee surveillance
+- Privacy: Personal content not intentionally reviewed unless security concern
+- Violation consequences: Verbal warning → written warning → suspension → termination
+
+=============================================================================
+CONTACT & REPORTING
+=============================================================================
+
+IT Security Team:
+- Email: security@brin.go.id
+- Phone: (021) 8012-3456 ext. 150
+- Security Hotline (24/7): ext. 911
+
+Report Security Incident:
+- Portal: https://security.brin.go.id/report
+- Email: incident@brin.go.id
+- Hotline: (021) 8012-3456 ext. 911 (prioritas 24/7)
+
+Report Policy Violation:
+- Ethics Hotline: ethics@brin.go.id
+- Anonymous Reporting: https://whistleblower.brin.go.id
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Security Team
+Approved by: Chief Information Security Officer (CISO)
+Classification: INTERNAL - MANDATORY COMPLIANCE
+Last Updated: 01 Januari 2025
+Next Review: 01 Juli 2025
+
+Acknowledgment: All BRIN employees must read and acknowledge this policy annually via the training portal.
+
+Change History:
+- v3.1 (01 Jan 2025): Update MFA requirements, add cloud security section
+- v3.0 (01 Jul 2024): Major revision - align with UU PDP, update DLP policies
+- v2.5 (01 Jan 2024): Update password policy, add PAM section
+- v2.0 (01 Jul 2023): Align with ISO 27001:2013 certification
+- v1.0 (01 Jan 2023): Initial version

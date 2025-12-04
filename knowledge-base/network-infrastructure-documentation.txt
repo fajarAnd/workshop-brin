@@ -1,0 +1,645 @@
+NETWORK INFRASTRUCTURE DOCUMENTATION
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: DOC-NET-001
+Version: 2.4
+Effective Date: 01 Januari 2025
+Classification: INTERNAL USE ONLY
+
+=============================================================================
+1. NETWORK TOPOLOGY OVERVIEW
+=============================================================================
+
+BRIN Network Architecture:
+- Total Sites: 12 locations across Indonesia
+- Main Data Center: Jakarta (Cibinong Science Center)
+- DR Site: Bandung (Geostech Center)
+- Regional Offices: 10 locations
+
+Network Segmentation:
+1. Production Network (10.10.0.0/16)
+   - Core Services: 10.10.1.0/24
+   - Application Servers: 10.10.10.0/23
+   - Database Servers: 10.10.20.0/24
+   - Web/DMZ: 10.10.100.0/24
+
+2. User Network (10.20.0.0/16)
+   - Executive: 10.20.1.0/24 (priority QoS)
+   - Research Staff: 10.20.10.0/22
+   - Administrative: 10.20.20.0/22
+   - Guest WiFi: 10.20.100.0/24 (isolated)
+
+3. Management Network (10.30.0.0/24)
+   - Network Management: 10.30.1.0/26
+   - Server Management: 10.30.1.64/26
+   - Storage Management: 10.30.1.128/26
+
+4. Lab/Research Network (10.40.0.0/16)
+   - AI/ML Lab: 10.40.10.0/24
+   - IoT Research: 10.40.20.0/24
+   - Testing Environment: 10.40.100.0/22
+
+Internet Connectivity:
+- Primary ISP: Telkom IndiHome Fiber 1 Gbps (dedicated)
+- Secondary ISP: Biznet Fiber 500 Mbps (backup & load balancing)
+- Total Bandwidth: 1.5 Gbps aggregate
+- Uptime SLA: 99.9%
+
+Inter-Site Connectivity:
+- MPLS VPN: 100 Mbps per site (primary)
+- Site-to-Site VPN over internet: Backup connectivity
+- Direct fiber link: Jakarta - Bandung (10 Gbps)
+
+=============================================================================
+2. CORE NETWORK INFRASTRUCTURE
+=============================================================================
+
+A. CORE SWITCHES (Data Center)
+
+Primary Core Switch:
+- Model: Cisco Catalyst 9500-48Y4C
+- Location: Data Center Rack A-01
+- Management IP: 10.30.1.1
+- Role: Primary core, Layer 3 routing
+- Uplinks: 4x 100GbE to distribution switches
+- Redundancy: VSS (Virtual Switching System) with secondary core
+- Power: Dual PSU, connected to UPS + generator
+
+Secondary Core Switch:
+- Model: Cisco Catalyst 9500-48Y4C
+- Location: Data Center Rack A-02
+- Management IP: 10.30.1.2
+- Role: Secondary core (VSS pair with primary)
+- Status: Active-Active (load balancing)
+
+Configuration Highlights:
+- OSPF routing (area 0 backbone)
+- HSRP for default gateway redundancy
+- 802.1Q VLAN trunking
+- Jumbo frames enabled (MTU 9000) untuk storage network
+- Storm control & broadcast suppression
+
+---
+
+B. DISTRIBUTION SWITCHES (Floor/Building)
+
+Typical Distribution Switch:
+- Model: Cisco Catalyst 9300-48P
+- Quantity: 18 units (per floor/wing)
+- Management IP: 10.30.1.10-27
+- Features: PoE+, Layer 3 lite, stacking
+- Uplinks: 4x 10GbE fiber to core (LACP bond)
+- Access: 48x 1GbE ports for access switches
+
+Distribution Layer Functions:
+- VLAN routing (Inter-VLAN routing)
+- Access control lists (ACLs)
+- QoS policy enforcement
+- DHCP relay
+- Multicast routing (PIM sparse mode untuk video conferencing)
+
+---
+
+C. ACCESS SWITCHES (Office/Lab)
+
+Standard Office Access Switch:
+- Model: Cisco Catalyst 9200-24P
+- Quantity: 85 units
+- Features: 24x 1GbE PoE+, 4x 1GbE SFP uplink
+- Deployment: Per office area (~30 users per switch)
+- Management: Centralized via Cisco DNA Center
+- PoE Budget: 370W (untuk IP phones, WiFi APs, cameras)
+
+Lab/Research Access Switch:
+- Model: Cisco Catalyst 9300-24UX (higher performance)
+- Quantity: 15 units
+- Features: 24x multi-gig (1/2.5/5/10G), PoE++
+- Use Case: High-performance computing, IoT research, specialized equipment
+
+Access Layer Security:
+- 802.1X authentication (port-based NAC)
+- Dynamic VLAN assignment
+- DHCP snooping
+- ARP inspection
+- Port security (MAC limiting)
+
+---
+
+D. WIRELESS NETWORK
+
+Wireless LAN Controller (WLC):
+- Model: Cisco Catalyst 9800-40
+- Location: Data Center
+- Management IP: 10.30.1.50
+- Capacity: Support up to 2,000 APs
+- Current AP Count: 320 APs
+
+Access Point Distribution:
+- Model: Cisco Catalyst 9130AXI (WiFi 6E)
+- Total: 320 APs deployed
+- Coverage: 98% of BRIN facilities
+- Average density: 1 AP per 100 m²
+
+SSID Configuration:
+
+1. BRIN-Corporate (WPA3-Enterprise)
+   - VLAN: 10.20.10.0/22
+   - Authentication: 802.1X (AD integration)
+   - Encryption: WPA3-Enterprise (AES)
+   - Access: Full corporate network access
+   - Client: Laptops, corporate mobile devices
+
+2. BRIN-Guest (WPA3-Personal)
+   - VLAN: 10.20.100.0/24 (isolated)
+   - Authentication: Captive portal (sponsored guest)
+   - Bandwidth limit: 10 Mbps per user
+   - Session timeout: 8 hours
+   - Access: Internet only (no corporate resources)
+
+3. BRIN-IoT (WPA2-PSK)
+   - VLAN: 10.40.20.0/24
+   - Authentication: Pre-shared key (rotated quarterly)
+   - Access: Limited to IoT services only
+   - Client: IoT sensors, smart building systems
+
+4. BRIN-Lab (WPA3-Enterprise)
+   - VLAN: 10.40.10.0/24
+   - Authentication: 802.1X
+   - Access: Lab resources + internet
+   - Client: Research equipment, lab devices
+
+WiFi Performance Standards:
+- Minimum signal strength: -67 dBm
+- Target: -65 dBm or better for 95% coverage
+- Channel utilization: <60% during peak hours
+- Roaming latency: <50ms
+
+=============================================================================
+3. INTERNET & PERIMETER SECURITY
+=============================================================================
+
+Firewall Cluster:
+
+Primary Firewall:
+- Model: Palo Alto PA-5220
+- Location: Data Center Edge
+- Management IP: 10.30.1.100
+- Role: Primary internet firewall
+- Throughput: 64 Gbps, 16 Gbps Threat Prevention
+- Licenses: Threat Prevention, URL Filtering, WildFire, GlobalProtect
+
+Secondary Firewall:
+- Model: Palo Alto PA-5220
+- Role: HA pair (Active-Passive)
+- Sync: HA link via dedicated 10GbE
+
+Firewall Zones:
+- OUTSIDE: Internet-facing (untrusted)
+- DMZ: Public-facing services (web, email)
+- INSIDE: Internal corporate network
+- LAB: Research network (isolated)
+- MGMT: Management network
+
+Security Policies:
+- Default deny all
+- Explicit allow rules per application
+- Geo-blocking: Block high-risk countries (except for research purposes)
+- IPS/IDS: All traffic inspection
+- SSL decryption: Enabled for outbound traffic (with privacy exceptions)
+
+Web Filtering:
+- Category blocking: Gambling, adult content, malware sites
+- Safe search enforcement
+- Download restrictions: Executable files scanned via WildFire
+- Bandwidth management: YouTube/streaming limited to 480p during work hours
+
+---
+
+VPN Infrastructure:
+
+Remote Access VPN (SSL VPN):
+- Platform: Palo Alto GlobalProtect
+- Capacity: 1,000 concurrent users
+- Authentication: MFA required (AD + OTP via Microsoft Authenticator)
+- Split tunneling: Disabled (all traffic via VPN)
+- Assigned IP Pool: 10.50.0.0/22
+- Client OS: Windows 10/11, macOS 12+, iOS 15+, Android 11+
+
+Site-to-Site VPN:
+- Protocol: IPsec (IKEv2)
+- Encryption: AES-256-GCM
+- Perfect Forward Secrecy: DH Group 14
+- Tunnels: 12 active tunnels (1 per regional office)
+- Backup: Auto-failover to secondary ISP if primary down
+
+VPN Usage Statistics (Average):
+- Peak concurrent users: 450 users (COVID period max: 850)
+- Average session duration: 6.5 hours
+- Top applications via VPN: Email (35%), file shares (25%), ERP (20%)
+
+=============================================================================
+4. NETWORK SERVICES
+=============================================================================
+
+A. DNS (Domain Name System)
+
+Primary DNS Server:
+- IP: 10.10.1.10
+- Platform: Windows Server 2022 (Active Directory integrated)
+- Role: Authoritative for brin.go.id internal zone
+- Forwarders: 1.1.1.1 (Cloudflare), 8.8.8.8 (Google)
+
+Secondary DNS Server:
+- IP: 10.10.1.11
+- Role: Backup DNS, AD replication
+
+DNS Zones:
+- brin.go.id (internal AD zone)
+- 10.in-addr.arpa (reverse DNS for internal IPs)
+
+External DNS:
+- Provider: Cloudflare
+- Domain: brin.go.id (public)
+- Records managed via Terraform automation
+
+---
+
+B. DHCP (Dynamic Host Configuration Protocol)
+
+DHCP Servers:
+- Primary: 10.10.1.20 (Windows Server 2022)
+- Secondary: 10.10.1.21 (failover pair, load balancing)
+
+DHCP Scopes:
+- Research Staff: 10.20.10.0/22 (1,000 IPs, lease 8 hours)
+- Administrative: 10.20.20.0/22 (1,000 IPs, lease 8 hours)
+- Guest WiFi: 10.20.100.0/24 (254 IPs, lease 2 hours)
+- Lab/IoT: 10.40.20.0/24 (254 IPs, lease 24 hours)
+
+DHCP Options:
+- Option 3: Default gateway
+- Option 6: DNS servers (10.10.1.10, 10.10.1.11)
+- Option 15: DNS domain (brin.go.id)
+- Option 42: NTP servers (10.10.1.30, 10.10.1.31)
+- Option 66/67: PXE boot server (untuk network boot imaging)
+
+---
+
+C. NTP (Network Time Protocol)
+
+Primary NTP Server:
+- IP: 10.10.1.30
+- Sync source: GPS time source + internet NTP pool
+- Stratum: 1 (primary reference)
+
+Secondary NTP Server:
+- IP: 10.10.1.31
+- Sync source: Primary NTP + internet NTP pool
+- Stratum: 2
+
+Client Configuration:
+- All network devices sync to internal NTP
+- All servers sync to internal NTP
+- User workstations sync via AD (domain time)
+
+---
+
+D. PROXY SERVER
+
+Web Proxy:
+- Platform: Squid Proxy + pfSense
+- IP: 10.10.1.40
+- Role: HTTP/HTTPS proxy with caching
+- Cache size: 500 GB SSD
+- Bandwidth savings: ~20% (cached content)
+
+Proxy Features:
+- URL filtering integration with firewall
+- SSL bump (HTTPS inspection) for security scanning
+- Bandwidth throttling per user
+- Download quotas (5 GB/day per user default)
+
+Proxy Exceptions:
+- O365 traffic (direct internet, bypass proxy untuk performance)
+- Windows Update (bypass proxy)
+- Whitelisted research domains
+
+=============================================================================
+5. MONITORING & MANAGEMENT
+=============================================================================
+
+Network Management System:
+
+Platform: Cisco DNA Center
+- Version: 2.3.5
+- Management IP: 10.30.1.60
+- Functions:
+  * Centralized device configuration
+  * Firmware management
+  * Policy automation
+  * Network assurance & analytics
+  * Troubleshooting workflows
+
+Monitoring Tools:
+
+1. SolarWinds Network Performance Monitor (NPM)
+   - IP: 10.30.1.70
+   - Monitors: Bandwidth, latency, packet loss, device health
+   - Polling interval: 2 minutes
+   - Retention: 1 year (aggregated data)
+
+2. Nagios Core
+   - IP: 10.30.1.71
+   - Monitors: Service availability, ping, SNMP traps
+   - Alerting: Email, SMS, PagerDuty integration
+   - SLA reporting: Monthly uptime reports
+
+3. ELK Stack (Elasticsearch, Logstash, Kibana)
+   - IP: 10.30.1.80
+   - Log collection: Syslog from all network devices
+   - Retention: 90 days
+   - Use case: Security analysis, troubleshooting, compliance
+
+4. NetFlow Analyzer
+   - IP: 10.30.1.75
+   - Data source: NetFlow from routers & core switches
+   - Analysis: Traffic patterns, top talkers, application usage
+   - Bandwidth capacity planning
+
+Performance Baselines:
+- Average bandwidth utilization: 40% (peak), 15% (off-peak)
+- Average latency LAN: <1 ms
+- Average latency WAN (inter-site): <10 ms
+- Packet loss: <0.1%
+
+Alerting Thresholds:
+- Interface utilization >80%: Warning
+- Interface utilization >90%: Critical
+- Interface errors >100/hour: Warning
+- Device CPU >80% for 5 min: Warning
+- Device memory >90%: Critical
+- Link down: Critical (immediate SMS + email)
+
+=============================================================================
+6. NETWORK MAINTENANCE & CHANGE MANAGEMENT
+=============================================================================
+
+Scheduled Maintenance Windows:
+
+Standard Maintenance:
+- Frequency: Monthly (first Saturday of the month)
+- Time: 22:00 - 06:00 WIB (Sunday morning)
+- Scope: Firmware updates, configuration changes, hardware replacement
+- Notification: Email sent H-7 to all users
+
+Emergency Maintenance:
+- Approval: IT Manager + CIO (untuk critical infrastructure)
+- Notification: Minimum 4 hours advance notice (if possible)
+- Scope: Security patches, critical bug fixes, hardware failure response
+
+Change Management Process:
+
+1. Change Request (CR) Submission
+   - Submit via ServiceNow Change Management module
+   - Include: Description, impact analysis, rollback plan, testing evidence
+
+2. Change Advisory Board (CAB) Review
+   - Meeting: Every Wednesday 14:00 WIB
+   - Members: IT Manager, Network Team Lead, Security Team, App owners
+   - Decision: Approve, Reject, Request more info
+
+3. Implementation
+   - Standard change: Implement in next maintenance window
+   - Emergency change: Implement ASAP with approval
+   - High-risk change: Require peer review + testing in lab first
+
+4. Post-Implementation Review
+   - Verify change success
+   - Update documentation
+   - Close change ticket
+   - Lessons learned (if incident occurred)
+
+=============================================================================
+7. COMMON NETWORK ISSUES & TROUBLESHOOTING
+=============================================================================
+
+Issue 1: Slow Internet / Network Performance
+
+Troubleshooting Steps:
+1. Check user device:
+   - Restart network adapter
+   - Check WiFi signal strength (should be >-67 dBm)
+   - Disconnect VPN and test (VPN adds latency)
+   - Test wired connection (bypass WiFi)
+
+2. Check local network:
+   - Ping default gateway (should be <1ms response)
+   - Check switch port errors (show interface status)
+   - Verify VLAN assignment correct
+
+3. Check upstream:
+   - Ping 8.8.8.8 (test internet connectivity)
+   - Traceroute to identify where latency occurs
+   - Check bandwidth utilization on firewall/router
+
+4. Check ISP:
+   - Verify ISP link status (up/down)
+   - Check ISP provided metrics
+   - Escalate to ISP if needed
+
+Common Causes:
+- WiFi interference or low signal
+- Broadcast storm (loop in network)
+- ISP issue or DDoS attack
+- Bandwidth saturation (large file download/upload)
+- Application issue (not network issue)
+
+---
+
+Issue 2: Cannot Connect to WiFi
+
+Troubleshooting Steps:
+1. Verify SSID visibility:
+   - Check if SSID broadcasting
+   - Check if device supports WiFi frequency (2.4GHz vs 5GHz vs 6GHz)
+
+2. Verify authentication:
+   - BRIN-Corporate: Ensure AD account active, password correct
+   - Check 802.1X certificate validity
+   - Check if account locked (too many failed attempts)
+
+3. Verify device compliance:
+   - Check if device registered in MDM (untuk corporate SSID)
+   - Check if device OS supported (iOS 15+, Android 10+, Windows 10+)
+
+4. Check AP status:
+   - Verify AP online (check WLC)
+   - Check AP client count (max 50 clients per AP, might be saturated)
+   - Check for RF interference
+
+5. Network team escalation:
+   - If issue persists, create ticket with: Device type, OS version, SSID, location, screenshot error
+
+---
+
+Issue 3: VPN Connection Fails
+
+Troubleshooting Steps:
+1. Verify credentials:
+   - Ensure AD password correct
+   - Ensure MFA/OTP available and correct
+   - Check account not locked
+
+2. Verify VPN client:
+   - Check GlobalProtect client version (update to latest)
+   - Check VPN portal URL correct (vpn.brin.go.id)
+   - Restart VPN client
+
+3. Check local network:
+   - Ensure internet connection working
+   - Check if corporate firewall/proxy blocking VPN (port 443, 4501)
+   - Try different network (mobile hotspot vs home WiFi)
+
+4. Verify VPN capacity:
+   - Check if VPN gateway at capacity (max 1,000 users)
+   - Check VPN gateway status
+
+5. Escalate:
+   - Create ticket with: Error message screenshot, VPN log export, OS version
+
+---
+
+Issue 4: Cannot Access Shared Drive / Internal Application
+
+Troubleshooting Steps:
+1. Verify network connectivity:
+   - Ping file server (e.g., ping 10.10.10.50)
+   - Check if on correct network (corporate network, not guest WiFi)
+   - If remote, verify VPN connected
+
+2. Verify credentials:
+   - Ensure logged in with correct AD account
+   - Check if account has permission to resource
+   - Try accessing with UNC path: \\fileserver\share
+
+3. Verify DNS resolution:
+   - Check if can resolve internal hostnames (nslookup fileserver.brin.go.id)
+   - Check DNS settings (should be 10.10.1.10, 10.10.1.11)
+
+4. Check application/service status:
+   - Verify file server or application server online
+   - Check if service running (ask IT Support to verify)
+
+5. Check firewall rules:
+   - Verify traffic allowed from user's subnet to server
+   - Check if any recent firewall policy changes
+
+=============================================================================
+8. NETWORK SECURITY POLICIES
+=============================================================================
+
+Access Control:
+- Default deny policy (explicit allow only)
+- Principle of least privilege
+- Network segmentation enforced via VLANs + firewall
+- Inter-VLAN routing via firewall (not Layer 3 switches) untuk visibility
+
+Acceptable Use:
+- Corporate network untuk business use only
+- Personal use allowed during break (limited bandwidth)
+- Prohibited: P2P file sharing, torrenting, illegal content, excessive streaming
+- Monitoring: All traffic logged for security & compliance
+
+Password Policy (Network Devices):
+- Minimum 16 characters
+- Complex password required (uppercase, lowercase, numbers, symbols)
+- Password rotation: Every 90 days
+- No password reuse (last 10 passwords)
+- MFA required for privileged access
+
+Device Hardening:
+- Disable unused services & ports
+- Enable SSH only (disable Telnet)
+- SNMP v3 only (encrypted)
+- Login banner displayed (unauthorized access warning)
+- Console access requires physical security
+
+Patch Management:
+- Security patches: Within 30 days of release (critical), 90 days (high)
+- Firmware updates: Tested in lab first
+- Change management approval required
+- Maintenance window for production deployment
+
+=============================================================================
+9. DISASTER RECOVERY & BUSINESS CONTINUITY
+=============================================================================
+
+Network Redundancy:
+
+- Dual ISP: Auto-failover within 30 seconds
+- Dual core switches: VSS (Virtual Switching System) - zero downtime
+- Dual WLC: SSO (Stateful Switchover) - seamless AP failover
+- Dual firewall: Active-Passive HA - sub-second failover
+- Dual PSU on all critical devices
+- UPS: 30 minutes runtime + generator auto-start
+
+Backup Strategy:
+
+Configuration Backups:
+- Frequency: Daily (automated via Ansible)
+- Retention: 30 days (daily), 12 months (monthly)
+- Storage: On-premise + cloud (AWS S3)
+- Encryption: AES-256
+
+Disaster Recovery Plan:
+
+RTO (Recovery Time Objective):
+- Core network: 1 hour
+- Internet connectivity: 30 minutes
+- User WiFi: 2 hours
+- VPN: 1 hour
+
+RPO (Recovery Point Objective):
+- Configuration: 24 hours (daily backup)
+- Monitoring data: 5 minutes (real-time replication)
+
+DR Site (Bandung):
+- Hot standby for critical services
+- Automatic failover for core services
+- Manual failover for non-critical services
+- Regular DR drills: Quarterly
+
+=============================================================================
+CONTACT & SUPPORT
+=============================================================================
+
+Network Operations Center (NOC):
+- Email: noc@brin.go.id
+- Phone: (021) 8012-3456 ext. 180
+- WhatsApp: +62 812-NOC-BRIN
+- Location: Data Center, Gedung A Lantai 1
+
+Network Team:
+- Network Manager: network.manager@brin.go.id
+- Network Engineers: Available 24/7 (on-call rotation)
+
+Escalation:
+- L1: IT Support Helpdesk
+- L2: Network Engineers
+- L3: Network Manager / Vendor Support
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: Network Engineering Team
+Approved by: IT Infrastructure Manager
+Classification: INTERNAL USE ONLY
+Last Updated: 01 Januari 2025
+Next Review: 01 Juli 2025
+
+Change History:
+- v2.4 (01 Jan 2025): Update firewall model, WiFi 6E deployment
+- v2.3 (01 Jul 2024): Add VPN statistics, update monitoring tools
+- v2.2 (01 Jan 2024): Revised network segmentation, add IoT VLAN
+- v2.0 (01 Jul 2023): Major revision - new data center topology
+- v1.0 (01 Jan 2023): Initial version

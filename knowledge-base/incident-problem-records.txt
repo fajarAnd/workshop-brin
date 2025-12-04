@@ -1,0 +1,596 @@
+IT INCIDENT & PROBLEM RECORDS
+BRIN (Badan Riset dan Inovasi Nasional)
+Document ID: INC-DB-001
+Version: 1.5
+Effective Date: 01 Januari 2025
+Purpose: Knowledge Base of Common IT Incidents & Resolutions
+
+=============================================================================
+INTRODUCTION
+=============================================================================
+
+Dokumen ini berisi record incident dan problem yang pernah terjadi di BRIN beserta solusi yang sudah terbukti efektif. Tujuannya untuk:
+- Mempercepat troubleshooting dengan referensi historical solutions
+- Mengurangi repeat incidents dengan root cause analysis
+- Knowledge transfer dari senior ke junior IT staff
+- Continuous improvement dari incident management process
+
+Incident vs Problem:
+- Incident: Unplanned interruption atau reduction in quality of IT service
+- Problem: Root cause dari satu atau lebih incidents
+- Workaround: Temporary solution (reduces impact but doesn't fix root cause)
+- Known Error: Problem yang sudah ada documented root cause & workaround
+- Resolution: Permanent solution yang fix root cause
+
+=============================================================================
+INCIDENT CATEGORY: EMAIL ISSUES
+=============================================================================
+
+INC-2024-0234 - Cannot Send Emails (Mailbox Full)
+
+Date: 15 November 2024
+Priority: P3
+Affected Users: 1 (Dr. Siti Rahma - Research Division)
+Symptoms:
+- User cannot send emails
+- Error message: "Your mailbox is full. Please delete some items to free space."
+- Emails stuck in Outbox
+
+Root Cause:
+- User mailbox 49.8 GB / 50 GB (99.6% full)
+- Archive policy not enabled for this user
+- Large attachments accumulated over 3 years
+
+Resolution:
+1. Enabled Online Archive for user (added 100 GB archive mailbox)
+2. Set auto-archive policy: Emails older than 2 years → move to archive
+3. Deleted emails from Deleted Items folder (recovered 8 GB)
+4. User deleted old emails with large attachments (recovered 5 GB)
+5. Mailbox reduced to 37 GB, emails sending normally
+
+Preventive Action:
+- Enabled auto-archive policy for all users with mailbox >80% full
+- Created alert: Email to user when mailbox reaches 90%
+- Quarterly mailbox cleanup reminders
+
+---
+
+INC-2024-0567 - Email Delivery Delayed (SPF Configuration Issue)
+
+Date: 22 November 2024
+Priority: P2
+Affected Users: All external email recipients
+Symptoms:
+- Emails to external domains (Gmail, Yahoo) delayed 2-4 hours
+- No bounce-back errors
+- Internal emails delivered instantly
+
+Root Cause:
+- SPF record incomplete after domain migration
+- Missing new mail server IP addresses in SPF record
+- External mail servers quarantining emails for additional checks
+
+Resolution:
+1. Updated DNS SPF record to include all mail server IPs:
+   OLD: v=spf1 include:spf.protection.outlook.com ~all
+   NEW: v=spf1 ip4:203.130.xxx.0/24 include:spf.protection.outlook.com ~all
+2. Verified SPF: https://mxtoolbox.com/spf.aspx
+3. Waited 24 hours for DNS propagation
+4. Tested email delivery to Gmail, Yahoo, Hotmail - all delivered within 2 minutes
+
+Lessons Learned:
+- Always update SPF/DKIM/DMARC when changing mail infrastructure
+- Test external email delivery after DNS changes
+- Monitor mail queue for anomalies
+
+Known Error Entry: KE-2024-011 (Mail delivery delayed after DNS changes)
+
+=============================================================================
+INCIDENT CATEGORY: NETWORK CONNECTIVITY
+=============================================================================
+
+INC-2024-0123 - Slow Internet Access (ISP Routing Issue)
+
+Date: 08 November 2024
+Priority: P1
+Affected Users: All users (entire organization)
+Symptoms:
+- Internet extremely slow (pages timeout)
+- Internal network fast
+- Ping to 8.8.8.8: 800-1500ms (normal <20ms)
+- Packet loss 15-30%
+
+Root Cause:
+- Primary ISP (Telkom) routing issue
+- BGP route flapping to international destinations
+- Traffic congested through suboptimal path (Jakarta → Singapore → Europe → US instead of direct Jakarta → US)
+
+Workaround:
+- Manually failed over to Secondary ISP (Biznet) within 15 minutes
+- Internet restored, latency back to normal (<30ms)
+
+Resolution:
+- Escalated to Telkom NOC (Network Operations Center)
+- Telkom fixed BGP routing within 4 hours
+- Failed back to primary ISP
+- Confirmed latency & packet loss normal
+
+Post-Incident Actions:
+- Configured automatic ISP failover (if latency >200ms for 5 minutes → auto-failover)
+- Implemented dual-ISP load balancing (50/50 traffic split)
+- Setup monitoring alert: ISP latency >100ms → notify Network Team
+
+Incident Duration: 4 hours 20 minutes
+Downtime: 15 minutes (during manual failover)
+
+---
+
+INC-2024-0445 - WiFi Connection Drops (Channel Interference)
+
+Date: 18 November 2024
+Priority: P2
+Affected Users: Building B, Floor 3 (approx. 40 users)
+Symptoms:
+- WiFi disconnects every 5-10 minutes
+- Signal strength good (-60 dBm)
+- Reconnect automatically but disruptive
+
+Root Cause:
+- Wireless channel interference from neighboring building
+- 5 GHz channels overlapping with external APs
+- New office building next door installed WiFi last week
+
+Resolution:
+1. Performed wireless site survey (Cisco Prime Infrastructure)
+2. Identified interfering channels: 36, 40, 44, 48
+3. Reconfigured APs to use DFS channels (100, 104, 108, 112)
+4. Enabled CleanAir to auto-avoid interference
+5. Reduced AP transmit power (was 100%, reduced to 50%) - counter-intuitive but reduces co-channel interference
+
+Testing:
+- Monitored for 48 hours post-change
+- No disconnections reported
+- Channel utilization <40% (healthy)
+
+Preventive Action:
+- Enabled dynamic channel assignment (auto-adjust if new interference detected)
+- Quarterly wireless site survey to identify interference
+- Documented recommended channels per building
+
+Known Error Entry: KE-2024-015 (WiFi interference from external sources)
+
+=============================================================================
+INCIDENT CATEGORY: VPN ACCESS
+=============================================================================
+
+INC-2024-0789 - VPN Connection Fails (Certificate Expiry)
+
+Date: 30 November 2024
+Priority: P1
+Affected Users: All remote users (450+ users)
+Symptoms:
+- Cannot connect to VPN
+- Error: "The server certificate has expired"
+- Started at 06:00 WIB
+
+Root Cause:
+- VPN gateway SSL certificate expired at 00:00 WIB 30 November
+- Certificate renewal scheduled but not executed (procedural miss)
+- Auto-renewal failed due to changed email address in certificate authority
+
+Resolution:
+1. Emergency certificate renewal via manual process
+   - Generated new CSR on firewall
+   - Requested expedited certificate from DigiCert
+   - Received certificate within 2 hours (SLA: 24 hours, negotiated emergency)
+2. Installed new certificate on VPN gateway (06:45 WIB)
+3. Tested VPN connection from multiple devices - successful
+4. Notified all users via email & WhatsApp blast (07:00 WIB)
+
+Incident Duration: 1 hour 45 minutes (06:00-07:45 WIB)
+Impact: High (all remote workers unable to work during incident)
+
+Root Cause Analysis:
+- Certificate expiry reminder sent to wrong email (old admin left company)
+- No secondary reminder or monitoring alert configured
+- Manual process relied on single person
+
+Corrective Actions:
+1. Implemented automated certificate expiry monitoring
+   - Alert 60, 30, 14, 7, 3 days before expiry
+   - Multiple recipients (team distribution list, not individual)
+2. Configured auto-renewal where possible (Let's Encrypt for internal services)
+3. Created certificate inventory spreadsheet with expiry dates
+4. Quarterly certificate review meeting
+
+Known Error Entry: KE-2024-018 (Certificate expiry causing service outage)
+
+---
+
+INC-2024-0654 - VPN Slow Performance (MTU Mismatch)
+
+Date: 25 November 2024
+Priority: P3
+Affected Users: Multiple remote users (15-20 users reported)
+Symptoms:
+- VPN connected successfully
+- Web browsing slow or intermittent
+- Large file transfers timeout
+- Ping works, but HTTP/HTTPS slow
+
+Root Cause:
+- MTU (Maximum Transmission Unit) mismatch
+- VPN tunnel MTU: 1400 bytes
+- User ISP: 1500 bytes (standard Ethernet)
+- Packets fragmented, causing performance degradation
+
+Resolution:
+1. Identified issue via packet capture (Wireshark): Fragmented packets, TCP retransmissions
+2. Configured VPN client to use MTU 1400:
+   - GlobalProtect → Settings → Advanced → MTU 1400
+3. Alternatively, users can configure Windows MTU:
+   ```
+   netsh interface ipv4 set subinterface "WiFi" mtu=1400 store=persistent
+   ```
+4. Tested: Web browsing fast, file transfers successful
+
+Workaround:
+- Set VPN client MTU to 1400 (documented in VPN user manual)
+
+Long-term Fix:
+- Configured VPN gateway to automatically negotiate MTU with client (MSS clamping)
+- Updated VPN client deployment package to include MTU setting
+
+Known Error Entry: KE-2024-013 (VPN performance issues due to MTU)
+
+=============================================================================
+INCIDENT CATEGORY: SYSTEM/APPLICATION FAILURES
+=============================================================================
+
+INC-2024-0912 - File Server Inaccessible (Storage Full)
+
+Date: 05 Desember 2024
+Priority: P1
+Affected Users: All users (shared drive access)
+Symptoms:
+- Cannot save files to shared drive
+- Error: "There is not enough space on the disk"
+- Existing files readable but cannot modify
+
+Root Cause:
+- File server storage 99.8% full (24.95 TB / 25 TB)
+- User accidentally copied entire video library (800 GB) to shared drive
+- No storage quota enforcement
+
+Immediate Workaround:
+1. Identified large files: Directory size analysis tool (TreeSize)
+2. Found 800 GB video folder created yesterday
+3. Contacted user (confirmed accidental copy)
+4. Deleted video folder
+5. Storage reduced to 96% (24 TB / 25 TB)
+6. File save operations resumed
+
+Resolution:
+1. Implemented storage quotas per department:
+   - Research: 5 TB
+   - Administration: 2 TB
+   - Management: 1 TB
+   - Projects: 3 TB (per project folder)
+2. Enabled quota alerts: Email when 80%, 90%, 95% full
+3. Created file retention policy:
+   - Files not accessed in 2 years → archive to cold storage
+   - Files not accessed in 5 years → candidate for deletion (with approval)
+4. Purchased additional storage (10 TB expansion)
+
+Preventive Actions:
+- Weekly storage utilization report
+- Monthly top 10 storage consumers review
+- User education: Use OneDrive for personal files, shared drive for team files only
+
+---
+
+INC-2024-0543 - Database Connection Timeout (Connection Pool Exhausted)
+
+Date: 20 November 2024
+Priority: P1
+Affected System: SIMBRIS (Research Information System)
+Symptoms:
+- Users cannot login to SIMBRIS
+- Error: "Database connection timeout"
+- Started at 09:30 WIB (peak usage time)
+
+Root Cause:
+- Database connection pool exhausted (max 100 connections, all in use)
+- Application not releasing connections properly (connection leak)
+- Bug in recent application update (deployed 19 Nov)
+
+Immediate Workaround:
+1. Restarted application server (released stuck connections)
+2. Increased connection pool size: 100 → 200 (temporary)
+3. System restored, users can login
+
+Root Cause Investigation:
+1. Reviewed application logs: Identified connection leak in new report module
+2. Reviewed code: Missing connection.close() in finally block
+3. Database connections not returned to pool after query execution
+
+Resolution:
+1. Developer fixed code bug (added proper connection handling)
+2. Tested fix in UAT environment
+3. Deployed hotfix to production (same day, 16:00 WIB)
+4. Reduced connection pool back to 100 (verified no leaks)
+5. Monitored for 72 hours - no recurrence
+
+Lessons Learned:
+- Code review should catch resource leaks (connection, file handles)
+- Load testing should be performed before production deployment
+- Monitor connection pool usage (alert if >80% utilized)
+
+Post-Incident Actions:
+- Added database connection monitoring dashboard
+- Implemented automated connection leak detection
+- Enhanced code review checklist (resource cleanup verification)
+
+=============================================================================
+INCIDENT CATEGORY: SECURITY INCIDENTS
+=============================================================================
+
+INC-2024-0888 - Phishing Attack (Credential Harvesting)
+
+Date: 02 Desember 2024
+Priority: P1
+Classification: Security Incident
+Affected Users: 12 users (clicked phishing link)
+Symptoms:
+- Users received email appearing to be from "IT Support"
+- Subject: "Urgent: Your account will be suspended"
+- Link to fake Office 365 login page
+- 12 users entered credentials
+
+Detection:
+- User reported suspicious email to security@brin.go.id
+- Security team verified: Phishing attack
+- Identified 12 users who clicked link (email tracking logs)
+
+Immediate Response:
+1. Notified affected users via phone (within 30 minutes of detection)
+2. Forced password reset for all 12 users
+3. Terminated all active sessions for affected accounts
+4. Enabled MFA if not already enabled
+5. Blocked phishing domain at firewall (phishing-brin-go-id[.]com)
+6. Reported to O365 Security as phishing (email removed from all mailboxes)
+
+Investigation:
+1. Reviewed email headers: Sender IP from known phishing infrastructure
+2. Analyzed fake login page: Credentials sent to attacker-controlled server
+3. Checked for unauthorized access: 3 accounts accessed within 2 hours of credential entry
+   - Activities: Read emails, no data exfiltration detected
+4. Reviewed email send logs from compromised accounts: No phishing emails sent (caught early)
+
+Containment:
+1. Reset passwords for 3 compromised accounts (again, new passwords)
+2. Notified users' managers (potential data exposure in emails)
+3. Monitored accounts for suspicious activity (24/7 for 1 week)
+
+Remediation:
+1. Enhanced email filtering rules (block similar phishing patterns)
+2. Added sender domain spoofing protection (DMARC policy)
+3. User security awareness training (mandatory for all 12 affected users)
+4. Company-wide phishing awareness email sent
+
+Preventive Actions:
+- Monthly phishing simulation tests (ongoing)
+- Email banner for external emails: "This email is from outside BRIN. Be cautious with links and attachments."
+- Hard MFA enforcement (no more soft prompts) for all users (by end of December)
+
+Lessons Learned:
+- User reporting is critical (incident detected within 1 hour)
+- MFA prevented account takeover (only 3 of 12 had MFA, those 3 not compromised)
+- Need better user training (12 users clicked despite previous training)
+
+Security Incident Report: Filed to CISO, report to BSSN (as per regulation)
+
+=============================================================================
+INCIDENT CATEGORY: HARDWARE FAILURES
+=============================================================================
+
+INC-2024-0345 - Server Disk Failure (RAID Degraded)
+
+Date: 12 November 2024
+Priority: P2
+Affected System: Database Server DB-PROD-02
+Symptoms:
+- RAID array status: Degraded
+- Alert email: "Disk 3 failed in RAID array"
+- System still operational (RAID 5 allows 1 disk failure)
+
+Response:
+1. Verified alert: Logged into server RAID controller
+2. Confirmed: Disk 3 (2 TB SSD) failed, RAID array degraded but functional
+3. Checked warranty: Server under 5-year warranty (Dell ProSupport)
+4. Logged support case with Dell: Critical priority (4-hour onsite response)
+5. Dell engineer arrived with replacement disk: 3 hours 15 minutes
+
+Resolution:
+1. Hot-swapped failed disk with new disk (no downtime required)
+2. RAID controller auto-started rebuild process
+3. Rebuild completed in 6 hours (monitored progress)
+4. RAID status: Optimal
+5. Verified database integrity: No corruption detected
+
+Post-Incident Actions:
+- Updated disk replacement log
+- Scheduled disk health check for all servers (monthly SMART test)
+- Reviewed backup status: Last backup 12 hours ago (verified restorable)
+
+Lessons Learned:
+- RAID monitoring saved the day (early detection)
+- 5-year warranty justified (free replacement, fast response)
+- Regular backups critical (even with RAID, backup is separate)
+
+---
+
+INC-2024-0721 - UPS Battery Failure (No Backup Power)
+
+Date: 28 November 2024
+Priority: P2
+Affected: Data Center (10 servers)
+Symptoms:
+- UPS alarm beeping
+- UPS display: "Replace battery" warning
+- Battery test failed (cannot hold charge)
+
+Risk Assessment:
+- Current state: Servers running on utility power (no battery backup)
+- Risk: Power outage → immediate server shutdown (no graceful shutdown)
+- Impact: Potential data corruption, service interruption
+
+Immediate Actions:
+1. Checked UPS battery: Last replacement 4 years ago (warranty 3-5 years)
+2. Ordered replacement batteries: Emergency procurement (same-day delivery available)
+3. Notified users: Maintenance window scheduled for Saturday (emergency change)
+4. Coordinated with building management: Ensure no planned power interruption
+
+Resolution:
+1. Replacement batteries delivered: 6 hours (expedited)
+2. Scheduled UPS battery replacement: Saturday 22:00 WIB (low-traffic time)
+3. Gracefully shut down servers before UPS maintenance
+4. Replaced UPS batteries (4x 12V 200Ah batteries)
+5. Tested UPS: Battery holds charge, runtime test successful (30 minutes confirmed)
+6. Powered on servers, verified all services operational
+7. Completed by 01:00 WIB (3 hours total)
+
+Preventive Actions:
+- Implemented UPS battery replacement schedule (every 3 years proactive replacement)
+- Monthly UPS battery test (automated via UPS management software)
+- Inventory spare UPS batteries (keep 1 set in stock for emergency)
+
+=============================================================================
+PROBLEM MANAGEMENT - KNOWN ERRORS
+=============================================================================
+
+KE-2024-011 - Email Delivery Delays After DNS Changes
+
+Root Cause: SPF/DKIM/DMARC records incomplete or incorrect after DNS migration
+Impact: External email recipients experience 2-4 hour delays
+Workaround: None (must fix DNS records)
+Permanent Fix:
+  1. Update SPF record with all mail server IPs
+  2. Verify DKIM signing enabled
+  3. Set DMARC policy to quarantine/reject
+  4. Test with https://mxtoolbox.com
+Related Incidents: INC-2024-0567
+
+---
+
+KE-2024-013 - VPN Performance Issues (MTU Mismatch)
+
+Root Cause: MTU mismatch between VPN tunnel and user ISP
+Impact: Slow web browsing, file transfers timeout via VPN
+Workaround: Set VPN client MTU to 1400 (user-side configuration)
+Permanent Fix:
+  1. Configure VPN gateway MSS clamping (automatically adjust MTU)
+  2. Update VPN client deployment with MTU 1400 default
+Related Incidents: INC-2024-0654
+
+---
+
+KE-2024-015 - WiFi Interference from External Sources
+
+Root Cause: Wireless channel interference from neighboring buildings
+Impact: WiFi disconnections, slow performance in specific areas
+Workaround: Reconnect to WiFi (temporary, will drop again)
+Permanent Fix:
+  1. Perform wireless site survey (identify interfering channels)
+  2. Reconfigure APs to use DFS channels (less interference)
+  3. Enable CleanAir for dynamic channel selection
+  4. Reduce AP transmit power to minimize co-channel interference
+Related Incidents: INC-2024-0445
+
+---
+
+KE-2024-018 - Certificate Expiry Causing Service Outages
+
+Root Cause: SSL/TLS certificates expire without renewal
+Impact: Service inaccessible (VPN, HTTPS sites, email)
+Workaround: Emergency certificate renewal (2-24 hours downtime)
+Permanent Fix:
+  1. Implement automated certificate monitoring (alert 60/30/14/7/3 days before expiry)
+  2. Auto-renewal where possible (Let's Encrypt)
+  3. Certificate inventory with expiry dashboard
+  4. Quarterly certificate review meetings
+Related Incidents: INC-2024-0789
+
+=============================================================================
+METRICS & TRENDS
+=============================================================================
+
+Incident Statistics (November 2024):
+
+Total Incidents: 89
+- P1 (Critical): 5 incidents (5.6%)
+- P2 (High): 18 incidents (20.2%)
+- P3 (Medium): 47 incidents (52.8%)
+- P4 (Low): 19 incidents (21.3%)
+
+Average Response Time:
+- P1: 12 minutes (SLA: 15 minutes) ✓
+- P2: 45 minutes (SLA: 1 hour) ✓
+- P3: 3.2 hours (SLA: 4 hours) ✓
+- P4: 18 hours (SLA: 1 day) ✓
+
+Average Resolution Time:
+- P1: 3.5 hours (SLA: 4 hours) ✓
+- P2: 6.8 hours (SLA: 8 hours) ✓
+- P3: 28 hours (SLA: 2 days) ✓
+- P4: 4.2 days (SLA: 5 days) ✓
+
+Top 5 Incident Categories:
+1. Email issues (22 incidents, 24.7%)
+2. Network connectivity (18 incidents, 20.2%)
+3. Password reset / account lockout (15 incidents, 16.9%)
+4. Application errors (14 incidents, 15.7%)
+5. Hardware failures (10 incidents, 11.2%)
+
+Repeat Incidents (Same Root Cause):
+- WiFi interference: 4 incidents (different buildings, same root cause)
+- Mailbox full: 8 incidents (same issue, different users)
+- VPN connection issues: 6 incidents (MTU, certificate, capacity)
+
+Action Items:
+- Implement auto-archive for all mailboxes (reduce mailbox full incidents)
+- Quarterly wireless site survey (proactive interference detection)
+- VPN capacity planning (current 60% utilized, plan for growth)
+
+=============================================================================
+CONTACT & ESCALATION
+=============================================================================
+
+Report Incidents:
+- IT Support: itsupport@brin.go.id
+- Phone: (021) 8012-3456 ext. 123
+- Portal: https://helpdesk.brin.go.id
+- Emergency (24/7): ext. 999
+
+Security Incidents:
+- Security Team: security@brin.go.id
+- Security Hotline: ext. 911 (24/7)
+
+=============================================================================
+DOCUMENT CONTROL
+=============================================================================
+
+Prepared by: IT Support & Operations Team
+Approved by: IT Manager
+Last Updated: 01 Januari 2025
+Next Review: 01 April 2025 (quarterly update)
+
+This document is living documentation - updated continuously as new incidents occur and solutions discovered.
+
+Change History:
+- v1.5 (01 Jan 2025): Added December 2024 incidents, updated metrics
+- v1.4 (01 Dec 2024): Added security incident section
+- v1.3 (01 Nov 2024): Added known errors section
+- v1.2 (01 Oct 2024): Added metrics & trends
+- v1.1 (01 Sep 2024): Initial incidents from Q3 2024
+- v1.0 (01 Jul 2024): Template creation

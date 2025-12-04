@@ -1,0 +1,155 @@
+EXAMPLE USER QUESTIONS - BRIN IT Support Knowledge Base
+=========================================================
+
+File ini berisi contoh pertanyaan user yang beragam untuk testing retrieval
+dari knowledge base. Pertanyaan-pertanyaan ini dirancang untuk memastikan
+sistem RAG dapat mengambil informasi yang relevan dari dokumen knowledge base.
+
+=============================================================================
+QUESTION 1: Password & Account Access
+=============================================================================
+
+PERTANYAAN:
+"Saya lupa password email Office 365 saya dan tidak bisa login. Bagaimana cara reset password? Apakah saya harus datang ke kantor IT Support atau bisa dilakukan sendiri?"
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- work-instruction-password-reset.txt (self-service password reset, phone support)
+- README.txt (Quick Reference - forgot password scenario)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Self-service portal: https://passwordreset.brin.go.id
+- Alternatif: Call IT Support (021) 8012-3456 ext. 123
+- Informasi tentang password policy BRIN
+- Prosedur account unlock jika diperlukan
+
+
+=============================================================================
+QUESTION 2: Network Connectivity Issue
+=============================================================================
+
+PERTANYAAN:
+"WiFi di ruang kerja saya sering putus-putus dan internetnya lambat. Ini sudah terjadi beberapa hari. Apa yang bisa saya lakukan? Apakah ada masalah dengan jaringan BRIN?"
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- network-infrastructure-documentation.txt (troubleshooting section)
+- incident-problem-records.txt (INC-2024-0445 - WiFi Connection Drops)
+- README.txt (WiFi is slow/not working scenario)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Common troubleshooting steps
+- Known issue: Channel interference
+- Solution: Wireless site survey, reconfigure channels
+- IT Support contact untuk eskalasi
+- Informasi tentang monitoring tools
+
+
+=============================================================================
+QUESTION 3: Security & Phishing
+=============================================================================
+
+PERTANYAAN:
+"Saya baru saja menerima email yang mencurigakan yang mengaku dari bank dan meminta saya klik link untuk verifikasi akun. Email ini terlihat seperti phishing. Apa yang harus saya lakukan? Apakah ada prosedur pelaporan di BRIN?"
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- security-guidelines.txt (incident response, email security)
+- incident-problem-records.txt (INC-2024-0888 - Phishing Attack)
+- README.txt (suspicious email scenario, escalation contacts)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Jangan klik link atau download attachment
+- Report immediately to security@brin.go.id or ext. 911
+- Incident response procedure
+- Action: Force password reset, check for compromise
+- Security awareness information
+
+
+=============================================================================
+QUESTION 4: Service Request - Hardware
+=============================================================================
+
+PERTANYAAN:
+"Laptop saya sudah berumur 5 tahun dan sering hang. Saya perlu laptop baru untuk pekerjaan. Bagaimana prosedur pengajuan laptop baru? Berapa lama prosesnya dan apa saja persyaratannya?"
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- service-catalog.txt (Category 2 - Laptop/Desktop Request)
+- it-asset-inventory.txt (asset request & procurement, standard hardware specs)
+- README.txt (need new laptop scenario)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Service request portal: https://serviceportal.brin.go.id/hardware-request
+- Asset request process
+- Standard hardware specifications
+- Procurement timeline
+- Approval requirements
+- Asset replacement policy
+
+
+=============================================================================
+QUESTION 5: VPN Access & Remote Work
+=============================================================================
+
+PERTANYAAN:
+"Saya bekerja dari rumah dan perlu akses VPN untuk connect ke server kantor, tapi VPN saya tidak bisa connect. Muncul error 'connection timeout'. Saya sudah coba beberapa kali tapi tetap gagal. Mohon bantuannya."
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- incident-problem-records.txt (INC-2024-0789 - VPN Connection Fails, INC-2024-0654 - VPN Slow Performance)
+- network-infrastructure-documentation.txt (VPN section)
+- README.txt (IT Support Quick Reference - VPN connection fails)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Common causes: Certificate expiry, MTU mismatch, VPN capacity
+- Check certificate validity
+- Check MTU settings
+- VPN portal: https://vpn.brin.go.id
+- IT Support contact: (021) 8012-3456 ext. 123
+- Known errors and solutions
+- Alternative remote access methods if available
+
+
+=============================================================================
+BONUS QUESTION 6: Change Management
+=============================================================================
+
+PERTANYAAN:
+"Tim saya akan melakukan update aplikasi database production minggu depan. Saya dengar ada prosedur change management yang harus diikuti. Apa saja langkah-langkahnya dan siapa yang harus approve?"
+
+EXPECTED KNOWLEDGE BASE SOURCE:
+- change-management-procedures.txt (change request process, CAB, classification)
+- README.txt (request change to production scenario)
+
+EXPECTED ANSWER SHOULD INCLUDE:
+- Change request process (9 steps)
+- Change classification (Standard, Normal, Major, Emergency)
+- Change Advisory Board (CAB) approval
+- Maintenance windows
+- Submit via ServiceNow
+- Rollback & backout procedures
+- Change calendar coordination
+
+
+=============================================================================
+USAGE NOTES FOR TESTING
+=============================================================================
+
+Testing Strategy:
+1. Input each question to the RAG system
+2. Verify that relevant documents are retrieved
+3. Check if the answer contains expected information
+4. Measure retrieval accuracy and relevance
+5. Evaluate answer completeness and accuracy
+
+Success Criteria:
+✓ System retrieves correct source documents
+✓ Answer addresses all parts of the question
+✓ Answer includes specific details (URLs, phone numbers, procedures)
+✓ Answer references specific incident records or known solutions
+✓ Answer provides actionable next steps
+
+Quality Metrics:
+- Retrieval precision: Are retrieved chunks relevant?
+- Retrieval recall: Are all relevant chunks retrieved?
+- Answer completeness: Does answer cover all aspects?
+- Answer accuracy: Is information correct and up-to-date?
+- Response time: How long does retrieval + generation take?
+
+=============================================================================

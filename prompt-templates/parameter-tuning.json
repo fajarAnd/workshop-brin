@@ -1,0 +1,140 @@
+{
+  "faq-handler": {
+    "description": "Simple FAQ - quick answers for common questions",
+    "use_case": "Pertanyaan sederhana: jam operasional, kontak, lokasi, info dasar",
+    "model": {
+      "recommended": "llama-3.1-8b",
+      "alternatives": ["claude-3-5-haiku"],
+      "rationale": "Fast, cheap, good enough for simple queries"
+    },
+    "parameters": {
+      "temperature": 0.3,
+      "max_tokens": 50,
+      "top_p": 0.9,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0
+    },
+    "reasoning": {
+      "temperature": "Low (0.3) for consistent, deterministic answers. Same question should get same answer.",
+      "max_tokens": "Very short (50) to enforce brief responses and reduce cost",
+      "top_p": "Default (0.9) for natural language",
+      "penalties": "None needed - simple answers don't require variation"
+    },
+    "expected_cost_per_1k_requests": "$0.10",
+    "expected_latency": "< 500ms"
+  },
+
+  "complaint-handler": {
+    "description": "Complaint handling - empathetic, solution-oriented responses",
+    "use_case": "Keluhan, masalah teknis yang mengganggu, frustasi user",
+    "model": {
+      "recommended": "claude-3-5-haiku",
+      "alternatives": ["claude-3-5-sonnet", "gpt-4o-mini"],
+      "rationale": "Better at empathy and nuanced language, good Bahasa Indonesia support"
+    },
+    "parameters": {
+      "temperature": 0.5,
+      "max_tokens": 200,
+      "top_p": 0.9,
+      "presence_penalty": 0.6,
+      "frequency_penalty": 0.3
+    },
+    "reasoning": {
+      "temperature": "Medium (0.5) for balanced responses - empathetic but consistent",
+      "max_tokens": "Medium (200) for structured response with empathy + solution",
+      "top_p": "Default (0.9) for natural empathetic language",
+      "presence_penalty": "Medium (0.6) to encourage varied responses and avoid robotic replies",
+      "frequency_penalty": "Low (0.3) to reduce repetitive phrases like 'saya memahami'"
+    },
+    "expected_cost_per_1k_requests": "$0.30",
+    "expected_latency": "< 1000ms"
+  },
+
+  "rag-knowledge-query": {
+    "description": "Knowledge base queries - detailed answers from documentation",
+    "use_case": "Pertanyaan teknis memerlukan langkah detail, prosedur, kebijakan",
+    "model": {
+      "recommended": "claude-3-5-haiku",
+      "alternatives": ["claude-3-5-sonnet", "gpt-4o"],
+      "rationale": "Good at following context strictly, detailed explanations, good Bahasa"
+    },
+    "parameters": {
+      "temperature": 0.2,
+      "max_tokens": 300,
+      "top_p": 0.85,
+      "presence_penalty": 0.0,
+      "frequency_penalty": 0.0
+    },
+    "reasoning": {
+      "temperature": "Very low (0.2) to stay focused on provided context, minimize hallucination",
+      "max_tokens": "High (300) for detailed step-by-step instructions",
+      "top_p": "Lower (0.85) to focus on highest probability words from context",
+      "penalties": "None - we want model to stick closely to retrieved documents"
+    },
+    "expected_cost_per_1k_requests": "$0.40",
+    "expected_latency": "< 1500ms",
+    "rag_specific": {
+      "retrieval_top_k": 3,
+      "retrieval_threshold": 0.7,
+      "context_window": 2000,
+      "note": "Higher context window for detailed documentation"
+    }
+  },
+
+  "unified-handler": {
+    "description": "Unified handler - automatically handles all scenarios",
+    "use_case": "Single endpoint untuk semua tipe pertanyaan IT support",
+    "model": {
+      "recommended": "claude-3-5-haiku",
+      "alternatives": ["claude-3-5-sonnet", "gpt-4o"],
+      "rationale": "Versatile, good at detecting intent, balanced performance"
+    },
+    "parameters": {
+      "temperature": 0.4,
+      "max_tokens": 250,
+      "top_p": 0.9,
+      "presence_penalty": 0.4,
+      "frequency_penalty": 0.2
+    },
+    "reasoning": {
+      "temperature": "Balanced (0.4) for flexibility across different request types",
+      "max_tokens": "Medium (250) to accommodate different response lengths",
+      "top_p": "Default (0.9) for natural language",
+      "presence_penalty": "Medium (0.4) for some variety without being too creative",
+      "frequency_penalty": "Low (0.2) to reduce repetition"
+    },
+    "expected_cost_per_1k_requests": "$0.35",
+    "expected_latency": "< 1200ms",
+    "rag_specific": {
+      "retrieval_top_k": 3,
+      "retrieval_threshold": 0.65,
+      "context_window": 2000,
+      "note": "Lower threshold (0.65) to retrieve context even for FAQ, let model decide relevance"
+    }
+  },
+
+  "general_guidelines": {
+    "cost_optimization": {
+      "tips": [
+        "Use FAQ handler for simple queries - 70% cost reduction vs unified",
+        "Cache common FAQ responses to avoid LLM calls",
+        "Use intent classification first to route to appropriate handler",
+        "Monitor max_tokens usage - most responses use < 50% of limit"
+      ]
+    },
+    "quality_monitoring": {
+      "metrics": [
+        "Response relevance (human rating 1-5)",
+        "User satisfaction (thumbs up/down)",
+        "Escalation rate (% requiring human agent)",
+        "Context utilization (% of responses citing context)",
+        "Hallucination rate (% of responses with info not in context)"
+      ]
+    },
+    "a_b_testing_suggestions": {
+      "temperature": "Test 0.3 vs 0.5 for complaint handling - measure empathy perception",
+      "max_tokens": "Test 150 vs 200 for complaints - measure completeness vs conciseness",
+      "model": "Test Haiku vs Sonnet for complex issues - measure quality vs cost trade-off"
+    }
+  }
+}
