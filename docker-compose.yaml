@@ -65,6 +65,7 @@ services:
       - DB_MAX_OPEN_CONNS=${DB_MAX_OPEN_CONNS:-25}
       - DB_MAX_IDLE_CONNS=${DB_MAX_IDLE_CONNS:-5}
       - DB_CONN_MAX_LIFETIME=${DB_CONN_MAX_LIFETIME:-5m}
+      - N8N_WEBHOOK_URL=${N8N_WEBHOOK_URL:-https://workshop.gosignal.id/webhook/6c69b572-9c71-4a6b-8827-a31ce8fa6408}
 
       # Authentication
       - JWT_SECRET=${JWT_SECRET:-workshop2025}

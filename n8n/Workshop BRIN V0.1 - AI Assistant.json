@@ -1,0 +1,617 @@
+{
+  "name": "Workshop BRIN V0.1 - AI Assistant",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "=Role: Kamu adalah IT Support specialist senior bernama \"Fulan\" yang sudah 8 tahun menangani IT Support di instansi pemerintah. Kamu ramah, sabar, dan terbiasa berbicara santai tapi tetap profesional seperti teknisi IT yang membantu rekan kerja.\n\nTask: Tangani semua request IT support dengan pendekatan conversational troubleshooting:\n\n1. GREETING/SAPAAN\n   → Balas singkat dan ramah, tanyakan ada yang bisa dibantu\n\n2. KELUHAN/MASALAH TEKNIS (laptop error, internet mati, printer issue, dll)\n   → JANGAN langsung kasih solusi!\n   → Tanyakan dulu untuk diagnosis:\n      - Device apa? (laptop/PC, merk, OS)\n      - Sudah coba apa sebelumnya?\n      - Kapan mulai bermasalah?\n      - Ada perubahan terakhir? (install software, update, kena air, dll)\n   → Setelah info cukup, baru berikan solusi step-by-step\n   → Cari di Knowledge Base untuk SOP penanganan yang sesuai\n\n3. PERTANYAAN INFORMASI (cara reset password, prosedur pengajuan, dll)\n   → Cari jawaban di Knowledge Base\n   → Berikan jawaban langsung dengan langkah jelas\n\n4. ESCALATION\n   → Jika masalah kompleks atau butuh penanganan fisik, arahkan ke Help Desk\n\nKnowledge Base Reference:\n- Gunakan tool knowledge base (it_support_kb) untuk mencari SOP, panduan, dan prosedur\n- Query dengan keyword spesifik: nama aplikasi, jenis masalah, nama prosedur\n- Jika tidak ketemu, jangan mengarang - arahkan ke Help Desk\n\nConstraint:\n- Bahasa Indonesia santai tapi sopan (seperti ngobrol dengan rekan kerja)\n- JANGAN terjemahkan istilah teknis (tetap pakai: restart, update, driver, IP address, DNS, VPN, troubleshoot, screenshot, dll)\n- Jangan skip proses tanya-jawab untuk masalah teknis\n- Jangan assume informasi yang tidak diberikan user\n- Jangan janji timeline spesifik kecuali ada di SOP\n- WAJIB! Mencari informasi dari knowledge base terlebih dahulu jika user bertanya terkait dengan SOP, troubleshooting dan informasi internal.\n\nOutput Format:\n\nUntuk KELUHAN TEKNIS (belum cukup info):\n\"[Acknowledge masalah dengan empati singkat]\nSebelum saya bantu troubleshoot, boleh info dulu:\n- [Pertanyaan diagnosis 1]\n- [Pertanyaan diagnosis 2]\n- [Pertanyaan diagnosis 3 jika perlu]\"\n\nUntuk KELUHAN TEKNIS (info sudah cukup):\n\"[Konfirmasi pemahaman masalah]\nCoba langkah berikut:\n1. [Step 1]\n2. [Step 2]\n...\nKabari saya hasilnya ya, kalau masih bermasalah kita coba cara lain.\"\n\nUntuk PERTANYAAN INFORMASI:\n\"[Jawaban langsung dari knowledge base]\n[Langkah-langkah jika ada]\nAda yang mau ditanyakan lagi?\"\n\nUntuk INFO TIDAK DITEMUKAN:\n\"Untuk [topik], saya perlu cek lebih detail. Bisa langsung hubungi Help Desk di (021) 8012-3456 ext. 123 atau email ke itsupport@brin.go.id ya.\"\n\nContoh Interaksi yang BENAR:\n\nUser: \"Laptop saya gak bisa connect internet\"\nAI: \"Baik Saya bantu cek ya.\nSebelumnya boleh info dulu:\n- Laptop pakai Windows atau Mac?\n- Wifi atau kabel LAN?\n- Tadi pagi masih normal atau sudah dari kemarin?\n- Ada install atau update sesuatu sebelum masalah ini muncul?\"\n\nUser: \"Windows 11, wifi, tadi pagi masih bisa, habis meeting tiba-tiba mati\"\nAI: \"Oke, jadi Windows 11, wifi, dan baru bermasalah setelah meeting tadi ya. \nCoba langkah ini dulu:\n1. Klik icon wifi di taskbar, cek apakah wifi sudah ON dan connected\n2. Kalau connected tapi no internet, coba: Settings → Network & Internet → Network troubleshooter\n3. Atau restart dulu laptop-nya, kadang itu solve masalah wifi habis sleep/meeting\nKabari saya hasilnya ya, kalau masih stuck kita lanjut diagnosa.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -1312,
+        -448
+      ],
+      "id": "ab7386be-f0d3-4523-b1b9-25243ef8fe3b",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -1360,
+        -224
+      ],
+      "id": "4c2e5f6b-130c-4b8d-9d8b-f81ad017d531",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "osDY7rHv294FdcJI",
+          "name": "OpenRouter Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        -16
+      ],
+      "id": "913e868c-adb9-41de-a554-acbeae05b613",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "osDY7rHv294FdcJI",
+          "name": "OpenRouter Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -1600,
+        -368
+      ],
+      "id": "f2430051-b1b5-4799-9df5-448a279eeb89",
+      "name": "When chat message received",
+      "webhookId": "d485427f-c8b2-43ba-bdf0-262b026fd8fc"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -1232,
+        -224
+      ],
+      "id": "7874809d-f507-4a9e-ba8f-21eb0ea48ba1",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "FXlkm9TuJGVEQ79h",
+          "name": "Postgres Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": "simple_knowledge_vectors",
+        "options": {
+          "columnNames": {
+            "values": {
+              "contentColumnName": "content"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        -1248,
+        16
+      ],
+      "id": "978d6489-8c32-4850-96cd-3d0309dc2274",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "FXlkm9TuJGVEQ79h",
+          "name": "Postgres Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -1136,
+        192
+      ],
+      "id": "190ddf95-9860-4513-acfd-2a3575c4c2b3",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "WxoepIrUv4HV4n4A",
+          "name": "OpenAi workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "=file_id",
+                "value": "={{ $('Set File ID').item.json.file_id }}"
+              }
+            ]
+          }
+        }
+      },
+      "id": "d371de7b-4441-4767-ba28-64ac9cb853ae",
+      "name": "Default Data Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -336,
+        832
+      ]
+    },
+    {
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "id": "d9dd832c-5659-43e7-aa98-1eefbf640410",
+      "name": "Embeddings OpenAI1",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1,
+      "position": [
+        -464,
+        832
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "WxoepIrUv4HV4n4A",
+          "name": "OpenAi workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Add knowledge to Google Drive File",
+        "height": 816,
+        "width": 1627,
+        "color": 5
+      },
+      "id": "591e6564-0983-486c-91b3-95289469a1db",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1680,
+        368
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "={{ $('Set File ID').item.json.file_id }}",
+          "mode": "id"
+        },
+        "options": {
+          "googleFileConversion": {
+            "conversion": {
+              "docsToFormat": "text/plain"
+            }
+          }
+        }
+      },
+      "id": "31e89d2e-305f-4407-b0fc-50ef167c633e",
+      "name": "Download File",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 3,
+      "position": [
+        -912,
+        608
+      ],
+      "executeOnce": true,
+      "credentials": {
+        "googleApi": {
+          "id": "Cw7ICcZaNqV1K2eM",
+          "name": "Bonapp Development"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "serviceAccount",
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1BnqLLBaUK89LmXIk6TP-k_BLTfah7WoN",
+          "mode": "id"
+        },
+        "event": "fileCreated",
+        "options": {
+          "fileType": "all"
+        }
+      },
+      "id": "60769b6a-e76c-4c66-bfdf-fcf8d9ae1f1b",
+      "name": "File Created",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1584,
+        512
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "Cw7ICcZaNqV1K2eM",
+          "name": "Bonapp Development"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "serviceAccount",
+        "triggerOn": "specificFolder",
+        "folderToWatch": {
+          "__rl": true,
+          "value": "1BnqLLBaUK89LmXIk6TP-k_BLTfah7WoN",
+          "mode": "id"
+        },
+        "event": "fileUpdated",
+        "options": {}
+      },
+      "id": "973513a8-2981-47d1-92f4-5168219ce80b",
+      "name": "File Updated",
+      "type": "n8n-nodes-base.googleDriveTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1584,
+        704
+      ],
+      "credentials": {
+        "googleApi": {
+          "id": "Cw7ICcZaNqV1K2eM",
+          "name": "Bonapp Development"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "id": "c643fdbb-97dd-41ec-b143-5a6d8f067eff",
+      "name": "Extract Document Text",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        608
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "chunkSize": 500,
+        "chunkOverlap": 20,
+        "options": {}
+      },
+      "id": "946bdbfb-f4bc-4164-90a8-d18e176419f9",
+      "name": "Recursive Character Text Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -256,
+        1040
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "10646eae-ae46-4327-a4dc-9987c2d76173",
+              "name": "file_id",
+              "value": "={{ $json.id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ab9c9344-4e72-4ea0-86a9-7c4fcf2bca8f",
+      "name": "Set File ID",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1360,
+        608
+      ]
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "simple_knowledge_vectors",
+        "options": {
+          "columnNames": {
+            "values": {
+              "contentColumnName": "content"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        -432,
+        608
+      ],
+      "id": "65c2897d-ac05-4784-9468-dce1c1663c35",
+      "name": "Postgres PGVector Store2",
+      "credentials": {
+        "postgres": {
+          "id": "FXlkm9TuJGVEQ79h",
+          "name": "Postgres Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Assistant Ai Agent",
+        "height": 848,
+        "width": 923,
+        "color": 3
+      },
+      "id": "a27f07ba-2df7-4ca7-ac8f-a6aa3422c965",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1680,
+        -528
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "DELETE FROM simple_knowledge_vectors\nWHERE metadata->>'file_id' LIKE '%{{ $json.file_id }}%'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1136,
+        608
+      ],
+      "id": "cf689ceb-35fa-4258-9d30-7ff3de5f3ca7",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "FXlkm9TuJGVEQ79h",
+          "name": "Postgres Workshop"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "it_support_kb",
+        "description": "=Primary source terkait dengan dokumentasi komprehensif untuk mendukung operasional IT Support di BRIN"
+      },
+      "id": "542becaf-fe6f-4dd7-bb90-d182a3d6b4d2",
+      "name": "Knowledge Base IT Support",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        -1104,
+        -224
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Knowledge Base IT Support",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Knowledge Base IT Support",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store2",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI1": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store2",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download File": {
+      "main": [
+        [
+          {
+            "node": "Extract Document Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Created": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "File Updated": {
+      "main": [
+        [
+          {
+            "node": "Set File ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Document Text": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set File ID": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Download File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Knowledge Base IT Support": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "7a795666-6f73-4bc3-990b-0e5f6ab28993",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "3475cd4a346696cf8a6cc79e8fcae959bc91185c86d1843a5c8448e0cc6d2271"
+  },
+  "id": "zwhFk7ea7bCFFLHe",
+  "tags": []
+}
