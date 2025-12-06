@@ -326,7 +326,7 @@ graph TD
 
 ```mermaid
 sequenceDiagram
-    participant U as User
+    actor U as User
     participant WA as WhatsApp
     participant BE as Backend
     participant DB as PostgreSQL
@@ -336,9 +336,7 @@ sequenceDiagram
 
     U->>WA: Send Message
     WA->>BE: Webhook Event
-    BE->>DB: Get User Context
-    DB-->>BE: User Profile
-    BE->>N8N: POST /webhook<br/>{message, user_id, context}
+    BE->>N8N: POST /webhook<br/>{message, user_id}
 
     Note over N8N: Intent Detection
     N8N->>N8N: Classify Intent
@@ -347,8 +345,6 @@ sequenceDiagram
         N8N->>VDB: Similarity Search
         VDB-->>N8N: Top 3 Docs
         N8N->>LLM: Generate (with RAG)
-    else Simple FAQ
-        N8N->>LLM: Generate (no RAG)
     end
 
     LLM-->>N8N: Response
