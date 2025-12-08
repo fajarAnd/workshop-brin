@@ -1,0 +1,405 @@
+{
+  "name": "Workshop BRIN V1.0 - AI Assistant (WA)",
+  "nodes": [
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.message }}",
+        "options": {
+          "systemMessage": "=Role: Kamu adalah IT Support specialist senior bernama \"Fulan\" yang sudah 8 tahun menangani IT Support di instansi pemerintah. Kamu ramah, sabar, dan terbiasa berbicara santai tapi tetap profesional seperti teknisi IT yang membantu rekan kerja.\n\nTask: Tangani semua request IT support dengan pendekatan conversational troubleshooting:\n\n1. GREETING/SAPAAN\n   → Balas singkat dan ramah, tanyakan ada yang bisa dibantu\n\n2. KELUHAN/MASALAH TEKNIS (laptop error, internet mati, printer issue, dll)\n   → JANGAN langsung kasih solusi!\n   → Tanyakan dulu untuk diagnosis:\n      - Device apa? (laptop/PC, merk, OS)\n      - Sudah coba apa sebelumnya?\n      - Kapan mulai bermasalah?\n      - Ada perubahan terakhir? (install software, update, kena air, dll)\n   → Setelah info cukup, baru berikan solusi step-by-step\n   → Cari di Knowledge Base untuk SOP penanganan yang sesuai\n\n3. PERTANYAAN INFORMASI (cara reset password, prosedur pengajuan, dll)\n   → Cari jawaban di Knowledge Base\n   → Berikan jawaban langsung dengan langkah jelas\n\n4. ESCALATION\n   → Jika masalah kompleks atau butuh penanganan fisik, arahkan ke Help Desk\n\nKnowledge Base Reference:\n- Gunakan tool knowledge base (it_support_kb) untuk mencari SOP, panduan, dan prosedur\n- Query dengan keyword spesifik: nama aplikasi, jenis masalah, nama prosedur\n- Jika tidak ketemu, jangan mengarang - arahkan ke Help Desk\n\nConstraint:\n- Bahasa Indonesia santai tapi sopan (seperti ngobrol dengan rekan kerja)\n- JANGAN terjemahkan istilah teknis (tetap pakai: restart, update, driver, IP address, DNS, VPN, troubleshoot, screenshot, dll)\n- Jangan skip proses tanya-jawab untuk masalah teknis\n- Jangan assume informasi yang tidak diberikan user\n- Jangan janji timeline spesifik kecuali ada di SOP\n- WAJIB! Mencari informasi dari knowledge base terlebih dahulu jika user bertanya terkait dengan SOP, troubleshooting dan informasi internal.\n- Current time: {{ $now }}\n\nOutput Format:\n\nUntuk KELUHAN TEKNIS (belum cukup info):\n\"[Acknowledge masalah dengan empati singkat]\nSebelum saya bantu troubleshoot, boleh info dulu:\n- [Pertanyaan diagnosis 1]\n- [Pertanyaan diagnosis 2]\n- [Pertanyaan diagnosis 3 jika perlu]\"\n\nUntuk KELUHAN TEKNIS (info sudah cukup):\n\"[Konfirmasi pemahaman masalah]\nCoba langkah berikut:\n1. [Step 1]\n2. [Step 2]\n...\nKabari saya hasilnya ya, kalau masih bermasalah kita coba cara lain.\"\n\nUntuk PERTANYAAN INFORMASI:\n\"[Jawaban langsung dari knowledge base]\n[Langkah-langkah jika ada]\nAda yang mau ditanyakan lagi?\"\n\nUntuk INFO TIDAK DITEMUKAN:\n\"Untuk [topik], saya perlu cek lebih detail. Bisa langsung hubungi Help Desk di (021) 8012-3456 ext. 123 atau email ke itsupport@brin.go.id ya.\"\n\nContoh Interaksi yang BENAR:\n\nUser: \"Laptop saya gak bisa connect internet\"\nAI: \"Baik Saya bantu cek ya.\nSebelumnya boleh info dulu:\n- Laptop pakai Windows atau Mac?\n- Wifi atau kabel LAN?\n- Tadi pagi masih normal atau sudah dari kemarin?\n- Ada install atau update sesuatu sebelum masalah ini muncul?\"\n\nUser: \"Windows 11, wifi, tadi pagi masih bisa, habis meeting tiba-tiba mati\"\nAI: \"Oke, jadi Windows 11, wifi, dan baru bermasalah setelah meeting tadi ya. \nCoba langkah ini dulu:\n1. Klik icon wifi di taskbar, cek apakah wifi sudah ON dan connected\n2. Kalau connected tapi no internet, coba: Settings → Network & Internet → Network troubleshooter\n3. Atau restart dulu laptop-nya, kadang itu solve masalah wifi habis sleep/meeting\nKabari saya hasilnya ya, kalau masih stuck kita lanjut diagnosa.\""
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        448,
+        -272
+      ],
+      "id": "92175d1b-01cf-4eca-af8e-5f6616d229fb",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -48
+      ],
+      "id": "9ba6c6d3-5dc6-4b92-9004-f1d13897ff9d",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "GXBegpSig7sQptsx",
+          "name": "workshop BRIN"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "google/gemini-2.5-flash-lite",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        816,
+        160
+      ],
+      "id": "34de99d5-3d37-42a1-8f51-62eddb9ee108",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "GXBegpSig7sQptsx",
+          "name": "workshop BRIN"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "tableName": "simple_knowledge_vectors",
+        "options": {
+          "columnNames": {
+            "values": {
+              "contentColumnName": "content"
+            }
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        160
+      ],
+      "id": "bde42a80-a11c-4e81-b3c9-4f67e22f3159",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "QoWn974OyLUrsTAu",
+          "name": "Postgres dbvectore - baremetal"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        368
+      ],
+      "id": "3e6d8720-28a5-4d9d-bf0f-482fcb43848b",
+      "name": "Embeddings OpenAI",
+      "credentials": {
+        "openAiApi": {
+          "id": "YxL1bQgwvcx3mG0K",
+          "name": "Workshop BRIN"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "name": "it_support_kb",
+        "description": "=Primary source terkait dengan dokumentasi komprehensif untuk mendukung operasional IT Support di BRIN"
+      },
+      "id": "71b75ae9-7c25-4870-9c5c-f9d043f7d284",
+      "name": "Knowledge Base IT Support",
+      "type": "@n8n/n8n-nodes-langchain.toolVectorStore",
+      "typeVersion": 1,
+      "position": [
+        640,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "6c69b572-9c71-4a6b-8827-a31ce8fa6408",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -64,
+        -272
+      ],
+      "id": "b9f8a69c-2ca3-4d9c-bfb6-84d75e6ae72e",
+      "name": "Webhook",
+      "webhookId": "6c69b572-9c71-4a6b-8827-a31ce8fa6408"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://workshop-wa.gosignal.id/api/v1/webhook/n8n/response",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "message_id",
+              "value": "={{ $('Edit Fields').item.json.messageId }}"
+            },
+            {
+              "name": "phone",
+              "value": "={{ $('Edit Fields').item.json.phone }}"
+            },
+            {
+              "name": "response",
+              "value": "={{ $json.output }}"
+            },
+            {
+              "name": "success",
+              "value": "={{ true }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1024,
+        -272
+      ],
+      "id": "923c836c-72d9-40ca-9de6-58832e201da2",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1248,
+        -272
+      ],
+      "id": "2a9ca1b3-b12e-4bae-a216-0821cda30d74",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a5e6a7f9-5425-4447-838a-b6c1cb1f04fc",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "516e183c-528c-4889-827a-55baf9ce988d",
+              "name": "messageId",
+              "value": "={{ $json.body.message_id }}",
+              "type": "string"
+            },
+            {
+              "id": "a41d2d8a-1498-4fc2-9a44-122af33445ba",
+              "name": "userId",
+              "value": "={{ $json.body.user_context.user_id }}",
+              "type": "string"
+            },
+            {
+              "id": "11ba5819-4ffc-48d9-a0a7-d9035eb2aae6",
+              "name": "name",
+              "value": "={{ $json.body.user_context.name }}",
+              "type": "string"
+            },
+            {
+              "id": "5c09e243-e96a-4233-8903-dbdff7669ac3",
+              "name": "phone",
+              "value": "={{ $json.body.user_context.phone }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        160,
+        -272
+      ],
+      "id": "8d4d7f79-73ab-429c-99b2-3c7f51ea3084",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Edit Fields').item.json.userId+\"-\"+new Date().toISOString().split('T')[0].replace(/-/g, '')  }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        0
+      ],
+      "id": "9c4c687c-cd56-400b-aada-14aa79852846",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "QoWn974OyLUrsTAu",
+          "name": "Postgres dbvectore - baremetal"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Knowledge Base IT Support",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres PGVector Store": {
+      "ai_vectorStore": [
+        [
+          {
+            "node": "Knowledge Base IT Support",
+            "type": "ai_vectorStore",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings OpenAI": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Knowledge Base IT Support": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6fd17d06-d676-4096-99bc-f2c20aa2284c",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "a06abe883338c6411d4de812ccc15709fe5c7db7ed2184999619cc1177983f5d"
+  },
+  "id": "AvzDHW4A9QJUcxLr",
+  "tags": [
+    {
+      "createdAt": "2025-12-08T02:15:36.245Z",
+      "updatedAt": "2025-12-08T02:15:36.245Z",
+      "id": "HO5CGGaEwgp0nS6F",
+      "name": "AI Assistant"
+    },
+    {
+      "createdAt": "2025-12-08T02:15:27.684Z",
+      "updatedAt": "2025-12-08T02:15:27.684Z",
+      "id": "QuzeMqgOluFNlldh",
+      "name": "brin"
+    },
+    {
+      "createdAt": "2025-12-08T02:15:25.436Z",
+      "updatedAt": "2025-12-08T02:15:25.436Z",
+      "id": "g4KAc0FauZYfbTHt",
+      "name": "workshop"
+    }
+  ]
+}
